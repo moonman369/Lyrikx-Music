@@ -27,7 +27,7 @@ export const shazamCoreApi = createApi({
   }),
   endpoints: (builder) => ({
     getTopCharts: builder.query({
-      query: (pageSize) => `/charts/track?pageSize=${pageSize}`,
+      query: (startFrom) => `/charts/track?startFrom=${startFrom}`,
     }),
   }),
 });
