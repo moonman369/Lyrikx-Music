@@ -1900,6 +1900,7 @@ const Discover = () => {
             i={i}
             isPlaying={isPlaying}
             activeSong={activeSong}
+            data={data.tracks}
           />
         ))}
       </div>
