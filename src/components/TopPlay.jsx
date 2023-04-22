@@ -26,7 +26,7 @@ const TopChartCard = ({
       <img
         src={song?.images?.coverart}
         alt={song?.title}
-        className="w-[50px] h-[50px] rounded-lg"
+        className="w-20 h-20 rounded-lg"
       />
       <div className="flex-1 flex flex-col justify-center mx-3">
         <Link to={`/songs/${song.key}`}>
