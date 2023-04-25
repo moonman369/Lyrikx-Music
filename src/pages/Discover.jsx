@@ -1862,7 +1862,7 @@ const Discover = () => {
     },
   ];
 
-  console.log(data);
+  // console.log(data);
   const genreTitle = "Pop";
 
   const disatch = useDispatch();
