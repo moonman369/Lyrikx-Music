@@ -39,6 +39,9 @@ export const shazamCoreApi = createApi({
     getArtistDetails: builder.query({
       query: (artistid) => `/artists/get-summary?id=${artistid}`,
     }),
+    getSongsBySearch: builder.query({
+      query: (searchTerm) => `/search?term=${searchTerm}`,
+    }),
   }),
 });
 
@@ -47,4 +50,5 @@ export const {
   useGetSongDetailsQuery,
   useGetSongRelatedQuery,
   useGetArtistDetailsQuery,
+  useGetSongsBySearchQuery,
 } = shazamCoreApi;
