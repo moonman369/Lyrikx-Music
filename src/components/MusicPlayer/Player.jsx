@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/media-has-caption */
 import React, { useRef, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const Player = ({
   activeSong,
@@ -30,17 +31,23 @@ const Player = ({
   }, [seekTime]);
 
   return (
-    <audio
-      src={
-        activeSong?.hub?.actions[1]?.uri ||
-        activeSong?.attributes?.streaming?.preview
-      }
-      ref={ref}
-      loop={repeat}
-      onEnded={onEnded}
-      onTimeUpdate={onTimeUpdate}
-      onLoadedData={onLoadedData}
-    />
+    <>
+      {activeSong?.hub?.actions ? (
+        <audio
+          src={
+            activeSong?.hub?.actions[1]?.uri ||
+            activeSong?.attributes?.streaming?.preview
+          }
+          ref={ref}
+          loop={repeat}
+          onEnded={onEnded}
+          onTimeUpdate={onTimeUpdate}
+          onLoadedData={onLoadedData}
+        />
+      ) : (
+        <Link to={activeSong?.url}></Link>
+      )}
+    </>
   );
 };
 
