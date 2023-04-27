@@ -41,17 +41,24 @@ const SongBar = ({
           alt={song?.attributes?.title}
         />
         <div className="flex-1 flex flex-col justify-center mx-3">
-          {!artistId ? (
+          <Link to={`/songs/${song.id}`}>
+            <p className="text-xl font-bold text-white">
+              {artistId ? song?.attributes?.name : song?.attributes?.title}
+            </p>
+          </Link>
+          {/* {!artistId ? (
             <Link to={`/songs/${song.id}`}>
               <p className="text-xl font-bold text-white">
                 {song?.attributes?.title}
               </p>
             </Link>
           ) : (
-            <p className="text-xl font-bold text-white">
-              {song?.attributes?.name}
-            </p>
-          )}
+            <Link to={`/songs/${song.id}`}>
+              <p className="text-xl font-bold text-white">
+                {song?.attributes?.name}
+              </p>
+            </Link>
+          )} */}
           <p className="text-base text-gray-300 mt-1">
             {artistId ? song?.attributes?.albumName : song?.attributes?.artist}
           </p>

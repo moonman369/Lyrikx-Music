@@ -2,4332 +2,2261 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { DetailsHeader, Error, Loader, RelatedSongs } from "../components";
 
-import {
-  useGetSongDetailsQuery,
-  useGetSongRelatedQuery,
-} from "../redux/services/shazamCore";
+import { useGetArtistDetailsQuery } from "../redux/services/shazamCore";
 
 const ArtistDetails = () => {
   const { activeSong, isPlaying } = useSelector((state) => state.player);
-  const { songid } = useParams();
-  console.log(songid);
 
-  const handlePauseClick = () => {
-    dispatch(playPause(false));
-  };
-
-  const handlePlayClick = ({ song, data, i }) => {
-    dispatch(setActiveSong({ song, data, i }));
-    dispatch(playPause(true));
-  };
-
-  //   const { data, isFetching } = useGetSongDetailsQuery(songid);
-  const data = {
-    layout: "5",
-    type: "MUSIC",
-    key: "632531170",
-    title: "Unholy",
-    subtitle: "Sam Smith & Kim Petras",
-    images: {
-      background:
-        "https://is2-ssl.mzstatic.com/image/thumb/AMCArtistImages122/v4/de/0c/5f/de0c5f88-722a-32d8-ff95-51ea2d98cd33/9fd6e963-6b85-446e-aeb9-871641d96659_ami-identity-a9d9c72c23307ab2a64018246fe99b36-2022-11-11T11-06-33.418Z_cropped.png/800x800cc.jpg",
-      coverart:
-        "https://is2-ssl.mzstatic.com/image/thumb/Music122/v4/0d/97/a6/0d97a649-760f-522c-269d-9d710dc372ba/22UM1IM07174.rgb.jpg/400x400cc.jpg",
-      coverarthq:
-        "https://is2-ssl.mzstatic.com/image/thumb/Music122/v4/0d/97/a6/0d97a649-760f-522c-269d-9d710dc372ba/22UM1IM07174.rgb.jpg/400x400cc.jpg",
-      joecolor: "b:36311dp:e4c29ds:e0a581t:c1a583q:be8e6d",
-    },
-    share: {
-      subject: "Unholy - Sam Smith & Kim Petras",
-      text: "I used Shazam to discover Unholy by Sam Smith & Kim Petras.",
-      href: "https://www.shazam.com/track/632531170/unholy",
-      image:
-        "https://is2-ssl.mzstatic.com/image/thumb/Music122/v4/0d/97/a6/0d97a649-760f-522c-269d-9d710dc372ba/22UM1IM07174.rgb.jpg/400x400cc.jpg",
-      twitter: "I used @Shazam to discover Unholy by Sam Smith & Kim Petras.",
-      html: "https://www.shazam.com/snippets/email-share/632531170?lang=en-US&country=US",
-      avatar:
-        "https://is2-ssl.mzstatic.com/image/thumb/AMCArtistImages122/v4/de/0c/5f/de0c5f88-722a-32d8-ff95-51ea2d98cd33/9fd6e963-6b85-446e-aeb9-871641d96659_ami-identity-a9d9c72c23307ab2a64018246fe99b36-2022-11-11T11-06-33.418Z_cropped.png/800x800cc.jpg",
-      snapchat: "https://www.shazam.com/partner/sc/track/632531170",
-    },
-    hub: {
-      type: "APPLEMUSIC",
-      image:
-        "https://images.shazam.com/static/icons/hub/ios/v5/applemusic_{scalefactor}.png",
-      actions: [
-        {
-          name: "apple",
-          type: "applemusicplay",
-          id: "1649325659",
-        },
-        {
-          name: "apple",
-          type: "uri",
-          uri: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview126/v4/3a/2e/99/3a2e99b8-ee01-7af0-f1e0-b189e54cf85c/mzaf_7494069049386285167.plus.aac.ep.m4a",
-        },
-      ],
-      options: [
-        {
-          caption: "OPEN",
-          actions: [
-            {
-              name: "hub:applemusic:deeplink",
-              type: "applemusicopen",
-              uri: "https://music.apple.com/us/album/unholy/1649325651?i=1649325659&mttnagencyid=s2n&mttnsiteid=125115&mttn3pid=Apple-Shazam&mttnsub1=Shazam_ios&mttnsub2=5348615A-616D-3235-3830-44754D6D5973&itscg=30201&app=music&itsct=Shazam_ios",
-            },
-            {
-              name: "hub:applemusic:deeplink",
-              type: "uri",
-              uri: "https://music.apple.com/us/album/unholy/1649325651?i=1649325659&mttnagencyid=s2n&mttnsiteid=125115&mttn3pid=Apple-Shazam&mttnsub1=Shazam_ios&mttnsub2=5348615A-616D-3235-3830-44754D6D5973&itscg=30201&app=music&itsct=Shazam_ios",
-            },
-          ],
-          beacondata: {
-            type: "open",
-            providername: "applemusic",
-          },
-          image:
-            "https://images.shazam.com/static/icons/hub/ios/v5/overflow-open-option_{scalefactor}.png",
-          type: "open",
-          listcaption: "Open in Apple Music",
-          overflowimage:
-            "https://images.shazam.com/static/icons/hub/ios/v5/applemusic-overflow_{scalefactor}.png",
-          colouroverflowimage: false,
-          providername: "applemusic",
-        },
-        {
-          caption: "BUY",
-          actions: [
-            {
-              type: "uri",
-              uri: "https://itunes.apple.com/us/album/unholy/1649325651?i=1649325659&mttnagencyid=s2n&mttnsiteid=125115&mttn3pid=Apple-Shazam&mttnsub1=Shazam_ios&mttnsub2=5348615A-616D-3235-3830-44754D6D5973&itscg=30201&app=itunes&itsct=Shazam_ios",
-            },
-          ],
-          beacondata: {
-            type: "buy",
-            providername: "itunes",
-          },
-          image:
-            "https://images.shazam.com/static/icons/hub/ios/v5/itunes-overflow-buy_{scalefactor}.png",
-          type: "buy",
-          listcaption: "Buy on iTunes",
-          overflowimage:
-            "https://images.shazam.com/static/icons/hub/ios/v5/itunes-overflow-buy_{scalefactor}.png",
-          colouroverflowimage: false,
-          providername: "itunes",
-        },
-      ],
-      providers: [
-        {
-          caption: "Open in Spotify",
-          images: {
-            overflow:
-              "https://images.shazam.com/static/icons/hub/ios/v5/spotify-overflow_{scalefactor}.png",
-            default:
-              "https://images.shazam.com/static/icons/hub/ios/v5/spotify_{scalefactor}.png",
-          },
-          actions: [
-            {
-              name: "hub:spotify:searchdeeplink",
-              type: "uri",
-              uri: "spotify:search:Unholy%20Sam%20Smith",
-            },
-          ],
-          type: "SPOTIFY",
-        },
-        {
-          caption: "Open in Deezer",
-          images: {
-            overflow:
-              "https://images.shazam.com/static/icons/hub/ios/v5/deezer-overflow_{scalefactor}.png",
-            default:
-              "https://images.shazam.com/static/icons/hub/ios/v5/deezer_{scalefactor}.png",
-          },
-          actions: [
-            {
-              name: "hub:deezer:searchdeeplink",
-              type: "uri",
-              uri: "deezer-query://www.deezer.com/play?query=%7Btrack%3A%27Unholy%27%20artist%3A%27Sam+Smith++Kim+Petras%27%7D",
-            },
-          ],
-          type: "DEEZER",
-        },
-      ],
-      explicit: false,
-      displayname: "APPLE MUSIC",
-    },
-    url: "https://www.shazam.com/track/632531170/unholy",
-    artists: [
-      {
-        id: "42",
-        adamid: "156488786",
-      },
-    ],
-    isrc: "GBUM72205415",
-    genres: {
-      primary: "Pop",
-    },
-    urlparams: {
-      "{tracktitle}": "Unholy",
-      "{trackartist}": "Sam+Smith+%26+Kim+Petras",
-    },
-    myshazam: {
-      apple: {
-        actions: [
-          {
-            name: "myshazam:apple",
-            type: "uri",
-            uri: "https://music.apple.com/us/album/unholy/1649325651?i=1649325659&mttnagencyid=s2n&mttnsiteid=125115&mttn3pid=Apple-Shazam&mttnsub1=Shazam_ios&mttnsub2=5348615A-616D-3235-3830-44754D6D5973&itscg=30201&app=music&itsct=Shazam_ios",
-          },
-        ],
-      },
-    },
-    albumadamid: "1649325651",
-    sections: [
-      {
-        type: "SONG",
-        metapages: [
-          {
-            image:
-              "https://is2-ssl.mzstatic.com/image/thumb/AMCArtistImages122/v4/de/0c/5f/de0c5f88-722a-32d8-ff95-51ea2d98cd33/9fd6e963-6b85-446e-aeb9-871641d96659_ami-identity-a9d9c72c23307ab2a64018246fe99b36-2022-11-11T11-06-33.418Z_cropped.png/800x800cc.jpg",
-            caption: "Sam Smith",
-          },
-          {
-            image:
-              "https://is2-ssl.mzstatic.com/image/thumb/Music122/v4/0d/97/a6/0d97a649-760f-522c-269d-9d710dc372ba/22UM1IM07174.rgb.jpg/400x400cc.jpg",
-            caption: "Unholy",
-          },
-        ],
-        tabname: "Song",
-        metadata: [
-          {
-            title: "Album",
-            text: "Gloria",
-          },
-          {
-            title: "Label",
-            text: "Capitol Records UK / EMI",
-          },
-          {
-            title: "Released",
-            text: "2022",
-          },
-        ],
-      },
-      {
-        type: "LYRICS",
-        text: [
-          "Mummy don't know daddy's getting hot",
-          "At the body shop, doing something unholy",
-          "",
-          "He lucky, lucky, yeah (ooh)",
-          "He lucky, lucky, yeah (ye-yeah)",
-          "He lucky, lucky, yeah",
-          "He lucky, lucky, yeah",
-          "",
-          "A lucky, lucky girl",
-          "She got married to a boy like you",
-          "She'd kick you out if she ever, ever knew",
-          "'Bout all the - you tell me that you do",
-          "",
-          "Dirty, dirty boy",
-          "You know everyone is talking on the scene",
-          "I hear them whispering 'bout the places that you've been",
-          "And how you don't know how to keep your business clean",
-          "",
-          "Mummy don't know daddy's getting hot",
-          "At the body shop, doing something unholy",
-          "He's sat back while she's dropping it, she be popping it",
-          "Yeah, she put it down slowly",
-          "Oh-ee-oh-ee-oh, he left his kids at",
-          "Ho-ee-oh-ee-ome, so he can get that",
-          "Mummy don't know daddy's getting hot",
-          "At the body shop, doing something unholy (woo)",
-          "",
-          "Mmm, daddy, daddy, if you want it, drop the add'y (yuh)",
-          "Give me love, give me Fendi, my Balenciaga daddy",
-          "You gon' need to bag it up, 'cause I'm spending on Rodeo (woo)",
-          "You can watch me back it up, I'll be gone in the a.m.",
-          "And he, he get me Prada, get me Miu Miu like Rihanna (ah)",
-          "He always call me 'cause I never cause no drama",
-          "And when you want it, baby, I know I got you covered",
-          "And when you need it, baby, just jump under the covers",
-          "",
-          "Mummy don't know daddy's getting hot",
-          "At the body shop, doin' somethin' unholy",
-          "He's sat back while she's dropping it, she be popping it",
-          "Yeah, she put it down slowly",
-          "Oh-ee-oh-ee-oh, he left his kids at",
-          "Ho-ee-oh-ee-ome, so he can get that",
-          "Mummy don't know daddy's getting hot",
-          "At the body shop, doin' something unholy",
-        ],
-        footer:
-          "Writer(s): Ilya Salmanzadeh, Kim Petras, Samuel Frederick Smith, Jimmy Napes, Omer Fedi, Henry Russell Walter, Blake Slatkin\nLyrics powered by www.musixmatch.com",
-        tabname: "Lyrics",
-        beacondata: {
-          lyricsid: "30897220",
-          providername: "musixmatch",
-          commontrackid: "152048112",
-        },
-      },
-      {
-        type: "VIDEO",
-        tabname: "Video",
-        youtubeurl: {
-          caption: "Sam Smith, Kim Petras - Unholy (Official Music Video)",
-          image: {
-            dimensions: {
-              width: 1280,
-              height: 720,
-            },
-            url: "https://i.ytimg.com/vi/Uq9gPaIzbe8/maxresdefault.jpg",
-          },
-          actions: [
-            {
-              name: "video:youtube",
-              type: "webview",
-              share: {
-                subject: "Unholy - Sam Smith & Kim Petras",
-                text: "I used Shazam to discover Unholy by Sam Smith & Kim Petras.",
-                href: "https://www.shazam.com/track/632531170/unholy",
-                image:
-                  "https://is2-ssl.mzstatic.com/image/thumb/Music122/v4/0d/97/a6/0d97a649-760f-522c-269d-9d710dc372ba/22UM1IM07174.rgb.jpg/400x400cc.jpg",
-                twitter:
-                  "I used @Shazam to discover Unholy by Sam Smith & Kim Petras.",
-                html: "https://www.shazam.com/snippets/email-share/632531170?lang=-&country=US",
-                avatar:
-                  "https://is2-ssl.mzstatic.com/image/thumb/AMCArtistImages122/v4/de/0c/5f/de0c5f88-722a-32d8-ff95-51ea2d98cd33/9fd6e963-6b85-446e-aeb9-871641d96659_ami-identity-a9d9c72c23307ab2a64018246fe99b36-2022-11-11T11-06-33.418Z_cropped.png/800x800cc.jpg",
-                snapchat: "https://www.shazam.com/partner/sc/track/632531170",
-              },
-              uri: "https://youtu.be/Uq9gPaIzbe8?autoplay=1",
-            },
-          ],
-        },
-      },
-      {
-        type: "RELATED",
-        tabname: "Related",
-      },
-    ],
-  };
-  console.log(data);
-  const isFetching = false;
-  // console.log(data);
+  const { id: artistId } = useParams();
+  console.log(artistId);
 
   // const {
-  //   data: relatedData,
-  //   isFetching: isFetchingRelated,
+  //   data: artistData,
+  //   isFetching: isFetchingArtist,
   //   error,
-  // } = useGetSongRelatedQuery(songid);
+  // } = useGetArtistDetailsQuery(artistId);
 
-  const relatedData = {
+  const artistData = {
     data: [
       {
-        id: "track-similarities-id-632531170",
-        type: "shazam-song-lists",
+        id: "156488786",
+        type: "artists",
       },
     ],
     resources: {
-      "shazam-song-lists": {
-        "track-similarities-id-632531170": {
-          id: "track-similarities-id-632531170",
-          type: "shazam-song-lists",
+      artists: {
+        156488786: {
+          id: "156488786",
+          type: "artists",
+          attributes: {
+            genreNames: ["Pop"],
+            name: "Sam Smith",
+            editorialNotes: {
+              short:
+                "“When I look back at this album, it reminds me of the courage it took.”",
+            },
+            artwork: {
+              width: 1500,
+              url: "https://is5-ssl.mzstatic.com/image/thumb/AMCArtistImages122/v4/de/0c/5f/de0c5f88-722a-32d8-ff95-51ea2d98cd33/9fd6e963-6b85-446e-aeb9-871641d96659_ami-identity-a9d9c72c23307ab2a64018246fe99b36-2022-11-11T11-06-33.418Z_cropped.png/{w}x{h}bb.jpg",
+              height: 1500,
+              textColor3: "c2a686",
+              textColor2: "e4b88a",
+              textColor4: "c19d74",
+              textColor1: "e5c4a1",
+              bgColor: "36311c",
+              hasP3: false,
+            },
+            url: "https://music.apple.com/us/artist/sam-smith/156488786",
+          },
           relationships: {
-            tracks: {
+            albums: {
               data: [
                 {
-                  id: "53510886",
-                  type: "shazam-songs",
+                  id: "1536646939",
+                  type: "albums",
                 },
                 {
-                  id: "628935200",
-                  type: "shazam-songs",
+                  id: "1440814069",
+                  type: "albums",
                 },
                 {
-                  id: "648859694",
-                  type: "shazam-songs",
+                  id: "1444861565",
+                  type: "albums",
                 },
                 {
-                  id: "643726163",
-                  type: "shazam-songs",
+                  id: "1536993568",
+                  type: "albums",
                 },
                 {
-                  id: "601555046",
-                  type: "shazam-songs",
+                  id: "1531499128",
+                  type: "albums",
                 },
                 {
-                  id: "626708777",
-                  type: "shazam-songs",
+                  id: "1440899798",
+                  type: "albums",
                 },
                 {
-                  id: "498502624",
-                  type: "shazam-songs",
+                  id: "1442684447",
+                  type: "albums",
                 },
                 {
-                  id: "607917333",
-                  type: "shazam-songs",
+                  id: "1659905064",
+                  type: "albums",
                 },
                 {
-                  id: "639053666",
-                  type: "shazam-songs",
+                  id: "1444896308",
+                  type: "albums",
                 },
                 {
-                  id: "614204083",
-                  type: "shazam-songs",
+                  id: "1440837455",
+                  type: "albums",
                 },
                 {
-                  id: "70679146",
-                  type: "shazam-songs",
+                  id: "1536646529",
+                  type: "albums",
                 },
                 {
-                  id: "606589047",
-                  type: "shazam-songs",
+                  id: "1447334977",
+                  type: "albums",
                 },
                 {
-                  id: "630520607",
-                  type: "shazam-songs",
+                  id: "1531509367",
+                  type: "albums",
                 },
                 {
-                  id: "609260140",
-                  type: "shazam-songs",
+                  id: "1649325651",
+                  type: "albums",
                 },
                 {
-                  id: "640613166",
-                  type: "shazam-songs",
+                  id: "1643168265",
+                  type: "albums",
                 },
                 {
-                  id: "40590926",
-                  type: "shazam-songs",
+                  id: "1471596229",
+                  type: "albums",
                 },
                 {
-                  id: "628712770",
-                  type: "shazam-songs",
+                  id: "1555680902",
+                  type: "albums",
                 },
                 {
-                  id: "636972694",
-                  type: "shazam-songs",
+                  id: "1424361878",
+                  type: "albums",
                 },
                 {
-                  id: "514260283",
-                  type: "shazam-songs",
+                  id: "1446046501",
+                  type: "albums",
                 },
                 {
-                  id: "308021058",
-                  type: "shazam-songs",
+                  id: "1654902404",
+                  type: "albums",
+                },
+                {
+                  id: "1541884146",
+                  type: "albums",
+                },
+                {
+                  id: "1444270268",
+                  type: "albums",
+                },
+                {
+                  id: "1680907429",
+                  type: "albums",
+                },
+                {
+                  id: "1363910799",
+                  type: "albums",
+                },
+                {
+                  id: "1505357732",
+                  type: "albums",
                 },
               ],
+            },
+          },
+          views: {
+            "top-songs": {
+              attributes: {
+                title: "Top Songs",
+              },
+              data: [
+                {
+                  id: "1536646948",
+                  type: "songs",
+                },
+                {
+                  id: "1447334978",
+                  type: "songs",
+                },
+                {
+                  id: "1440814425",
+                  type: "songs",
+                },
+                {
+                  id: "1643168566",
+                  type: "songs",
+                },
+                {
+                  id: "1471596298",
+                  type: "songs",
+                },
+                {
+                  id: "1440814433",
+                  type: "songs",
+                },
+                {
+                  id: "1440814843",
+                  type: "songs",
+                },
+                {
+                  id: "1440862129",
+                  type: "songs",
+                },
+                {
+                  id: "1536647555",
+                  type: "songs",
+                },
+                {
+                  id: "1424362622",
+                  type: "songs",
+                },
+                {
+                  id: "1536993755",
+                  type: "songs",
+                },
+                {
+                  id: "1446046515",
+                  type: "songs",
+                },
+                {
+                  id: "1536993857",
+                  type: "songs",
+                },
+                {
+                  id: "1440814661",
+                  type: "songs",
+                },
+                {
+                  id: "1536647550",
+                  type: "songs",
+                },
+                {
+                  id: "1443257774",
+                  type: "songs",
+                },
+                {
+                  id: "1445028072",
+                  type: "songs",
+                },
+                {
+                  id: "1505358044",
+                  type: "songs",
+                },
+                {
+                  id: "1531499529",
+                  type: "songs",
+                },
+                {
+                  id: "1536647195",
+                  type: "songs",
+                },
+              ],
+            },
+            "latest-release": {
+              attributes: {
+                title: "Latest Release",
+              },
+              data: [
+                {
+                  id: "1659905064",
+                  type: "albums",
+                },
+              ],
+            },
+          },
+          meta: {
+            views: {
+              order: ["latest-release", "top-songs"],
             },
           },
         },
       },
       songs: {
-        687868140: {
-          id: "687868140",
+        1424362622: {
+          id: "1424362622",
           type: "songs",
+          attributes: {
+            hasTimeSyncedLyrics: true,
+            albumName: "Promises - Single",
+            genreNames: ["Dance", "Music"],
+            trackNumber: 1,
+            releaseDate: "2018-08-17",
+            durationInMillis: 213309,
+            isVocalAttenuationAllowed: true,
+            isMasteredForItunes: false,
+            isrc: "GBARL1801049",
+            artwork: {
+              width: 3000,
+              url: "https://is2-ssl.mzstatic.com/image/thumb/Music128/v4/95/94/14/9594147f-63c4-92ba-bfd5-74e8199aba51/886447242926.jpg/{w}x{h}bb.jpg",
+              height: 3000,
+              textColor3: "32221e",
+              textColor2: "171819",
+              textColor4: "3d2d2a",
+              textColor1: "0a0a0a",
+              bgColor: "d58471",
+              hasP3: false,
+            },
+            composerName: "Sam Smith, Adam Wiles & Jessie Reyez",
+            audioLocale: "en-US",
+            url: "https://music.apple.com/us/album/promises/1424361878?i=1424362622",
+            playParams: {
+              id: "1424362622",
+              kind: "song",
+            },
+            discNumber: 1,
+            isAppleDigitalMaster: false,
+            hasLyrics: true,
+            audioTraits: ["lossless", "lossy-stereo"],
+            name: "Promises",
+            previews: [
+              {
+                url: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/7d/8a/94/7d8a9443-cf19-33b0-30ba-34205a0e71e9/mzaf_8625311620279291226.plus.aac.ep.m4a",
+              },
+            ],
+            artistName: "Calvin Harris, Sam Smith",
+          },
         },
-        1055074639: {
-          id: "1055074639",
+        1440814425: {
+          id: "1440814425",
           type: "songs",
+          attributes: {
+            albumName: "In the Lonely Hour",
+            hasTimeSyncedLyrics: true,
+            genreNames: [
+              "Pop",
+              "Music",
+              "Adult Contemporary",
+              "R&B/Soul",
+              "Rock",
+              "Contemporary R&B",
+            ],
+            trackNumber: 3,
+            releaseDate: "2014-01-01",
+            durationInMillis: 172724,
+            isVocalAttenuationAllowed: true,
+            isMasteredForItunes: true,
+            isrc: "GBUM71308833",
+            artwork: {
+              width: 1500,
+              url: "https://is2-ssl.mzstatic.com/image/thumb/Music115/v4/80/74/b6/8074b6bc-387f-6cc9-5ede-92b76396ad5f/13UAEIM58958.rgb.jpg/{w}x{h}bb.jpg",
+              height: 1500,
+              textColor3: "ccc2bc",
+              textColor2: "eed7c4",
+              textColor4: "cebcad",
+              textColor1: "ebded8",
+              bgColor: "51524e",
+              hasP3: false,
+            },
+            composerName:
+              "Sam Smith, James Napier, William Phillips, Jeff Lynne & Tom Petty",
+            audioLocale: "en-US",
+            url: "https://music.apple.com/us/album/stay-with-me/1440814069?i=1440814425",
+            playParams: {
+              id: "1440814425",
+              kind: "song",
+            },
+            discNumber: 1,
+            isAppleDigitalMaster: true,
+            hasLyrics: true,
+            audioTraits: ["atmos", "lossless", "lossy-stereo", "spatial"],
+            name: "Stay With Me",
+            previews: [
+              {
+                url: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/92/1d/64/921d6401-9e04-ae04-8ea3-bc98ccca6baa/mzaf_2820953966932936336.plus.aac.ep.m4a",
+              },
+            ],
+            artistName: "Sam Smith",
+          },
+          meta: {
+            formerIds: ["792657455", "825325379"],
+          },
         },
-        1440751633: {
-          id: "1440751633",
+        1440814433: {
+          id: "1440814433",
           type: "songs",
+          attributes: {
+            albumName: "In the Lonely Hour",
+            hasTimeSyncedLyrics: true,
+            genreNames: [
+              "Pop",
+              "Music",
+              "Adult Contemporary",
+              "R&B/Soul",
+              "Rock",
+              "Contemporary R&B",
+            ],
+            trackNumber: 5,
+            durationInMillis: 239317,
+            releaseDate: "2014-01-01",
+            isVocalAttenuationAllowed: true,
+            isMasteredForItunes: true,
+            isrc: "GBUM71308836",
+            artwork: {
+              width: 1500,
+              url: "https://is2-ssl.mzstatic.com/image/thumb/Music115/v4/80/74/b6/8074b6bc-387f-6cc9-5ede-92b76396ad5f/13UAEIM58958.rgb.jpg/{w}x{h}bb.jpg",
+              height: 1500,
+              textColor3: "ccc2bc",
+              textColor2: "eed7c4",
+              textColor4: "cebcad",
+              textColor1: "ebded8",
+              bgColor: "51524e",
+              hasP3: false,
+            },
+            composerName: "Sam Smith & James Napier",
+            audioLocale: "en-US",
+            url: "https://music.apple.com/us/album/im-not-the-only-one/1440814069?i=1440814433",
+            playParams: {
+              id: "1440814433",
+              kind: "song",
+            },
+            discNumber: 1,
+            isAppleDigitalMaster: true,
+            hasLyrics: true,
+            audioTraits: ["atmos", "lossless", "lossy-stereo", "spatial"],
+            name: "I'm Not the Only One",
+            previews: [
+              {
+                url: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview122/v4/29/99/84/2999844e-bcf9-6851-24c5-9511ee567510/mzaf_2632478799465045509.plus.aac.ep.m4a",
+              },
+            ],
+            artistName: "Sam Smith",
+          },
+          meta: {
+            formerIds: ["825325381", "792657457"],
+          },
         },
-        1440824272: {
-          id: "1440824272",
+        1440814661: {
+          id: "1440814661",
           type: "songs",
+          attributes: {
+            hasTimeSyncedLyrics: true,
+            albumName: "In the Lonely Hour",
+            genreNames: [
+              "Pop",
+              "Music",
+              "Adult Contemporary",
+              "R&B/Soul",
+              "Rock",
+              "Contemporary R&B",
+            ],
+            trackNumber: 7,
+            releaseDate: "2014-01-01",
+            durationInMillis: 167066,
+            isVocalAttenuationAllowed: true,
+            isMasteredForItunes: true,
+            isrc: "GBUM71308834",
+            artwork: {
+              width: 1500,
+              url: "https://is2-ssl.mzstatic.com/image/thumb/Music115/v4/80/74/b6/8074b6bc-387f-6cc9-5ede-92b76396ad5f/13UAEIM58958.rgb.jpg/{w}x{h}bb.jpg",
+              height: 1500,
+              textColor3: "ccc2bc",
+              textColor2: "eed7c4",
+              textColor4: "cebcad",
+              textColor1: "ebded8",
+              bgColor: "51524e",
+              hasP3: false,
+            },
+            composerName: "Sam Smith & Matt Prime",
+            audioLocale: "en-US",
+            url: "https://music.apple.com/us/album/like-i-can/1440814069?i=1440814661",
+            playParams: {
+              id: "1440814661",
+              kind: "song",
+            },
+            discNumber: 1,
+            isAppleDigitalMaster: true,
+            hasLyrics: true,
+            audioTraits: ["atmos", "lossless", "lossy-stereo", "spatial"],
+            name: "Like I Can",
+            previews: [
+              {
+                url: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview112/v4/91/04/38/910438af-58e3-8d71-c0a8-57525ad20c1f/mzaf_7821308924334420261.plus.aac.ep.m4a",
+              },
+            ],
+            artistName: "Sam Smith",
+          },
+          meta: {
+            formerIds: ["825325383", "792657459"],
+          },
         },
-        1612321591: {
-          id: "1612321591",
+        1440814843: {
+          id: "1440814843",
           type: "songs",
+          attributes: {
+            hasTimeSyncedLyrics: true,
+            albumName: "In the Lonely Hour",
+            genreNames: [
+              "Pop",
+              "Music",
+              "Adult Contemporary",
+              "R&B/Soul",
+              "Rock",
+              "Contemporary R&B",
+            ],
+            trackNumber: 10,
+            durationInMillis: 253208,
+            releaseDate: "2013-02-15",
+            isVocalAttenuationAllowed: false,
+            isMasteredForItunes: true,
+            isrc: "GBUM71308839",
+            artwork: {
+              width: 1500,
+              url: "https://is2-ssl.mzstatic.com/image/thumb/Music115/v4/80/74/b6/8074b6bc-387f-6cc9-5ede-92b76396ad5f/13UAEIM58958.rgb.jpg/{w}x{h}bb.jpg",
+              height: 1500,
+              textColor3: "ccc2bc",
+              textColor2: "eed7c4",
+              textColor4: "cebcad",
+              textColor1: "ebded8",
+              bgColor: "51524e",
+              hasP3: false,
+            },
+            audioLocale: "en-US",
+            composerName: "Sam Smith, James Napier & Elvin Smith",
+            url: "https://music.apple.com/us/album/lay-me-down/1440814069?i=1440814843",
+            playParams: {
+              id: "1440814843",
+              kind: "song",
+            },
+            discNumber: 1,
+            hasLyrics: true,
+            isAppleDigitalMaster: true,
+            audioTraits: ["atmos", "lossless", "lossy-stereo", "spatial"],
+            name: "Lay Me Down",
+            previews: [
+              {
+                url: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview122/v4/95/50/81/955081ff-94c2-b848-0deb-939867b69ddc/mzaf_6850008172753142592.plus.aac.ep.m4a",
+              },
+            ],
+            artistName: "Sam Smith",
+          },
+          meta: {
+            formerIds: ["792657462", "825325386"],
+          },
         },
-        1614063459: {
-          id: "1614063459",
+        1440862129: {
+          id: "1440862129",
           type: "songs",
+          attributes: {
+            hasTimeSyncedLyrics: true,
+            albumName: "Settle (Deluxe Version)",
+            genreNames: ["Electronic", "Music", "Dance", "Garage", "House"],
+            trackNumber: 3,
+            durationInMillis: 255867,
+            releaseDate: "2012-10-08",
+            isVocalAttenuationAllowed: true,
+            isMasteredForItunes: false,
+            isrc: "GBUM71302810",
+            artwork: {
+              width: 1500,
+              url: "https://is4-ssl.mzstatic.com/image/thumb/Music114/v4/d2/a7/10/d2a71014-c884-f850-9aab-b86db3ef7ddb/14UMGIM12348.rgb.jpg/{w}x{h}bb.jpg",
+              height: 1500,
+              textColor3: "c0966d",
+              textColor2: "e4a16c",
+              textColor4: "bb855a",
+              textColor1: "ebb683",
+              bgColor: "141615",
+              hasP3: false,
+            },
+            audioLocale: "en-US",
+            composerName:
+              "Sam Smith, Howard Lawrence, Guy Lawrence, Jimmy Napes & James Napier",
+            url: "https://music.apple.com/us/album/latch-feat-sam-smith/1440862011?i=1440862129",
+            playParams: {
+              id: "1440862129",
+              kind: "song",
+            },
+            discNumber: 1,
+            hasLyrics: true,
+            isAppleDigitalMaster: false,
+            audioTraits: ["atmos", "lossless", "lossy-stereo", "spatial"],
+            name: "Latch (feat. Sam Smith)",
+            previews: [
+              {
+                url: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview112/v4/8a/a8/c1/8aa8c191-4935-52f1-9830-4ecc04199661/mzaf_15972256999505008039.plus.aac.ep.m4a",
+              },
+            ],
+            artistName: "Disclosure",
+          },
+          meta: {
+            formerIds: ["855860494"],
+          },
         },
-        1615585008: {
-          id: "1615585008",
+        1443257774: {
+          id: "1443257774",
           type: "songs",
+          attributes: {
+            hasTimeSyncedLyrics: true,
+            albumName: "Hotel Cabana (Deluxe Version)",
+            genreNames: [
+              "Pop",
+              "Music",
+              "R&B/Soul",
+              "Dance",
+              "Electronic",
+              "Contemporary R&B",
+              "Hip-Hop/Rap",
+              "Pop/Rock",
+              "Rock",
+            ],
+            trackNumber: 8,
+            releaseDate: "2013-01-01",
+            durationInMillis: 222200,
+            isVocalAttenuationAllowed: true,
+            isMasteredForItunes: true,
+            isrc: "GBAAA1300148",
+            artwork: {
+              width: 1500,
+              url: "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/1f/2b/32/1f2b32ec-5978-44ad-2358-fd724d2e4038/00602537742790.rgb.jpg/{w}x{h}bb.jpg",
+              height: 1500,
+              textColor3: "d8c78b",
+              textColor2: "fa9d36",
+              textColor4: "d4802d",
+              textColor1: "fff5ab",
+              bgColor: "3d0d0d",
+              hasP3: false,
+            },
+            composerName:
+              "Sam Smith, Shahid Khan, Al-Hakam El Kaubaisy, Jimmy Napes, James Murray, Mustafa Omer, Jonny Coffer & Frobisher Mbabazi",
+            audioLocale: "en-US",
+            url: "https://music.apple.com/us/album/la-la-la-feat-sam-smith/1443257658?i=1443257774",
+            playParams: {
+              id: "1443257774",
+              kind: "song",
+            },
+            discNumber: 1,
+            isAppleDigitalMaster: true,
+            hasLyrics: true,
+            audioTraits: ["lossless", "lossy-stereo"],
+            name: "La La La (feat. Sam Smith)",
+            previews: [
+              {
+                url: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/87/bb/27/87bb27d3-d71b-eb77-7a03-72caabdd765c/mzaf_14660295433035974437.plus.aac.ep.m4a",
+              },
+            ],
+            artistName: "Naughty Boy",
+          },
+          meta: {
+            formerIds: ["854168086"],
+          },
         },
-        1621817894: {
-          id: "1621817894",
+        1445028072: {
+          id: "1445028072",
           type: "songs",
+          attributes: {
+            albumName: "Writing's On the Wall - Single",
+            hasTimeSyncedLyrics: true,
+            genreNames: ["Pop", "Music"],
+            trackNumber: 1,
+            releaseDate: "2015-09-25",
+            durationInMillis: 278987,
+            isVocalAttenuationAllowed: true,
+            isMasteredForItunes: true,
+            isrc: "GBUM71505354",
+            artwork: {
+              width: 2000,
+              url: "https://is2-ssl.mzstatic.com/image/thumb/Music112/v4/5b/87/fa/5b87fa3f-5797-d1dd-3aca-3aa117681237/15UMGIM43305.rgb.jpg/{w}x{h}bb.jpg",
+              height: 2000,
+              textColor3: "cdcdcd",
+              textColor2: "c7c7c7",
+              textColor4: "a7a7a7",
+              textColor1: "f6f6f6",
+              bgColor: "2a2a2a",
+              hasP3: false,
+            },
+            composerName: "Sam Smith & James Napier",
+            audioLocale: "en-US",
+            url: "https://music.apple.com/us/album/writings-on-the-wall/1445027918?i=1445028072",
+            playParams: {
+              id: "1445028072",
+              kind: "song",
+            },
+            discNumber: 1,
+            isAppleDigitalMaster: true,
+            hasLyrics: true,
+            audioTraits: ["atmos", "lossless", "lossy-stereo", "spatial"],
+            name: "Writing's On the Wall",
+            previews: [
+              {
+                url: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview112/v4/b4/0c/57/b40c573e-ec58-0aa1-72b8-863891f012e7/mzaf_5958342206211525900.plus.aac.ep.m4a",
+              },
+            ],
+            artistName: "Sam Smith",
+          },
+          meta: {
+            formerIds: ["1037851118", "1042122262"],
+          },
         },
-        1638208778: {
-          id: "1638208778",
+        1446046515: {
+          id: "1446046515",
           type: "songs",
+          attributes: {
+            albumName: "Fire on Fire - Single",
+            hasTimeSyncedLyrics: true,
+            genreNames: ["Pop", "Music"],
+            trackNumber: 1,
+            durationInMillis: 246735,
+            releaseDate: "2018-12-21",
+            isVocalAttenuationAllowed: true,
+            isMasteredForItunes: true,
+            isrc: "GBUM71807533",
+            artwork: {
+              width: 4000,
+              url: "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/83/b9/32/83b9327b-0d7c-5700-554d-9e6769e12b05/18UMGIM80639.rgb.jpg/{w}x{h}bb.jpg",
+              height: 4000,
+              textColor3: "dcdcdc",
+              textColor2: "e8e8e8",
+              textColor4: "cccccc",
+              textColor1: "fbfbfb",
+              bgColor: "5f5f5f",
+              hasP3: false,
+            },
+            composerName: "Sam Smith & Steve Mac",
+            audioLocale: "en-US",
+            url: "https://music.apple.com/us/album/fire-on-fire/1446046501?i=1446046515",
+            playParams: {
+              id: "1446046515",
+              kind: "song",
+            },
+            discNumber: 1,
+            isAppleDigitalMaster: true,
+            hasLyrics: true,
+            audioTraits: ["atmos", "lossless", "lossy-stereo", "spatial"],
+            name: "Fire on Fire",
+            previews: [
+              {
+                url: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview122/v4/6c/90/73/6c9073e4-b56f-9c01-d223-a63801c1476a/mzaf_9021482826240156339.plus.aac.ep.m4a",
+              },
+            ],
+            artistName: "Sam Smith",
+          },
         },
-        1640501238: {
-          id: "1640501238",
+        1447334978: {
+          id: "1447334978",
           type: "songs",
+          attributes: {
+            hasTimeSyncedLyrics: true,
+            albumName: "Dancing With A Stranger - Single",
+            genreNames: ["Pop", "Music"],
+            trackNumber: 1,
+            durationInMillis: 171030,
+            releaseDate: "2019-01-11",
+            isVocalAttenuationAllowed: true,
+            isMasteredForItunes: true,
+            isrc: "GBUM71807386",
+            artwork: {
+              width: 4000,
+              url: "https://is5-ssl.mzstatic.com/image/thumb/Music115/v4/30/75/5b/30755bfd-3225-8a60-ac85-0cf74876f84e/18UMGIM84859.rgb.jpg/{w}x{h}bb.jpg",
+              height: 4000,
+              textColor3: "edbac5",
+              textColor2: "f7eccb",
+              textColor4: "e7bda2",
+              textColor1: "ffe9f7",
+              bgColor: "a70200",
+              hasP3: false,
+            },
+            audioLocale: "en-US",
+            composerName:
+              "Sam Smith, Normani Hamilton, Mikkel S. Eriksen, Tor Erik Hermansen & James Napier",
+            url: "https://music.apple.com/us/album/dancing-with-a-stranger/1447334977?i=1447334978",
+            playParams: {
+              id: "1447334978",
+              kind: "song",
+            },
+            discNumber: 1,
+            hasLyrics: true,
+            isAppleDigitalMaster: true,
+            audioTraits: ["atmos", "lossless", "lossy-stereo", "spatial"],
+            name: "Dancing With A Stranger",
+            previews: [
+              {
+                url: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/06/91/8f/06918fe7-e34c-4266-4037-5b9316a4f883/mzaf_11811104978829386208.plus.aac.ep.m4a",
+              },
+            ],
+            artistName: "Sam Smith & Normani",
+          },
         },
-        1642613664: {
-          id: "1642613664",
+        1471596298: {
+          id: "1471596298",
           type: "songs",
+          attributes: {
+            hasTimeSyncedLyrics: true,
+            albumName: "How Do You Sleep? - Single",
+            genreNames: ["Pop", "Music"],
+            trackNumber: 1,
+            releaseDate: "2019-07-19",
+            durationInMillis: 202205,
+            isVocalAttenuationAllowed: true,
+            isMasteredForItunes: true,
+            isrc: "GBUM71902381",
+            artwork: {
+              width: 3000,
+              url: "https://is4-ssl.mzstatic.com/image/thumb/Music115/v4/ea/a0/87/eaa0872c-ff80-8625-c39e-14413d2bcd6b/19UMGIM40102.rgb.jpg/{w}x{h}bb.jpg",
+              height: 3000,
+              textColor3: "442b2c",
+              textColor2: "4f0000",
+              textColor4: "6a2b2b",
+              textColor1: "200001",
+              bgColor: "d6d7db",
+              hasP3: false,
+            },
+            composerName:
+              "Sam Smith, Max Martin, Savan Kotecha & Ilya Salmanzadeh",
+            audioLocale: "en-US",
+            url: "https://music.apple.com/us/album/how-do-you-sleep/1471596229?i=1471596298",
+            playParams: {
+              id: "1471596298",
+              kind: "song",
+            },
+            discNumber: 1,
+            isAppleDigitalMaster: true,
+            hasLyrics: true,
+            audioTraits: ["atmos", "lossless", "lossy-stereo", "spatial"],
+            name: "How Do You Sleep?",
+            previews: [
+              {
+                url: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview112/v4/6e/4b/06/6e4b0604-b8eb-b800-0e13-801c35cff3e6/mzaf_8925069359407826291.plus.aac.ep.m4a",
+              },
+            ],
+            artistName: "Sam Smith",
+          },
         },
-        1643756110: {
-          id: "1643756110",
+        1505358044: {
+          id: "1505358044",
           type: "songs",
+          attributes: {
+            hasTimeSyncedLyrics: true,
+            albumName: "To Die For - Single",
+            genreNames: ["Pop", "Music"],
+            trackNumber: 1,
+            releaseDate: "2020-02-14",
+            durationInMillis: 193795,
+            isVocalAttenuationAllowed: true,
+            isMasteredForItunes: true,
+            isrc: "GBUM71906661",
+            artwork: {
+              width: 3000,
+              url: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/c6/70/fb/c670fb3e-3df2-8d12-ad1f-50c110a44c08/19UM1IM08168.rgb.jpg/{w}x{h}bb.jpg",
+              height: 3000,
+              textColor3: "bfb0b5",
+              textColor2: "ecc6c8",
+              textColor4: "bd9fa0",
+              textColor1: "efdce3",
+              bgColor: "000000",
+              hasP3: false,
+            },
+            composerName:
+              "Sam Smith, Mikkel S. Eriksen, Tor Erik Hermansen & James Napier",
+            audioLocale: "en-US",
+            url: "https://music.apple.com/us/album/to-die-for/1505357732?i=1505358044",
+            playParams: {
+              id: "1505358044",
+              kind: "song",
+            },
+            discNumber: 1,
+            isAppleDigitalMaster: true,
+            hasLyrics: true,
+            audioTraits: ["atmos", "lossless", "lossy-stereo", "spatial"],
+            name: "To Die For",
+            previews: [
+              {
+                url: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview112/v4/f1/98/27/f1982776-7dcb-14d3-d7ad-2f549577036a/mzaf_12665479808435453788.plus.aac.ep.m4a",
+              },
+            ],
+            artistName: "Sam Smith",
+          },
         },
-        1646526227: {
-          id: "1646526227",
+        1531499529: {
+          id: "1531499529",
           type: "songs",
+          attributes: {
+            hasTimeSyncedLyrics: true,
+            albumName: "Love Goes",
+            genreNames: ["Pop", "Music"],
+            trackNumber: 2,
+            durationInMillis: 212097,
+            releaseDate: "2020-09-19",
+            isVocalAttenuationAllowed: true,
+            isMasteredForItunes: true,
+            isrc: "GBUM72002531",
+            artwork: {
+              width: 3000,
+              url: "https://is5-ssl.mzstatic.com/image/thumb/Music115/v4/a6/f3/9b/a6f39b28-0be0-383b-5987-a92c5ce14b14/20UMGIM49499.rgb.jpg/{w}x{h}bb.jpg",
+              height: 3000,
+              textColor3: "bfb7a1",
+              textColor2: "cbc542",
+              textColor4: "a39e35",
+              textColor1: "efe4c9",
+              bgColor: "010300",
+              hasP3: false,
+            },
+            audioLocale: "en-US",
+            composerName: "Sam Smith, Shellback & Oscar Görres",
+            url: "https://music.apple.com/us/album/diamonds/1531499128?i=1531499529",
+            playParams: {
+              id: "1531499529",
+              kind: "song",
+            },
+            discNumber: 1,
+            hasLyrics: true,
+            isAppleDigitalMaster: true,
+            audioTraits: ["atmos", "lossless", "lossy-stereo", "spatial"],
+            name: "Diamonds",
+            previews: [
+              {
+                url: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/b2/c7/47/b2c74711-9869-69bf-138e-983846f7c3ae/mzaf_6695846445522449551.plus.aac.ep.m4a",
+              },
+            ],
+            artistName: "Sam Smith",
+          },
         },
-        1649563461: {
-          id: "1649563461",
+        1536646948: {
+          id: "1536646948",
           type: "songs",
+          attributes: {
+            albumName: "The Thrill of It All (Special Video Edition)",
+            hasTimeSyncedLyrics: true,
+            genreNames: ["Pop", "Music"],
+            trackNumber: 1,
+            durationInMillis: 201000,
+            releaseDate: "2017-09-08",
+            isVocalAttenuationAllowed: false,
+            isMasteredForItunes: true,
+            isrc: "GBUM71704089",
+            artwork: {
+              width: 4000,
+              url: "https://is5-ssl.mzstatic.com/image/thumb/Music125/v4/a8/92/49/a89249e2-0cb5-ac6e-ce37-c946c4d0fe2e/17UM1IM18858.rgb.jpg/{w}x{h}bb.jpg",
+              height: 4000,
+              textColor3: "333333",
+              textColor2: "242424",
+              textColor4: "505050",
+              textColor1: "000000",
+              bgColor: "ffffff",
+              hasP3: false,
+            },
+            composerName:
+              "Sam Smith, James Napier, Tor Erik Hermansen & Mikkel S. Eriksen",
+            audioLocale: "en-US",
+            url: "https://music.apple.com/us/album/too-good-at-goodbyes/1536646939?i=1536646948",
+            playParams: {
+              id: "1536646948",
+              kind: "song",
+            },
+            discNumber: 1,
+            isAppleDigitalMaster: true,
+            hasLyrics: true,
+            audioTraits: ["atmos", "lossless", "lossy-stereo", "spatial"],
+            name: "Too Good at Goodbyes",
+            previews: [
+              {
+                url: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview122/v4/5f/de/24/5fde2476-5484-2c28-4c39-63d8d51fb134/mzaf_4892647634791128214.plus.aac.ep.m4a",
+              },
+            ],
+            artistName: "Sam Smith",
+          },
         },
-        1651763192: {
-          id: "1651763192",
+        1536647195: {
+          id: "1536647195",
           type: "songs",
+          attributes: {
+            albumName: "The Thrill of It All (Special Video Edition)",
+            hasTimeSyncedLyrics: true,
+            genreNames: ["Pop", "Music"],
+            trackNumber: 3,
+            releaseDate: "2017-11-03",
+            durationInMillis: 192922,
+            isVocalAttenuationAllowed: true,
+            isMasteredForItunes: true,
+            isrc: "GBUM71703749",
+            artwork: {
+              width: 4000,
+              url: "https://is5-ssl.mzstatic.com/image/thumb/Music125/v4/a8/92/49/a89249e2-0cb5-ac6e-ce37-c946c4d0fe2e/17UM1IM18858.rgb.jpg/{w}x{h}bb.jpg",
+              height: 4000,
+              textColor3: "333333",
+              textColor2: "242424",
+              textColor4: "505050",
+              textColor1: "000000",
+              bgColor: "ffffff",
+              hasP3: false,
+            },
+            composerName:
+              "Sam Smith, James Napier, Tyler Johnson & Charles Emanuel Smalls",
+            audioLocale: "en-US",
+            url: "https://music.apple.com/us/album/one-last-song/1536646939?i=1536647195",
+            playParams: {
+              id: "1536647195",
+              kind: "song",
+            },
+            discNumber: 1,
+            isAppleDigitalMaster: true,
+            hasLyrics: true,
+            audioTraits: ["atmos", "lossless", "lossy-stereo", "spatial"],
+            name: "One Last Song",
+            previews: [
+              {
+                url: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview122/v4/1a/02/c4/1a02c48b-df88-5725-8048-8a42bccb7220/mzaf_1676313182195193561.plus.aac.ep.m4a",
+              },
+            ],
+            artistName: "Sam Smith",
+          },
         },
-        1660134392: {
-          id: "1660134392",
+        1536647550: {
+          id: "1536647550",
           type: "songs",
+          attributes: {
+            albumName: "The Thrill of It All (Special Video Edition)",
+            hasTimeSyncedLyrics: true,
+            genreNames: ["Pop", "Music"],
+            trackNumber: 9,
+            durationInMillis: 187157,
+            releaseDate: "2017-11-03",
+            isVocalAttenuationAllowed: false,
+            isMasteredForItunes: true,
+            isrc: "GBUM71703750",
+            artwork: {
+              width: 4000,
+              url: "https://is5-ssl.mzstatic.com/image/thumb/Music125/v4/a8/92/49/a89249e2-0cb5-ac6e-ce37-c946c4d0fe2e/17UM1IM18858.rgb.jpg/{w}x{h}bb.jpg",
+              height: 4000,
+              textColor3: "333333",
+              textColor2: "242424",
+              textColor4: "505050",
+              textColor1: "000000",
+              bgColor: "ffffff",
+              hasP3: false,
+            },
+            composerName: "Sam Smith, Tyler Johnson & Camaron Ochs",
+            audioLocale: "en-US",
+            url: "https://music.apple.com/us/album/palace/1536646939?i=1536647550",
+            playParams: {
+              id: "1536647550",
+              kind: "song",
+            },
+            discNumber: 1,
+            isAppleDigitalMaster: true,
+            hasLyrics: true,
+            audioTraits: ["atmos", "lossless", "lossy-stereo", "spatial"],
+            name: "Palace",
+            previews: [
+              {
+                url: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview112/v4/2e/68/5d/2e685d95-11f2-0288-12a0-287a726a3568/mzaf_3863498360726101737.plus.aac.ep.m4a",
+              },
+            ],
+            artistName: "Sam Smith",
+          },
         },
-        1663558166: {
-          id: "1663558166",
+        1536647555: {
+          id: "1536647555",
           type: "songs",
+          attributes: {
+            hasTimeSyncedLyrics: true,
+            albumName: "The Thrill of It All (Special Video Edition)",
+            genreNames: ["Pop", "Music"],
+            trackNumber: 10,
+            durationInMillis: 221596,
+            releaseDate: "2017-10-06",
+            isVocalAttenuationAllowed: true,
+            isMasteredForItunes: true,
+            isrc: "GBUM71705145",
+            artwork: {
+              width: 4000,
+              url: "https://is5-ssl.mzstatic.com/image/thumb/Music125/v4/a8/92/49/a89249e2-0cb5-ac6e-ce37-c946c4d0fe2e/17UM1IM18858.rgb.jpg/{w}x{h}bb.jpg",
+              height: 4000,
+              textColor3: "333333",
+              textColor2: "242424",
+              textColor4: "505050",
+              textColor1: "000000",
+              bgColor: "ffffff",
+              hasP3: false,
+            },
+            audioLocale: "en-US",
+            composerName:
+              "Sam Smith, James Napier, Timothy Mosley, Darryl Pearson, Larrance Dopson & Jose Valasquez",
+            url: "https://music.apple.com/us/album/pray/1536646939?i=1536647555",
+            playParams: {
+              id: "1536647555",
+              kind: "song",
+            },
+            discNumber: 1,
+            hasLyrics: true,
+            isAppleDigitalMaster: true,
+            audioTraits: ["atmos", "lossless", "lossy-stereo", "spatial"],
+            name: "Pray",
+            previews: [
+              {
+                url: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview112/v4/2c/7a/59/2c7a59ad-b24a-5c6b-ebc9-be88c356e0c0/mzaf_595565643839695909.plus.aac.ep.m4a",
+              },
+            ],
+            artistName: "Sam Smith",
+            contentRating: "explicit",
+          },
         },
-        1663973562: {
-          id: "1663973562",
+        1536993755: {
+          id: "1536993755",
           type: "songs",
+          attributes: {
+            albumName: "In The Lonely Hour (Drowning Shadows Edition)",
+            hasTimeSyncedLyrics: true,
+            genreNames: ["Pop", "Music"],
+            trackNumber: 3,
+            durationInMillis: 172724,
+            releaseDate: "2014-05-26",
+            isVocalAttenuationAllowed: true,
+            isMasteredForItunes: true,
+            isrc: "GBUM71308833",
+            artwork: {
+              width: 3000,
+              url: "https://is4-ssl.mzstatic.com/image/thumb/Music114/v4/f2/59/8a/f2598a7e-945a-3cb6-24e1-9c3ead873760/15UMGIM50961.rgb.jpg/{w}x{h}bb.jpg",
+              height: 3000,
+              textColor3: "dddcdb",
+              textColor2: "f6f5f1",
+              textColor4: "d6d4d1",
+              textColor1: "ffffff",
+              bgColor: "56534e",
+              hasP3: false,
+            },
+            composerName:
+              "Sam Smith, James Napier, William Phillips, Jeff Lynne & Tom Petty",
+            audioLocale: "en-US",
+            url: "https://music.apple.com/us/album/stay-with-me/1536993568?i=1536993755",
+            playParams: {
+              id: "1536993755",
+              kind: "song",
+            },
+            discNumber: 1,
+            isAppleDigitalMaster: true,
+            hasLyrics: true,
+            audioTraits: ["atmos", "lossless", "lossy-stereo", "spatial"],
+            name: "Stay With Me",
+            previews: [
+              {
+                url: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/01/f7/c9/01f7c90b-e78f-9a95-1055-72f283ebcf6c/mzaf_8948762051717078368.plus.aac.ep.m4a",
+              },
+            ],
+            artistName: "Sam Smith",
+          },
         },
-        1678878113: {
-          id: "1678878113",
+        1536993857: {
+          id: "1536993857",
           type: "songs",
+          attributes: {
+            albumName: "In The Lonely Hour (Drowning Shadows Edition)",
+            hasTimeSyncedLyrics: true,
+            genreNames: ["Pop", "Music"],
+            trackNumber: 5,
+            durationInMillis: 239317,
+            releaseDate: "2014-05-26",
+            isVocalAttenuationAllowed: true,
+            isMasteredForItunes: true,
+            isrc: "GBUM71308836",
+            artwork: {
+              width: 3000,
+              url: "https://is4-ssl.mzstatic.com/image/thumb/Music114/v4/f2/59/8a/f2598a7e-945a-3cb6-24e1-9c3ead873760/15UMGIM50961.rgb.jpg/{w}x{h}bb.jpg",
+              height: 3000,
+              textColor3: "dddcdb",
+              textColor2: "f6f5f1",
+              textColor4: "d6d4d1",
+              textColor1: "ffffff",
+              bgColor: "56534e",
+              hasP3: false,
+            },
+            composerName: "Sam Smith & James Napier",
+            audioLocale: "en-US",
+            url: "https://music.apple.com/us/album/im-not-the-only-one/1536993568?i=1536993857",
+            playParams: {
+              id: "1536993857",
+              kind: "song",
+            },
+            discNumber: 1,
+            isAppleDigitalMaster: true,
+            hasLyrics: true,
+            audioTraits: ["atmos", "lossless", "lossy-stereo", "spatial"],
+            name: "I'm Not The Only One",
+            previews: [
+              {
+                url: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview112/v4/56/87/e5/5687e5ea-d69a-f6eb-d6f3-abade40e8ad9/mzaf_16167073679125814230.plus.aac.ep.m4a",
+              },
+            ],
+            artistName: "Sam Smith",
+          },
         },
-        1680740761: {
-          id: "1680740761",
+        1643168566: {
+          id: "1643168566",
           type: "songs",
-        },
-      },
-      "track-highlights": {
-        1281370544: {
-          id: "1281370544",
-          type: "track-highlights",
-        },
-        1445837780: {
-          id: "1445837780",
-          type: "track-highlights",
-        },
-        1520434039: {
-          id: "1520434039",
-          type: "track-highlights",
-        },
-        1616896437: {
-          id: "1616896437",
-          type: "track-highlights",
-        },
-        1617758121: {
-          id: "1617758121",
-          type: "track-highlights",
-        },
-        1623893089: {
-          id: "1623893089",
-          type: "track-highlights",
-        },
-        1643167420: {
-          id: "1643167420",
-          type: "track-highlights",
-        },
-        1646266064: {
-          id: "1646266064",
-          type: "track-highlights",
-        },
-        1647609220: {
-          id: "1647609220",
-          type: "track-highlights",
-        },
-        1648922849: {
-          id: "1648922849",
-          type: "track-highlights",
-        },
-        1650414355: {
-          id: "1650414355",
-          type: "track-highlights",
-        },
-        1650529451: {
-          id: "1650529451",
-          type: "track-highlights",
-        },
-        1651276204: {
-          id: "1651276204",
-          type: "track-highlights",
-        },
-        1651904457: {
-          id: "1651904457",
-          type: "track-highlights",
-        },
-        1651969464: {
-          id: "1651969464",
-          type: "track-highlights",
-        },
-        1652104610: {
-          id: "1652104610",
-          type: "track-highlights",
-        },
-      },
-      artists: {
-        111051: {
-          id: "111051",
-          type: "artists",
-        },
-        5557599: {
-          id: "5557599",
-          type: "artists",
-        },
-        28721078: {
-          id: "28721078",
-          type: "artists",
-        },
-        63346553: {
-          id: "63346553",
-          type: "artists",
-        },
-        95705522: {
-          id: "95705522",
-          type: "artists",
-        },
-        137057909: {
-          id: "137057909",
-          type: "artists",
-        },
-        260414340: {
-          id: "260414340",
-          type: "artists",
-        },
-        277293880: {
-          id: "277293880",
-          type: "artists",
-        },
-        358714030: {
-          id: "358714030",
-          type: "artists",
-        },
-        471260289: {
-          id: "471260289",
-          type: "artists",
-        },
-        524929515: {
-          id: "524929515",
-          type: "artists",
-        },
-        528928008: {
-          id: "528928008",
-          type: "artists",
-        },
-        670534462: {
-          id: "670534462",
-          type: "artists",
-        },
-        1140096017: {
-          id: "1140096017",
-          type: "artists",
-        },
-        1191850724: {
-          id: "1191850724",
-          type: "artists",
-        },
-        1304716885: {
-          id: "1304716885",
-          type: "artists",
-        },
-        1358539712: {
-          id: "1358539712",
-          type: "artists",
-        },
-        1400730578: {
-          id: "1400730578",
-          type: "artists",
-        },
-        1580652660: {
-          id: "1580652660",
-          type: "artists",
+          attributes: {
+            albumName: "Unholy - Single",
+            hasTimeSyncedLyrics: true,
+            genreNames: ["Pop", "Music"],
+            trackNumber: 1,
+            releaseDate: "2022-09-22",
+            durationInMillis: 156943,
+            isVocalAttenuationAllowed: true,
+            isMasteredForItunes: true,
+            isrc: "GBUM72205415",
+            artwork: {
+              width: 3000,
+              url: "https://is2-ssl.mzstatic.com/image/thumb/Music112/v4/a4/0c/bd/a40cbd9d-bb38-8164-cd30-e107c8c7bb0e/22UMGIM83430.rgb.jpg/{w}x{h}bb.jpg",
+              height: 3000,
+              textColor3: "bcb6b0",
+              textColor2: "dcd3c9",
+              textColor4: "b2aaa3",
+              textColor1: "e9e1db",
+              bgColor: "090708",
+              hasP3: false,
+            },
+            composerName:
+              "Sam Smith, Kim Petras, James Napier, Ilya Salmanzadeh, Henry Walter, Blake Slatkin & Omer Fedi",
+            audioLocale: "en-US",
+            url: "https://music.apple.com/us/album/unholy/1643168265?i=1643168566",
+            playParams: {
+              id: "1643168566",
+              kind: "song",
+            },
+            discNumber: 1,
+            isAppleDigitalMaster: true,
+            hasLyrics: true,
+            audioTraits: ["atmos", "lossless", "lossy-stereo", "spatial"],
+            name: "Unholy",
+            previews: [
+              {
+                url: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview126/v4/bf/af/9c/bfaf9c05-6e59-1bad-63cc-85ec6f93de82/mzaf_11826046767568718197.plus.aac.ep.m4a",
+              },
+            ],
+            artistName: "Sam Smith & Kim Petras",
+          },
         },
       },
       albums: {
-        687867700: {
-          id: "687867700",
+        1363910799: {
+          id: "1363910799",
           type: "albums",
           attributes: {
-            artistName: "Tom Odell",
-            name: "Long Way Down",
-            releaseDate: "2012",
+            copyright:
+              "A Capitol Records UK release; ℗ 2018 Universal Music Operations Limited",
+            genreNames: ["Pop", "Music"],
+            releaseDate: "2018-03-29",
+            isMasteredForItunes: true,
+            upc: "00602567556732",
+            artwork: {
+              width: 4000,
+              url: "https://is2-ssl.mzstatic.com/image/thumb/Music124/v4/c9/55/91/c9559180-1d26-5561-8e2b-388da95e9245/00602567556732.rgb.jpg/{w}x{h}bb.jpg",
+              height: 4000,
+              textColor3: "2b2b2b",
+              textColor2: "161616",
+              textColor4: "343434",
+              textColor1: "0b0c0b",
+              bgColor: "acaaab",
+              hasP3: false,
+            },
+            url: "https://music.apple.com/us/album/pray-feat-logic-single/1363910799",
+            playParams: {
+              id: "1363910799",
+              kind: "album",
+            },
+            recordLabel: "Capitol",
+            isCompilation: false,
+            trackCount: 1,
+            isPrerelease: false,
+            audioTraits: ["lossless", "lossy-stereo"],
+            isSingle: true,
+            name: "Pray (feat. Logic) - Single",
+            artistName: "Sam Smith",
+            contentRating: "explicit",
+            isComplete: true,
           },
         },
-        1055074478: {
-          id: "1055074478",
+        1424361878: {
+          id: "1424361878",
           type: "albums",
           attributes: {
-            artistName: "Sia",
-            name: "This Is Acting",
-            releaseDate: "2016",
+            copyright: "℗ 2018 Sony Music Entertainment UK Limited",
+            genreNames: ["Dance", "Music", "Electronic"],
+            releaseDate: "2018-08-17",
+            isMasteredForItunes: false,
+            upc: "886447242926",
+            artwork: {
+              width: 3000,
+              url: "https://is2-ssl.mzstatic.com/image/thumb/Music128/v4/95/94/14/9594147f-63c4-92ba-bfd5-74e8199aba51/886447242926.jpg/{w}x{h}bb.jpg",
+              height: 3000,
+              textColor3: "32221e",
+              textColor2: "171819",
+              textColor4: "3d2d2a",
+              textColor1: "0a0a0a",
+              bgColor: "d58471",
+              hasP3: false,
+            },
+            url: "https://music.apple.com/us/album/promises-single/1424361878",
+            playParams: {
+              id: "1424361878",
+              kind: "album",
+            },
+            recordLabel: "Columbia",
+            isCompilation: false,
+            trackCount: 1,
+            isPrerelease: false,
+            audioTraits: ["lossless", "lossy-stereo"],
+            isSingle: true,
+            name: "Promises - Single",
+            artistName: "Calvin Harris, Sam Smith",
+            editorialNotes: {
+              short:
+                "A sensual, noncommittal Sam Smith is all yours—for the night.",
+            },
+            isComplete: true,
           },
         },
-        1440751265: {
-          id: "1440751265",
+        1440814069: {
+          id: "1440814069",
           type: "albums",
           attributes: {
-            artistName: "Eminem",
-            name: "Encore",
-            releaseDate: "2004",
-          },
-        },
-        1440824019: {
-          id: "1440824019",
-          type: "albums",
-          attributes: {
-            artistName: "Lady Gaga",
-            name: "Born This Way",
-            releaseDate: "2011",
-          },
-        },
-        1612321587: {
-          id: "1612321587",
-          type: "albums",
-          attributes: {
-            artistName: "Imagine Dragons",
-            name: "Bones - Single",
-            releaseDate: "2021",
-          },
-        },
-        1614063395: {
-          id: "1614063395",
-          type: "albums",
-          attributes: {
-            artistName: "Rema",
-            name: "Rave & Roses",
-            releaseDate: "2022",
-          },
-        },
-        1615584999: {
-          id: "1615584999",
-          type: "albums",
-          attributes: {
-            artistName: "Harry Styles",
-            name: "Harry's House",
-            releaseDate: "2022",
-          },
-        },
-        1621817793: {
-          id: "1621817793",
-          type: "albums",
-          attributes: {
-            artistName: "OneRepublic",
-            name: "Top Gun: Maverick (Music from the Motion Picture)",
-            releaseDate: "2022",
-          },
-        },
-        1638208775: {
-          id: "1638208775",
-          type: "albums",
-          attributes: {
-            artistName: "Oliver Tree & Robin Schulz",
-            name: "Miss You - Single",
-            releaseDate: "2022",
-          },
-        },
-        1640501237: {
-          id: "1640501237",
-          type: "albums",
-          attributes: {
-            artistName: "Rema & Selena Gomez",
-            name: "Calm Down - Single",
-            releaseDate: "2022",
-          },
-        },
-        1642613175: {
-          id: "1642613175",
-          type: "albums",
-          attributes: {
-            artistName: "Lil Nas X",
-            name: "STAR WALKIN' (League of Legends Worlds Anthem) - Single",
-            releaseDate: "2022",
-          },
-        },
-        1643755888: {
-          id: "1643755888",
-          type: "albums",
-          attributes: {
-            artistName: "Chris Brown",
-            name: "Under The Influence - Single",
-            releaseDate: "2019",
-          },
-        },
-        1646526226: {
-          id: "1646526226",
-          type: "albums",
-          attributes: {
-            artistName: "Rosa Linn",
-            name: "SNAP PACK",
-            releaseDate: "2022",
-          },
-        },
-        1649563458: {
-          id: "1649563458",
-          type: "albums",
-          attributes: {
-            artistName: "JIN",
-            name: "The Astronaut - Single",
-            releaseDate: "2022",
-          },
-        },
-        1651763191: {
-          id: "1651763191",
-          type: "albums",
-          attributes: {
-            artistName: "Rihanna",
-            name: "Lift Me Up (From Black Panther: Wakanda Forever - Music From and Inspired By) - Single",
-            releaseDate: "2022",
-          },
-        },
-        1660133085: {
-          id: "1660133085",
-          type: "albums",
-          attributes: {
-            artistName: "Metro Boomin, The Weeknd & 21 Savage",
-            name: "HEROES & VILLAINS (Heroes Version)",
-            releaseDate: "2022",
-          },
-        },
-        1663558165: {
-          id: "1663558165",
-          type: "albums",
-          attributes: {
-            artistName: "Coi Leray",
-            name: "Players - EP",
-            releaseDate: "2022",
-          },
-        },
-        1663973555: {
-          id: "1663973555",
-          type: "albums",
-          attributes: {
-            artistName: "Miley Cyrus",
-            name: "Endless Summer Vacation",
-            releaseDate: "2023",
-          },
-        },
-        1678877550: {
-          id: "1678877550",
-          type: "albums",
-          attributes: {
-            artistName: "David Guetta & Bebe Rexha",
-            name: "Bebe",
-            releaseDate: "2022",
-          },
-        },
-        1680740657: {
-          id: "1680740657",
-          type: "albums",
-          attributes: {
-            artistName: "Glass Animals",
-            name: "Dreamland (Real Life Edition)",
-            releaseDate: "2020",
-          },
-        },
-      },
-      lyrics: {
-        29282474: {
-          id: "29282474",
-          type: "lyrics",
-          attributes: {
-            text: [
-              "I don't know what you've been told",
-              "But time is running out, no need to take it slow",
-              "I'm stepping to you toe-to-toe",
-              "I should be scared, honey, maybe so",
-              "",
-              "But I ain't worried 'bout it right now (right now)",
-              "Keeping dreams alive (hey!), 1999, heroes",
-              "I ain't worried 'bout it right now (right now)",
-              "Swimmin' in the floods (hey!), dancing on the clouds below",
-              "I ain't worried 'bout it",
-              "",
-              "I ain't worried 'bout it",
-              "Hey!",
-              "",
-              "I don't know what you've been told",
-              "But time is running out, so spend it like it's gold",
-              "I'm living like I'm nine-zeros",
-              "Got no regrets, even when I'm broke, yeah",
-              "",
-              "I'm at my best when I got something I'm wanting to steal",
-              "Way too busy for them problems and problems to feel (yeah-yeah)",
-              "No stressing, just obsessin' with sealin' the deal",
-              "I'll take it in and let it go",
-              "",
-              "But I ain't worried 'bout it right now (right now)",
-              "Keeping dreams alive (hey!), 1999, heroes",
-              "I ain't worried 'bout it right now (right now)",
-              "Swimmin' in the floods (hey!), dancing on the clouds below",
-              "",
-              "I ain't worried 'bout it",
-              "",
-              "I ain't worried 'bout it",
-              "",
-              "Hey!",
-              "",
-              "(Ooh-ooh, ooh-ooh)",
-              "I ain't worried",
-              "(Ooh-ooh, oh-oh, ooh-ooh)",
-              "Oh, no-no",
-              "",
-              "I ain't worried 'bout it right now (right now)",
-              "Keeping dreams alive (hey!), 1999, heroes",
-              "I ain't worried 'bout it right now (right now)",
-              "Swimmin' in the floods (hey!), dancing on the clouds below",
-              "I ain't worried 'bout it (ooh-aah, aah-ooh)",
-              "",
-              "Hey!",
-              "I ain't worried 'bout it (ooh-ahh, aah-ooh)",
-              "Hey!",
-              "",
-              "I ain't worried 'bout it",
+            copyright:
+              "℗ 2014 Capitol Records, a division of Universal Music Operations Limited",
+            genreNames: [
+              "Pop",
+              "Music",
+              "Adult Contemporary",
+              "R&B/Soul",
+              "Rock",
+              "Contemporary R&B",
             ],
-            footer:
-              "Writer(s): Tyler Spry, Brent Kutzle, Bjorn Yttling, Peter Moren, John Eriksson, Ryan Tedder\nLyrics powered by www.musixmatch.com",
-            musixmatchLyricsId: "143245955",
-            providerName: "musixmatch",
-            syncAvailable: false,
+            releaseDate: "2014-01-01",
+            isMasteredForItunes: true,
+            upc: "00602537696086",
+            artwork: {
+              width: 1500,
+              url: "https://is2-ssl.mzstatic.com/image/thumb/Music115/v4/80/74/b6/8074b6bc-387f-6cc9-5ede-92b76396ad5f/13UAEIM58958.rgb.jpg/{w}x{h}bb.jpg",
+              height: 1500,
+              textColor3: "ccc2bc",
+              textColor2: "eed7c4",
+              textColor4: "cebcad",
+              textColor1: "ebded8",
+              bgColor: "51524e",
+              hasP3: false,
+            },
+            url: "https://music.apple.com/us/album/in-the-lonely-hour/1440814069",
+            playParams: {
+              id: "1440814069",
+              kind: "album",
+            },
+            recordLabel: "Capitol",
+            trackCount: 10,
+            isCompilation: false,
+            isPrerelease: false,
+            audioTraits: ["atmos", "lossless", "lossy-stereo", "spatial"],
+            isSingle: false,
+            name: "In the Lonely Hour",
+            artistName: "Sam Smith",
+            editorialNotes: {
+              standard:
+                'Sam Smith’s star turn on Disclosure’s “Latch” only hinted at the British belter’s potential. <i>In the Lonely Hour</i> deftly blends classic soul, gospel choruses, and sumptuously recorded acoustic instruments with 21st-century production flourishes, like the hip-hop beat of "Life Support" and the subtle vocal processing of "Money on My Mind." An extended meditation on unrequited love, the album shows off Smith’s stunning emotive power, from wounded wailing on the mournful “Stay with Me” to barely disguised bitterness on the dazzling “Like I Can.”',
+              short: "A powerful debut that turns misery into beauty.",
+            },
+            isComplete: true,
           },
         },
-        29353439: {
-          id: "29353439",
-          type: "lyrics",
+        1440837455: {
+          id: "1440837455",
+          type: "albums",
           attributes: {
-            text: [
-              "(Vibez)",
-              "",
-              "Another banger",
-              "",
-              "Baby, calm down, calm down",
-              "Girl, this your body e put my heart for lockdown",
-              "For lockdown, oh, lockdown",
-              "Girl, you sweet like Fanta, Fanta",
-              "If I tell you say I love you no dey form yanga, oh, yanga",
-              "No tell me no, no, no, no, whoa-whoa-whoa-whoa",
-              "Oh-oh-oh-oh-oh-oh-oh-oh-oh-oh-oh",
-              "Baby, come gimme your lo-lo-lo-lo-lo-lo-lo-lo-lo-lo-lo-lo-love",
-              'You got me like, "Whoa-whoa-whoa-whoa-whoa-whoa-whoa-whoa-whoa"',
-              "Shawty come gimme your lo-lo-lo-lo-lo-lo-lo-lo-lo-lo-lo-lo-love, mm-mm",
-              "",
-              "I see this fine girl, for my party she wear yellow",
-              "Every other girl they dey do too much, but this girl mellow",
-              "Naim I dey find situation I go use take tell am hello",
-              "Finally I find way to talk to the girl but she no wan follow",
-              "",
-              "Who you come dey form for? (Mm-hm)",
-              "Why you no wan comform? (Mm-hm)",
-              "Then I start to feel her bum-bum (mm-hm)",
-              "But she dey gimme small-small",
-              "I know say she sabi pass that one (mm-hm)",
-              "But she feeling insecure",
-              "'Cause her friends go dey gum her like chewing gum",
-              "Go dey gum her like chewing gum",
-              "",
-              "Baby, calm down, calm down",
-              "Girl, this your body e put my heart for lockdown",
-              "For lockdown, oh, lockdown",
-              "Girl, you sweet like Fanta, Fanta",
-              "If I tell you say I love you no dey form yanga, oh, yanga",
-              "No tell me no, no, no, no, whoa-whoa-whoa-whoa",
-              "",
-              "Oh-oh-oh-oh-oh-oh-oh-oh-oh-oh-oh",
-              "Baby, come gimme your lo-lo-lo-lo-lo-lo-lo-lo-lo-lo-lo-lo-love",
-              'You got me like, "Whoa-whoa-whoa-whoa-whoa-whoa-whoa-whoa-whoa"',
-              "Shawty come gimme your lo-lo-lo-lo-lo-lo-lo-lo-lo-lo-lo-lo-love, mm-mm",
-              "",
-              "As I reach my house I say make I rest small (make I rest small)",
-              "As me I wake up na she dey my mind (na she dey my mind)",
-              "Day one, day two, I no fit focus (I no fit focus)",
-              "Na so me I call am, say make we link up (say make we link up)",
-              "As I start to dey tell her how I feel, na my heart dey race",
-              "Baby girl, if you leave me I no go love again",
-              "Because e get many girls wey put my heart for pain",
-              "Shebi, you feel my pain?",
-              "",
-              "Baby, calm down, calm down",
-              "Girl, this your body e put my heart for lockdown",
-              "For lockdown, oh, lockdown",
-              "Girl, you sweet like Fanta, Fanta",
-              "If I tell you say I love you no dey form yanga, oh, yanga",
-              "No tell me no, no, no, no, whoa-whoa-whoa-whoa",
-              "Oh-oh-oh-oh-oh-oh-oh-oh-oh-oh-oh",
-              "Baby come gimme your lo-lo-lo-lo-lo-lo-lo-lo-lo-lo-lo-lo-love",
-              'You got me like, "Whoa-whoa-whoa-whoa-whoa-whoa-whoa-whoa-whoa"',
-              "Shawty come gimme your lo-lo-lo-lo-lo-lo-lo-lo-lo-lo-lo-lo-love, mm-mm",
+            copyright:
+              "℗ 2015 Capitol Records, a division of Universal Music Operations Limited",
+            genreNames: [
+              "Pop",
+              "Music",
+              "R&B/Soul",
+              "Contemporary R&B",
+              "Adult Contemporary",
+              "Rock",
             ],
-            footer:
-              "Writer(s): Divine Ikubor, Michael Ovie Hunter, Alexander Uwaifo\nLyrics powered by www.musixmatch.com",
-            musixmatchLyricsId: "139681095",
-            providerName: "musixmatch",
-            syncAvailable: false,
+            releaseDate: "2015-11-06",
+            isMasteredForItunes: true,
+            upc: "00602547605085",
+            artwork: {
+              width: 3000,
+              url: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/6b/64/f8/6b64f8f3-b116-8704-7476-829420486cbb/15UMGIM50961.rgb.jpg/{w}x{h}bb.jpg",
+              height: 3000,
+              textColor3: "dddcdb",
+              textColor2: "f6f5f1",
+              textColor4: "d6d4d1",
+              textColor1: "ffffff",
+              bgColor: "56534e",
+              hasP3: false,
+            },
+            url: "https://music.apple.com/us/album/in-the-lonely-hour-drowning-shadows-edition/1440837455",
+            playParams: {
+              id: "1440837455",
+              kind: "album",
+            },
+            recordLabel: "Capitol",
+            trackCount: 23,
+            isCompilation: false,
+            isPrerelease: false,
+            audioTraits: ["lossless", "lossy-stereo"],
+            isSingle: false,
+            name: "In the Lonely Hour (Drowning Shadows Edition)",
+            artistName: "Sam Smith",
+            editorialNotes: {
+              standard:
+                'Sam Smith’s star turn on Disclosure’s “Latch” only hinted at the British belter’s potential. <i>In the Lonely Hour</i> deftly blends classic soul, gospel choruses, and sumptuously recorded acoustic instruments with 21st-century production flourishes, like the hip-hop beat of "Life Support" and the subtle vocal processing of "Money on My Mind." An extended meditation on unrequited love, the album shows off Smith’s stunning emotive power, from their wounded wail on the mournful “Stay with Me” to their barely disguised bitterness on the dazzling “Like I Can.”',
+              short: "A powerful debut that turns misery into beauty.",
+            },
+            isComplete: true,
           },
         },
-        29371213: {
-          id: "29371213",
-          type: "lyrics",
+        1440899798: {
+          id: "1440899798",
+          type: "albums",
           attributes: {
-            text: [
-              "Gimme, gimme, gimme some time to think",
-              "I'm in the bathroom, looking at me",
-              "Face in the mirror is all I need (ooh-ooh)",
-              "Wait until the reaper takes my life",
-              "Never gonna get me out alive",
-              "I will live a thousand million lives (ooh-ooh)",
-              "",
-              "My patience is waning, is this entertaining?",
-              "Our patience is waning, is this entertaining?",
-              "",
-              "I-I-I got this feeling, yeah, you know",
-              "Where I'm losing all control",
-              "'Cause there's magic in my bones",
-              "I-I-I got this feeling in my soul",
-              "Go ahead and throw your stones",
-              "'Cause there's magic in my bones",
-              "",
-              "Playing with the stick of dynamite",
-              "There was never gray in black and white",
-              "There was never wrong 'til there was right (ooh-ooh)",
-              "Feeling like a boulder hurtling",
-              "Seeing all the vultures circling",
-              "Burning in the flames, I'm working in",
-              "Turning in a bed, that's darkening",
-              "",
-              "My patience is waning, is this entertaining?",
-              "Our patience is waning, is this entertaining?",
-              "",
-              "I-I-I got this feeling, yeah, you know",
-              "Where I'm losing all control",
-              "'Cause there's magic in my bones (in my bones)",
-              "I-I-I got this feeling in my soul",
-              "Go ahead and throw your stones",
-              "'Cause there's magic in my bones",
-              "",
-              "'Cause there's magic in my bones",
-              "",
-              "Look in the mirror of my mind",
-              "Turning the pages of my life",
-              "Walking the path so many paced a million times",
-              "Drown out the voices in the air",
-              "Leaving the ones that never cared",
-              "Picking the pieces up and building to the sky",
-              "",
-              "My patience is waning, is this entertaining?",
-              "My patience is waning, is this entertaining?",
-              "",
-              "I-I-I got this feeling, yeah, you know",
-              "Where I'm losing all control",
-              "'Cause there's magic in my bones (magic in my bones)",
-              "I-I-I got this feeling in my soul (soul)",
-              "Go ahead and throw your stones",
-              "'Cause there's magic in my bones",
-              "",
-              "There goes my mind (I-I-I) don't mind",
-              "There goes my mind (there it goes, there it goes)",
-              "There goes my mind (I-I-I) don't mind",
-              "There goes my mind (there it goes)",
-              "'Cause there's magic in my bones",
+            copyright:
+              "A Capitol Records UK release; ℗ 2017 Universal Music Operations Limited",
+            genreNames: ["Pop", "Music", "Rock", "Adult Contemporary"],
+            releaseDate: "2017-11-03",
+            isMasteredForItunes: true,
+            upc: "00602557855685",
+            artwork: {
+              width: 4000,
+              url: "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/5a/7f/58/5a7f5825-f3c4-9b15-4774-057e6a61663f/17UM1IM17577.rgb.jpg/{w}x{h}bb.jpg",
+              height: 4000,
+              textColor3: "333333",
+              textColor2: "242424",
+              textColor4: "505050",
+              textColor1: "000000",
+              bgColor: "ffffff",
+              hasP3: false,
+            },
+            url: "https://music.apple.com/us/album/the-thrill-of-it-all/1440899798",
+            playParams: {
+              id: "1440899798",
+              kind: "album",
+            },
+            recordLabel: "Capitol",
+            isCompilation: false,
+            trackCount: 10,
+            isPrerelease: false,
+            audioTraits: ["atmos", "lossless", "lossy-stereo", "spatial"],
+            isSingle: false,
+            name: "The Thrill of It All",
+            artistName: "Sam Smith",
+            contentRating: "explicit",
+            isComplete: true,
+          },
+        },
+        1442684447: {
+          id: "1442684447",
+          type: "albums",
+          attributes: {
+            copyright:
+              "A Capitol Records UK release; ℗ 2017 Universal Music Operations Limited",
+            genreNames: ["Pop", "Music", "Rock", "Adult Contemporary"],
+            releaseDate: "2017-11-03",
+            upc: "00602567066972",
+            isMasteredForItunes: true,
+            artwork: {
+              width: 4000,
+              url: "https://is2-ssl.mzstatic.com/image/thumb/Music114/v4/85/d5/36/85d536d7-b406-3b60-e139-499e3268c184/17UM1IM17577.rgb.jpg/{w}x{h}bb.jpg",
+              height: 4000,
+              textColor3: "333333",
+              textColor2: "242424",
+              textColor4: "505050",
+              textColor1: "000000",
+              bgColor: "ffffff",
+              hasP3: false,
+            },
+            url: "https://music.apple.com/us/album/the-thrill-of-it-all/1442684447",
+            playParams: {
+              id: "1442684447",
+              kind: "album",
+            },
+            recordLabel: "Capitol",
+            trackCount: 10,
+            isCompilation: false,
+            isPrerelease: false,
+            audioTraits: ["lossless", "lossy-stereo"],
+            isSingle: false,
+            name: "The Thrill of It All",
+            artistName: "Sam Smith",
+            contentRating: "clean",
+            isComplete: true,
+          },
+        },
+        1444270268: {
+          id: "1444270268",
+          type: "albums",
+          attributes: {
+            copyright:
+              "℗ 2015 Capitol Records, a division of Universal Music Operations Limited",
+            genreNames: [
+              "Pop",
+              "Music",
+              "R&B/Soul",
+              "Contemporary R&B",
+              "Rock",
             ],
-            footer:
-              "Writer(s): Daniel Coulter Reynolds, Daniel Wayne Sermon, Benjamin Arthur Mckee, Mattias Per Larsson, Daniel James Platzman, Robin Lennart Fredriksson\nLyrics powered by www.musixmatch.com",
-            musixmatchLyricsId: "140815485",
-            providerName: "musixmatch",
-            syncAvailable: false,
+            releaseDate: "2015-02-22",
+            isMasteredForItunes: true,
+            upc: "00602547217790",
+            artwork: {
+              width: 1500,
+              url: "https://is5-ssl.mzstatic.com/image/thumb/Music114/v4/74/57/1e/74571e88-a618-8041-cce5-b0f2dad1b1f9/00602547217790.rgb.jpg/{w}x{h}bb.jpg",
+              height: 1500,
+              textColor3: "edcec7",
+              textColor2: "c8ec98",
+              textColor4: "c8bf7a",
+              textColor1: "f7fffa",
+              bgColor: "c80d00",
+              hasP3: false,
+            },
+            url: "https://music.apple.com/us/album/lay-me-down-single/1444270268",
+            playParams: {
+              id: "1444270268",
+              kind: "album",
+            },
+            recordLabel: "Capitol",
+            trackCount: 1,
+            isCompilation: false,
+            isPrerelease: false,
+            audioTraits: ["lossless", "lossy-stereo"],
+            isSingle: true,
+            name: "Lay Me Down - Single",
+            artistName: "Sam Smith",
+            isComplete: true,
           },
         },
-        29382097: {
-          id: "29382097",
-          type: "lyrics",
+        1444861565: {
+          id: "1444861565",
+          type: "albums",
           attributes: {
-            text: [
-              "It's 4 a.m., I can't turn my head off",
-              "Wishing these memories would fade, they never do",
-              "Turns out people lie",
-              'They said, "Just snap your fingers"',
-              "As if it was really that easy for me to get over you",
-              "I just need time",
-              "",
-              "Snapping one, two, where are you?",
-              "You're still in my heart",
-              "Snapping three, four, don't need you here anymore",
-              "Get out of my heart",
-              "'Cause I might snap",
-              "",
-              "I'm writing a song",
-              'Said, "This is the last one"',
-              "How many last songs are left? I'm losing count",
-              "Since June 22nd, my heart's been on fire",
-              "I've been spending my nights in the ring tryna put it out",
-              "",
-              "So I'm snapping one, two, where are you?",
-              "You're still in my heart",
-              "Snapping three, four, don't need you here anymore",
-              "Get out of my heart",
-              "'Cause I might snap",
-              "",
-              "(Oh-ooh-oh-oh)",
-              "'Cause I might snap (oh-ooh-oh-oh-oh-oh)",
-              "",
-              'And if one more person says, "You should get over it"',
-              "Oh, I might stop talking to people before I snap, snap, snap",
-              "Oh, I might stop talking to people before I snap",
-              "",
-              "Snapping one, two, where are you? (Where are you?)",
-              "You're still in my heart (still in my heart)",
-              "Snapping three, four, don't need you here anymore (need you here anymore)",
-              "Get out of my heart",
-              "",
-              "'Cause I might sna-, yeah-yeah-yeah, might snap (oh-ooh-oh-oh)",
-              "'Cause I might sna-, yeah-yeah-yeah, might snap (oh-ooh-oh-oh-oh-oh)",
-              "Get out of my heart, yeah-yeah-yeah, yeah, heart (oh-ooh-oh-oh)",
-              "'Cause I might snap (oh-ooh-oh-oh-oh-oh)",
-              "Get out of my heart, yeah",
-              "",
-              "'Cause I might snap",
+            copyright:
+              "A Capitol Records UK release; ℗ 2018 Universal Music Operations Limited",
+            genreNames: ["Pop", "Music", "Rock"],
+            releaseDate: "2018-02-22",
+            upc: "00602567458951",
+            isMasteredForItunes: false,
+            artwork: {
+              width: 3000,
+              url: "https://is2-ssl.mzstatic.com/image/thumb/Music118/v4/ae/07/09/ae0709cd-457b-76cf-957d-e9bab41a65fb/00602567458951.rgb.jpg/{w}x{h}bb.jpg",
+              height: 3000,
+              textColor3: "aba7ba",
+              textColor2: "d1c4ad",
+              textColor4: "aca28c",
+              textColor1: "d0cbe6",
+              bgColor: "19170a",
+              hasP3: false,
+            },
+            url: "https://music.apple.com/us/album/too-good-at-goodbyes-live-at-the-brits-single/1444861565",
+            playParams: {
+              id: "1444861565",
+              kind: "album",
+            },
+            recordLabel: "Capitol",
+            trackCount: 1,
+            isCompilation: false,
+            isPrerelease: false,
+            audioTraits: ["lossless", "lossy-stereo"],
+            isSingle: true,
+            name: "Too Good at Goodbyes (Live at the BRITs) - Single",
+            artistName: "Sam Smith",
+            isComplete: true,
+          },
+        },
+        1444896308: {
+          id: "1444896308",
+          type: "albums",
+          attributes: {
+            copyright:
+              "℗ 2013 Capitol Records, a division of Universal Music Operations Limited",
+            genreNames: [
+              "Pop",
+              "Music",
+              "Electronic",
+              "R&B/Soul",
+              "Adult Contemporary",
+              "Contemporary R&B",
+              "Rock",
             ],
-            footer:
-              "Writer(s): Courtney Harrell, Lawrence Principato, Jeremy Dussolliet, Roza Kostandyan, Tamar Mardirossian, Allison Crystal\nLyrics powered by www.musixmatch.com",
-            musixmatchLyricsId: "141232935",
-            providerName: "musixmatch",
-            syncAvailable: false,
+            releaseDate: "2013-01-01",
+            isMasteredForItunes: true,
+            upc: "00602537702961",
+            artwork: {
+              width: 1500,
+              url: "https://is3-ssl.mzstatic.com/image/thumb/Music112/v4/b1/4a/ca/b14aca06-d304-09dd-14fb-dfd10442c1bb/13UAAIM66829.rgb.jpg/{w}x{h}bb.jpg",
+              height: 1500,
+              textColor3: "70b77b",
+              textColor2: "80d2ae",
+              textColor4: "67a88c",
+              textColor1: "8ce49a",
+              bgColor: "010101",
+              hasP3: false,
+            },
+            url: "https://music.apple.com/us/album/nirvana-ep/1444896308",
+            playParams: {
+              id: "1444896308",
+              kind: "album",
+            },
+            recordLabel: "Capitol",
+            isCompilation: false,
+            trackCount: 7,
+            isPrerelease: false,
+            audioTraits: ["lossless", "lossy-stereo"],
+            isSingle: false,
+            name: "Nirvana - EP",
+            artistName: "Sam Smith",
+            editorialNotes: {
+              standard:
+                "By the time this debut EP was released, Sam Smith was already a sensation. The British singer-songwriter previously sang on two smash hits (Disclosure’s “Latch” and Naughty Boy’s “La La La”) and won some impressive UK awards including a BRIT Critics’ Choice award and a BBC Sound of 2014 poll. If the burden of expectations was weighing on Smith, it’s hard to tell from this excellent effort. The singer sounds sophisticated and assured, as if Smith feels there’s nothing the project needs to prove. It’s an approach that works. <i>Nirvana</i> features mostly slow, synth-driven grooves like “Safe with Me,” “Together,” and the title track, which highlights Smith's remarkable falsetto and subtle phrasing. There’s also a stripped-down version of “Latch” that reveals an entirely different side to the song. Still, it’s the midtempo “Money on My Mind” that emerges as the catchiest track here, and it shows Smith is more than just an evocative balladeer. Based on the promise of <i>Nirvana</i>, there’s much more to come from this promising young talent.",
+            },
+            isComplete: true,
           },
         },
-        29547308: {
-          id: "29547308",
-          type: "lyrics",
+        1446046501: {
+          id: "1446046501",
+          type: "albums",
           attributes: {
-            text: [
-              "Last night, all I think about is you",
-              "Don't stop, baby, you can walk through",
-              "Don't wanna, but I think about you",
-              "You know that I'm never gonna lose",
-              "",
-              "Road shimmer, wiggling the vision",
-              "",
-              "Heat, heat waves, I'm swimming in a mirror",
-              "Road shimmer, wiggling the vision",
-              "Heat, heat waves, I'm swimmin' in a-",
-              "",
-              "Sometimes all I think about is you",
-              "Late nights in the middle of June",
-              "Heat waves been faking me out",
-              "Can't make you happier now",
-              "",
-              "Sometimes all I think about is you",
-              "Late nights in the middle of June",
-              "Heat waves been faking me out",
-              "Can't make you happier now",
-              "",
-              "Usually, I put something on TV",
-              "So we never think about you and me",
-              "But today, I see our reflections clearly in Hollywood",
-              "Laying on the screen",
-              "",
-              "You just need a better life than this",
-              "You need something I can never give",
-              "Fake water all across the road",
-              "It's gone now, the night has come, but",
-              "",
-              "Sometimes all I think about is you",
-              "Late nights in the middle of June",
-              "Heat waves been faking me out",
-              "Can't make you happier now",
-              "",
-              "You can't fight it, you can't breathe",
-              "You say something so loving, but",
-              "Now I gotta let you go",
-              "You'll be better off with someone new",
-              "",
-              "I don't wanna be alone",
-              "You know it hurts me too",
-              "You look so broken when you cry",
-              "One more and then I say goodbye",
-              "",
-              "Sometimes all I think about is you",
-              "Late nights in the middle of June",
-              "Heat waves been faking me out",
-              "Can't make you happier now",
-              "",
-              "Sometimes all I think about is you",
-              "Late nights in the middle of June",
-              "Heat waves been faking me out",
-              "Can't make you happier now",
-              "",
-              "I just wonder what you're dreaming of",
-              "When you sleep and smile so comfortable",
-              "I just wish that I could give you that",
-              "That look that's perfectly un-sad",
-              "",
-              "Sometimes all I think about is you",
-              "Late nights in the middle of June",
-              "Heat waves been faking me out",
-              "Heat waves been faking me out",
-              "",
-              "Sometimes all I think about is you",
-              "Late nights in the middle of June",
-              "Heat waves been faking me out",
-              "Can't make you happier now",
-              "",
-              "Sometimes all I think about is you",
-              "Late nights in the middle of June",
-              "Heat waves been faking me out",
-              "Can't make you happier now",
-              "",
-              "Road shimmer wiggling the vision",
-              "Heat, heat waves, I'm swimming in a mirror",
-              "Road shimmer wiggling the vision",
-              "Heat, heat waves, I'm swimming in a mirror",
+            copyright:
+              "A Capitol Records UK Release; ℗ 2018 Universal Music Operations Limited",
+            genreNames: ["Pop", "Music"],
+            releaseDate: "2018-12-21",
+            isMasteredForItunes: true,
+            upc: "00602577324260",
+            artwork: {
+              width: 4000,
+              url: "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/83/b9/32/83b9327b-0d7c-5700-554d-9e6769e12b05/18UMGIM80639.rgb.jpg/{w}x{h}bb.jpg",
+              height: 4000,
+              textColor3: "dcdcdc",
+              textColor2: "e8e8e8",
+              textColor4: "cccccc",
+              textColor1: "fbfbfb",
+              bgColor: "5f5f5f",
+              hasP3: false,
+            },
+            url: "https://music.apple.com/us/album/fire-on-fire-single/1446046501",
+            playParams: {
+              id: "1446046501",
+              kind: "album",
+            },
+            recordLabel: "Capitol",
+            trackCount: 1,
+            isCompilation: false,
+            isPrerelease: false,
+            audioTraits: ["atmos", "lossless", "lossy-stereo", "spatial"],
+            isSingle: true,
+            name: "Fire on Fire - Single",
+            artistName: "Sam Smith",
+            isComplete: true,
+          },
+        },
+        1447334977: {
+          id: "1447334977",
+          type: "albums",
+          attributes: {
+            copyright:
+              "A Capitol Records UK Release; ℗ 2019 Universal Music Operations Limited",
+            genreNames: ["Pop", "Music", "Rock"],
+            releaseDate: "2019-01-11",
+            isMasteredForItunes: true,
+            upc: "00602577394164",
+            artwork: {
+              width: 4000,
+              url: "https://is5-ssl.mzstatic.com/image/thumb/Music115/v4/30/75/5b/30755bfd-3225-8a60-ac85-0cf74876f84e/18UMGIM84859.rgb.jpg/{w}x{h}bb.jpg",
+              height: 4000,
+              textColor3: "edbac5",
+              textColor2: "f7eccb",
+              textColor4: "e7bda2",
+              textColor1: "ffe9f7",
+              bgColor: "a70200",
+              hasP3: false,
+            },
+            url: "https://music.apple.com/us/album/dancing-with-a-stranger-single/1447334977",
+            playParams: {
+              id: "1447334977",
+              kind: "album",
+            },
+            recordLabel: "Capitol",
+            trackCount: 1,
+            isCompilation: false,
+            isPrerelease: false,
+            audioTraits: ["atmos", "lossless", "lossy-stereo", "spatial"],
+            isSingle: true,
+            name: "Dancing With A Stranger - Single",
+            artistName: "Sam Smith & Normani",
+            editorialNotes: {
+              short:
+                "The crazy things that lonely hearts do, as told by two aching voices.",
+            },
+            isComplete: true,
+          },
+        },
+        1471596229: {
+          id: "1471596229",
+          type: "albums",
+          attributes: {
+            copyright:
+              "A Capitol Records UK Release; ℗ 2019 Universal Music Operations Limited",
+            genreNames: ["Pop", "Music"],
+            releaseDate: "2019-07-19",
+            upc: "00602577865916",
+            isMasteredForItunes: true,
+            artwork: {
+              width: 3000,
+              url: "https://is4-ssl.mzstatic.com/image/thumb/Music115/v4/ea/a0/87/eaa0872c-ff80-8625-c39e-14413d2bcd6b/19UMGIM40102.rgb.jpg/{w}x{h}bb.jpg",
+              height: 3000,
+              textColor3: "442b2c",
+              textColor2: "4f0000",
+              textColor4: "6a2b2b",
+              textColor1: "200001",
+              bgColor: "d6d7db",
+              hasP3: false,
+            },
+            url: "https://music.apple.com/us/album/how-do-you-sleep-single/1471596229",
+            playParams: {
+              id: "1471596229",
+              kind: "album",
+            },
+            recordLabel: "Capitol",
+            trackCount: 1,
+            isCompilation: false,
+            isPrerelease: false,
+            audioTraits: ["atmos", "lossless", "lossy-stereo", "spatial"],
+            isSingle: true,
+            name: "How Do You Sleep? - Single",
+            artistName: "Sam Smith",
+            isComplete: true,
+          },
+        },
+        1505357732: {
+          id: "1505357732",
+          type: "albums",
+          attributes: {
+            copyright:
+              "A Capitol Records UK Release; ℗ 2020 Universal Music Operations Limited",
+            genreNames: ["Pop", "Music"],
+            releaseDate: "2020-02-14",
+            upc: "00602508614545",
+            isMasteredForItunes: true,
+            artwork: {
+              width: 3000,
+              url: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/c6/70/fb/c670fb3e-3df2-8d12-ad1f-50c110a44c08/19UM1IM08168.rgb.jpg/{w}x{h}bb.jpg",
+              height: 3000,
+              textColor3: "bfb0b5",
+              textColor2: "ecc6c8",
+              textColor4: "bd9fa0",
+              textColor1: "efdce3",
+              bgColor: "000000",
+              hasP3: false,
+            },
+            url: "https://music.apple.com/us/album/to-die-for-single/1505357732",
+            playParams: {
+              id: "1505357732",
+              kind: "album",
+            },
+            recordLabel: "Capitol",
+            trackCount: 1,
+            isCompilation: false,
+            isPrerelease: false,
+            audioTraits: ["atmos", "lossless", "lossy-stereo", "spatial"],
+            isSingle: true,
+            name: "To Die For - Single",
+            artistName: "Sam Smith",
+            isComplete: true,
+          },
+        },
+        1531499128: {
+          id: "1531499128",
+          type: "albums",
+          attributes: {
+            copyright:
+              "A Capitol Records UK Release; ℗ 2020 Universal Music Operations Limited",
+            genreNames: ["Pop", "Music"],
+            releaseDate: "2020-10-30",
+            upc: "00602507371999",
+            isMasteredForItunes: true,
+            artwork: {
+              width: 3000,
+              url: "https://is5-ssl.mzstatic.com/image/thumb/Music115/v4/a6/f3/9b/a6f39b28-0be0-383b-5987-a92c5ce14b14/20UMGIM49499.rgb.jpg/{w}x{h}bb.jpg",
+              height: 3000,
+              textColor3: "bfb7a1",
+              textColor2: "cbc542",
+              textColor4: "a39e35",
+              textColor1: "efe4c9",
+              bgColor: "010300",
+              hasP3: false,
+            },
+            url: "https://music.apple.com/us/album/love-goes/1531499128",
+            playParams: {
+              id: "1531499128",
+              kind: "album",
+            },
+            recordLabel: "Capitol",
+            trackCount: 17,
+            isCompilation: false,
+            isPrerelease: false,
+            audioTraits: ["lossless", "lossy-stereo"],
+            isSingle: false,
+            name: "Love Goes",
+            artistName: "Sam Smith",
+            contentRating: "explicit",
+            editorialNotes: {
+              standard:
+                "“This album is how I healed myself,” Sam Smith tells Apple Music. “And it sums up what I went through so perfectly.” Perhaps unsurprising for an artist who has made songs about love and loss their trademark, the singer is referring to heartbreak, which they document in granular detail on their third album <i>Love Goes</i>. There’s relatable post-split hedonism (\"Dance [’Til You Love Someone Else]\"), the crushing low of hearing your ex has moved on (“Another One”), and the slow journey towards self-acceptance (“Love Goes”). But if you’re expecting Smith to only explore such subjects via balladry: don’t. This is an album full of life-affirming pop, as well as disco, acoustic guitars, and cinematic strings. This is, too, an album that the singer made us wait for. Originally titled <i>To Die For</i> and slated for release in early 2020, it was delayed—then reworked—to become <i>Love Goes</i>, as Smith took stock during 2020’s global lockdown. “When everything stopped, it made me realize the album wasn’t finished, in a weird way,” they say. “And that the title felt really inappropriate. There was talk of me not releasing anything at all and just going back to the drawing board. But the last two years for me as a writer and a singer were so beautiful and freeing. And I wanted to share that with people.” The finished product, says Smith, is the record they are most proud of so far—and the album on which they feel the most free. “I felt at one point that I was going to be trapped onstage wearing a suit and singing ballads for the rest of my life,” they say. “When I look back at this album, it reminds me of the courage it took. To this day, there’s a music industry of people that wants me to do a certain thing, to abide by the rules. The risks that I took and the stress that it caused for me to truly be myself and express myself in a queer way was really difficult. I’m proud of myself for doing that.” Read on as Smith candidly walks us through <i>Love Goes</i>.<br />\n<b>Young</b>\n“‘Young’ is really sad. I wrote it with [British producer and songwriter] Steve Mac, and the lyrics were a commentary on fame and the position I’m in. I became well-known when I was 21. After <i>In the Lonely Hour</i>, there was this constant feeling of wanting to be normal and do normal things, and feeling like I can't because of the pressure on me. All I wanted to do was smoke a joint, have a drink, go out, kiss loads of boys and have one-night stands—just be young. And I felt like I had that right taken away from me because when I do it, people are watching and judging me. I wanted to start the album with this song because it was a declaration. But it was also saying, ’This isn't going to be an album of only uptempo pop. I'm still the person who was writing those sad love songs.’”<br />\n<b>Diamonds</b>\n“When I wrote ‘Diamonds’—in 2019 in London—I was in the studio and I was pretending to be a really rich woman whose husband had left her and taken all her things. She’s just in this wedding dress in the middle of a huge mansion. Think Moira Rose of <i>Schitt’s Creek</i>. This wasn’t even going to be on the album, but I just kept returning to it in quarantine. The moment I knew this song was something was when I played it to my mum and she freaked out. I call it a sexy exorcism.”<br />\n<b>Another One</b>\n“My favorite song I’ve ever done. The day I wrote it in LA, I had that moment we’ve all been through: hearing through the grapevine that someone you've been with has met someone else. I was so sad. We were just dancing and drinking, and it was such a healing moment. We gave the song to Guy [Lawrence] from Disclosure, who made the ending really trance-y. It just captures the emotion that I was feeling that day perfectly.”<br />\n<b>My Oasis (feat. Burna Boy)</b>\n“I can’t believe Burna Boy said yes to this—I’m still in shock about it, to be honest. I wrote this song during lockdown and sent it to him, because I heard him on it immediately. It’s more about sex, finding someone that you're enjoying and finding sex during a dry period. When I wrote it, it was really organic. It was the lockdown mood I was in that day. Being single in lockdown? It's tough!”<br />\n<b>So Serious</b>\n“The lyrics in this song are some of the deepest on this album. It’s talking about my mental health and my depression. About how you think everything's okay and then suddenly you're crying in the street and asking yourself, ‘Why am I so serious? Why am I so dark? Why do I get so down?’ This song is saying, ‘I'm beating myself up. Is anyone else beating themselves up?’ Because what you need when you're sad is you need to know that other people are in it with you. I wrote this song thinking that one day me and my fans can all sing that together and sing about being miserable in a really playful way. It's a cute little pop song.”<br />\n<b>Dance (’Til You Love Someone Else)</b>\n“This is like ‘Dancing With a Stranger’ part two. If on ‘Dancing With a Stranger’ I'm sexy, heartbroken, and dancing with a stranger feeling sad, on this one I'm going out and I need to find someone to heal that feeling. I need to mask the heartbreak immediately with someone else. It's more aggressive, darker, and more desperate. There’s angst to this song and it’s a bit more hedonistic.”<br />\n<b>For the Lover That I Lost</b>\n“This could be musical theater, to be quite honest. But I thought after ‘Dance (’Til You Love Someone Else),’ which is so dramatic, I wanted to shift the album. It would still be dramatic, but in a ballad way. [Norwegian LA-based production team] Stargate and I wrote this, and we gave it to Céline Dion, who had it on her 2019 album <i>Courage</i>. But just to try it, I went into the studio and sang it again. It’s like it's not even my song and more like I’m covering Céline's song. But it’s my ode to her, because she has been a huge part of the last few years for me. The day I went through my breakup, I went for a long walk in a forest and I just went into the middle of it, where no one could see me, and listened to ‘It's All Coming Back to Me Now.’ I just cried my eyes out. So I had to have a nod to Céline on this album.”<br />\n<b>Breaking Hearts</b>\n“This is a light song and a really sad song. We wrote it slow and then it became bouncier. But I didn't want this to reach the stars. I didn't want it to go anywhere. It’s me being a bitch and saying, ‘Fuck you.’ It’s going through an angry moment of heartbreak.”<br />\n<b>Forgive Myself</b>\n“It doesn't get sadder on the record than this song. This was the freshest one after my breakup. Two people can't collide into one, they have to grow alongside each other. ‘Forgive Myself’ was the beginning of me understanding that and saying, ‘Okay, for me to feel better, I'm going to have to forgive myself for all the things I’ve done in that relationship, and for all the things that I've ever done in relationships that were bad. And I need to work on myself to feel better.’”<br />\n<b>Love Goes (feat. Labrinth)</b>\n“When Labrinth and I were talking about this song, it was about the journey of love and the journey of heartbreak. In my head—and he probably won’t be happy with me saying this—Labrinth is the boyfriend or the ex. He’s saying, ‘Look, we both know you're fucked up. That's why this is isn't working.’ And I’m replying, ‘No, <i>you're</i> fucked up. <i>That's</i> why this isn't working.’ The ending is big, and when the beat comes in, you can dance to it. It's almost like coming home to yourself. If there was one musical snippet that I could take to describe the last three years, it would just be that piece of music at the end. Because I felt free.”<br />\n<b>Kids Again</b>\n“This song is completely different to everything else on the album. ‘Kids Again’ is the moment when you sit and look back at everything. I made the record and I was ready to move on to album four, and was doing just that. But it's also my piece to the relationship. It's saying, ‘I still miss you sometimes, but we were kids.’ And it's the other side of ‘Young.’ It was like a bookend for me. This song is also starting to lean into a more stripped-back, soulful musicality that I want to get into on the next record. I want to step away a little bit from electronic music and get back to some rootsy queer soul. I like to keep people on their toes.”<br />\n<b>Dancing With a Stranger (with Normani)</b>\n“I wrote this on tour and was just playing around. I was genuinely dancing with strangers, and I wrote about this one guy I met who was just such a lovely man. It was the first time after ‘Promises’ that I got into the studio and thought, ‘I can write some pop songs now and have a little bit of fun with this.’ Vocally, too, it was so nice just singing with ease and not belting. The Normani featuring happened so beautifully. The day I wrote this song, she was downstairs having a meeting. I was like, ‘She would smash this.’ So she came upstairs and listened to it and she cut it there and then. It was really special. I had no idea it would do what it's done. It's been one of my biggest-ever songs.”<br />\n<b>How Do You Sleep?</b>\n“We wanted to nod towards George Michael in a 2019 way (because it was 2019 when we wrote it). And it was just so fun. But I remember the day after I wrote this, I played it to my sister and she hated it! It put me off it a little bit. And then I lived with it for a bit and then we all just started to fall in love with it.”<br />\n<b>To Die For</b>\n“There’s a street in LA called Abbot Kinney, which is very bougie. I got lavender ice cream there one Sunday and was walking around. Everyone around me was so happy, but I was not feeling good. Sometimes, you just get fed up with being single. It's such a nice feeling to be in love and to go through life having a partner by your side. And I thought that we captured that in a song. I will always love this one.”<br />\n<b>I'm Ready (with Demi Lovato)</b>\n“This song is nuts. I don't even know what it is, and I'm not sure if I love it or I hate it. Either way, it’s an ode to a trashy queer club. I grew up in the countryside and then came to London. The only places I could go to be around people who were like-minded were these really awful gay bars. They play awful music. It's loud, it's intense. Your feet are sticking to the floor. There's loads of confused people there. Sometimes angry people, sometimes highly sexual people. Lots of drugs. I started to have this real connection to the pop songs that would play in these places, which I find beautiful now. A lot of my peers and people around me would say that music is awful. But I find it uplifting. I feel like I captured that in some way in ‘I’m Ready.’ I wanted to almost make a song that would make people squirm a bit.”<br />\n<b>Fire on Fire</b>\n“This song was written for [the 2018 BBC adaptation of] <i>Watership Down</i>. And I wrote it when I was very much in love. It's probably one of the only love songs I've written. But it's very dramatic. Again, I think I was trying to be Céline Dion. It was about intense passion—about two people who are fire and trying to make it work, which is a dangerous game. It was so fun to make, stepping into that musical theater side which is always going to be in me. One day I want to be in a dress in the Royal Albert Hall singing it with a huge orchestra.”<br />\n<b>Promises</b>\n“I was called a crooner for the first six years of my career. But then, after <i>The Thrill of It All</i>, I got in the studio with Calvin Harris and Jessie Reyez. Jessie poured us both a glass of whiskey and we just started dancing around. Normally it would be like, ‘Sit down, let's write a song. Let's get into it.’ But this was like, ‘I don't have to take myself that seriously in the studio. This can be a fun space.’ So it was the catalyst to how I wrote this record, which was ‘Let's go in the studio and let's have a laugh. Let's shoot for the stars. The rule book's out the window now. Let's just enjoy ourselves.’”",
+              short:
+                "“When I look back at this album, it reminds me of the courage it took.”",
+            },
+            isComplete: true,
+          },
+        },
+        1531509367: {
+          id: "1531509367",
+          type: "albums",
+          attributes: {
+            copyright:
+              "A Capitol Records UK Release; ℗ 2020 Universal Music Operations Limited",
+            genreNames: ["Pop", "Music"],
+            releaseDate: "2020-10-30",
+            upc: "00602435119526",
+            isMasteredForItunes: true,
+            artwork: {
+              width: 3000,
+              url: "https://is4-ssl.mzstatic.com/image/thumb/Music124/v4/e1/fc/66/e1fc66d0-d9c8-e250-e994-6875bf27e504/20UMGIM49499.rgb.jpg/{w}x{h}bb.jpg",
+              height: 3000,
+              textColor3: "bfb7a1",
+              textColor2: "cbc542",
+              textColor4: "a39e35",
+              textColor1: "efe4c9",
+              bgColor: "010300",
+              hasP3: false,
+            },
+            url: "https://music.apple.com/us/album/love-goes/1531509367",
+            playParams: {
+              id: "1531509367",
+              kind: "album",
+            },
+            recordLabel: "Capitol",
+            trackCount: 17,
+            isCompilation: false,
+            isPrerelease: false,
+            audioTraits: ["lossless", "lossy-stereo"],
+            isSingle: false,
+            name: "Love Goes",
+            artistName: "Sam Smith",
+            contentRating: "clean",
+            editorialNotes: {
+              standard:
+                "“This album is how I healed myself,” Sam Smith tells Apple Music. “And it sums up what I went through so perfectly.” Perhaps unsurprising for an artist who has made songs about love and loss their trademark, the singer is referring to heartbreak, which they document in granular detail on their third album <i>Love Goes</i>. There’s relatable post-split hedonism (\"Dance [’Til You Love Someone Else]\"), the crushing low of hearing your ex has moved on (“Another One”), and the slow journey towards self-acceptance (“Love Goes”). But if you’re expecting Smith to only explore such subjects via balladry: don’t. This is an album full of life-affirming pop, as well as disco, acoustic guitars, and cinematic strings. This is, too, an album that the singer made us wait for. Originally titled <i>To Die For</i> and slated for release in early 2020, it was delayed—then reworked—to become <i>Love Goes</i>, as Smith took stock during 2020’s global lockdown. “When everything stopped, it made me realize the album wasn’t finished, in a weird way,” they say. “And that the title felt really inappropriate. There was talk of me not releasing anything at all and just going back to the drawing board. But the last two years for me as a writer and a singer were so beautiful and freeing. And I wanted to share that with people.” The finished product, says Smith, is the record they are most proud of so far—and the album on which they feel the most free. “I felt at one point that I was going to be trapped onstage wearing a suit and singing ballads for the rest of my life,” they say. “When I look back at this album, it reminds me of the courage it took. To this day, there’s a music industry of people that wants me to do a certain thing, to abide by the rules. The risks that I took and the stress that it caused for me to truly be myself and express myself in a queer way was really difficult. I’m proud of myself for doing that.” Read on as Smith candidly walks us through <i>Love Goes</i>.<br />\n<b>Young</b>\n“‘Young’ is really sad. I wrote it with [British producer and songwriter] Steve Mac, and the lyrics were a commentary on fame and the position I’m in. I became well-known when I was 21. After <i>In the Lonely Hour</i>, there was this constant feeling of wanting to be normal and do normal things, and feeling like I can't because of the pressure on me. All I wanted to do was smoke a joint, have a drink, go out, kiss loads of boys and have one-night stands—just be young. And I felt like I had that right taken away from me because when I do it, people are watching and judging me. I wanted to start the album with this song because it was a declaration. But it was also saying, ’This isn't going to be an album of only uptempo pop. I'm still the person who was writing those sad love songs.’”<br />\n<b>Diamonds</b>\n“When I wrote ‘Diamonds’—in 2019 in London—I was in the studio and I was pretending to be a really rich woman whose husband had left her and taken all her things. She’s just in this wedding dress in the middle of a huge mansion. Think Moira Rose of <i>Schitt’s Creek</i>. This wasn’t even going to be on the album, but I just kept returning to it in quarantine. The moment I knew this song was something was when I played it to my mum and she freaked out. I call it a sexy exorcism.”<br />\n<b>Another One</b>\n“My favorite song I’ve ever done. The day I wrote it in LA, I had that moment we’ve all been through: hearing through the grapevine that someone you've been with has met someone else. I was so sad. We were just dancing and drinking, and it was such a healing moment. We gave the song to Guy [Lawrence] from Disclosure, who made the ending really trance-y. It just captures the emotion that I was feeling that day perfectly.”<br />\n<b>My Oasis (feat. Burna Boy)</b>\n“I can’t believe Burna Boy said yes to this—I’m still in shock about it, to be honest. I wrote this song during lockdown and sent it to him, because I heard him on it immediately. It’s more about sex, finding someone that you're enjoying and finding sex during a dry period. When I wrote it, it was really organic. It was the lockdown mood I was in that day. Being single in lockdown? It's tough!”<br />\n<b>So Serious</b>\n“The lyrics in this song are some of the deepest on this album. It’s talking about my mental health and my depression. About how you think everything's okay and then suddenly you're crying in the street and asking yourself, ‘Why am I so serious? Why am I so dark? Why do I get so down?’ This song is saying, ‘I'm beating myself up. Is anyone else beating themselves up?’ Because what you need when you're sad is you need to know that other people are in it with you. I wrote this song thinking that one day me and my fans can all sing that together and sing about being miserable in a really playful way. It's a cute little pop song.”<br />\n<b>Dance (’Til You Love Someone Else)</b>\n“This is like ‘Dancing With a Stranger’ part two. If on ‘Dancing With a Stranger’ I'm sexy, heartbroken, and dancing with a stranger feeling sad, on this one I'm going out and I need to find someone to heal that feeling. I need to mask the heartbreak immediately with someone else. It's more aggressive, darker, and more desperate. There’s angst to this song and it’s a bit more hedonistic.”<br />\n<b>For the Lover That I Lost</b>\n“This could be musical theater, to be quite honest. But I thought after ‘Dance (’Til You Love Someone Else),’ which is so dramatic, I wanted to shift the album. It would still be dramatic, but in a ballad way. [Norwegian LA-based production team] Stargate and I wrote this, and we gave it to Céline Dion, who had it on her 2019 album <i>Courage</i>. But just to try it, I went into the studio and sang it again. It’s like it's not even my song and more like I’m covering Céline's song. But it’s my ode to her, because she has been a huge part of the last few years for me. The day I went through my breakup, I went for a long walk in a forest and I just went into the middle of it, where no one could see me, and listened to ‘It's All Coming Back to Me Now.’ I just cried my eyes out. So I had to have a nod to Céline on this album.”<br />\n<b>Breaking Hearts</b>\n“This is a light song and a really sad song. We wrote it slow and then it became bouncier. But I didn't want this to reach the stars. I didn't want it to go anywhere. It’s me being a b***h and saying, ‘F**k you.’ It’s going through an angry moment of heartbreak.”<br />\n<b>Forgive Myself</b>\n“It doesn't get sadder on the record than this song. This was the freshest one after my breakup. Two people can't collide into one, they have to grow alongside each other. ‘Forgive Myself’ was the beginning of me understanding that and saying, ‘Okay, for me to feel better, I'm going to have to forgive myself for all the things I’ve done in that relationship, and for all the things that I've ever done in relationships that were bad. And I need to work on myself to feel better.’”<br />\n<b>Love Goes (feat. Labrinth)</b>\n“When Labrinth and I were talking about this song, it was about the journey of love and the journey of heartbreak. In my head—and he probably won’t be happy with me saying this—Labrinth is the boyfriend or the ex. He’s saying, ‘Look, we both know you're f**ked up. That's why this is isn't working.’ And I’m replying, ‘No, <i>you're</i> f**ked up. <i>That's</i> why this isn't working.’ The ending is big, and when the beat comes in, you can dance to it. It's almost like coming home to yourself. If there was one musical snippet that I could take to describe the last three years, it would just be that piece of music at the end. Because I felt free.”<br />\n<b>Kids Again</b>\n“This song is completely different to everything else on the album. ‘Kids Again’ is the moment when you sit and look back at everything. I made the record and I was ready to move on to album four, and was doing just that. But it's also my piece to the relationship. It's saying, ‘I still miss you sometimes, but we were kids.’ And it's the other side of ‘Young.’ It was like a bookend for me. This song is also starting to lean into a more stripped-back, soulful musicality that I want to get into on the next record. I want to step away a little bit from electronic music and get back to some rootsy queer soul. I like to keep people on their toes.”<br />\n<b>Dancing With a Stranger (with Normani)</b>\n“I wrote this on tour and was just playing around. I was genuinely dancing with strangers, and I wrote about this one guy I met who was just such a lovely man. It was the first time after ‘Promises’ that I got into the studio and thought, ‘I can write some pop songs now and have a little bit of fun with this.’ Vocally, too, it was so nice just singing with ease and not belting. The Normani featuring happened so beautifully. The day I wrote this song, she was downstairs having a meeting. I was like, ‘She would smash this.’ So she came upstairs and listened to it and she cut it there and then. It was really special. I had no idea it would do what it's done. It's been one of my biggest-ever songs.”<br />\n<b>How Do You Sleep?</b>\n“We wanted to nod towards George Michael in a 2019 way (because it was 2019 when we wrote it). And it was just so fun. But I remember the day after I wrote this, I played it to my sister and she hated it! It put me off it a little bit. And then I lived with it for a bit and then we all just started to fall in love with it.”<br />\n<b>To Die For</b>\n“There’s a street in LA called Abbot Kinney, which is very bougie. I got lavender ice cream there one Sunday and was walking around. Everyone around me was so happy, but I was not feeling good. Sometimes, you just get fed up with being single. It's such a nice feeling to be in love and to go through life having a partner by your side. And I thought that we captured that in a song. I will always love this one.”<br />\n<b>I'm Ready (with Demi Lovato)</b>\n“This song is nuts. I don't even know what it is, and I'm not sure if I love it or I hate it. Either way, it’s an ode to a trashy queer club. I grew up in the countryside and then came to London. The only places I could go to be around people who were like-minded were these really awful gay bars. They play awful music. It's loud, it's intense. Your feet are sticking to the floor. There's loads of confused people there. Sometimes angry people, sometimes highly sexual people. Lots of drugs. I started to have this real connection to the pop songs that would play in these places, which I find beautiful now. A lot of my peers and people around me would say that music is awful. But I find it uplifting. I feel like I captured that in some way in ‘I’m Ready.’ I wanted to almost make a song that would make people squirm a bit.”<br />\n<b>Fire on Fire</b>\n“This song was written for [the 2018 BBC adaptation of] <i>Watership Down</i>. And I wrote it when I was very much in love. It's probably one of the only love songs I've written. But it's very dramatic. Again, I think I was trying to be Céline Dion. It was about intense passion—about two people who are fire and trying to make it work, which is a dangerous game. It was so fun to make, stepping into that musical theater side which is always going to be in me. One day I want to be in a dress in the Royal Albert Hall singing it with a huge orchestra.”<br />\n<b>Promises</b>\n“I was called a crooner for the first six years of my career. But then, after <i>The Thrill of It All</i>, I got in the studio with Calvin Harris and Jessie Reyez. Jessie poured us both a glass of whiskey and we just started dancing around. Normally it would be like, ‘Sit down, let's write a song. Let's get into it.’ But this was like, ‘I don't have to take myself that seriously in the studio. This can be a fun space.’ So it was the catalyst to how I wrote this record, which was ‘Let's go in the studio and let's have a laugh. Let's shoot for the stars. The rule book's out the window now. Let's just enjoy ourselves.’”",
+              short:
+                "“When I look back at this album, it reminds me of the courage it took.”",
+            },
+            isComplete: true,
+          },
+        },
+        1536646529: {
+          id: "1536646529",
+          type: "albums",
+          attributes: {
+            copyright:
+              "A Capitol Records UK release; ℗ 2017 Universal Music Operations Limited",
+            genreNames: ["Pop", "Music"],
+            releaseDate: "2017-11-03",
+            isMasteredForItunes: true,
+            upc: "00602435386157",
+            artwork: {
+              width: 4000,
+              url: "https://is3-ssl.mzstatic.com/image/thumb/Music114/v4/38/b5/7c/38b57cdc-ed71-7991-3bcc-771b56ae8875/17UM1IM18858.rgb.jpg/{w}x{h}bb.jpg",
+              height: 4000,
+              textColor3: "333333",
+              textColor2: "242424",
+              textColor4: "505050",
+              textColor1: "000000",
+              bgColor: "ffffff",
+              hasP3: false,
+            },
+            url: "https://music.apple.com/us/album/the-thrill-of-it-all-special-video-edition/1536646529",
+            playParams: {
+              id: "1536646529",
+              kind: "album",
+            },
+            recordLabel: "Capitol",
+            trackCount: 19,
+            isCompilation: false,
+            isPrerelease: false,
+            audioTraits: ["lossless", "lossy-stereo"],
+            isSingle: false,
+            name: "The Thrill of It All (Special Video Edition)",
+            artistName: "Sam Smith",
+            contentRating: "clean",
+            isComplete: true,
+          },
+        },
+        1536646939: {
+          id: "1536646939",
+          type: "albums",
+          attributes: {
+            copyright:
+              "A Capitol Records UK release; ℗ 2017 Universal Music Operations Limited",
+            genreNames: ["Pop", "Music"],
+            releaseDate: "2017-11-03",
+            upc: "00602435363318",
+            isMasteredForItunes: true,
+            artwork: {
+              width: 4000,
+              url: "https://is5-ssl.mzstatic.com/image/thumb/Music125/v4/a8/92/49/a89249e2-0cb5-ac6e-ce37-c946c4d0fe2e/17UM1IM18858.rgb.jpg/{w}x{h}bb.jpg",
+              height: 4000,
+              textColor3: "333333",
+              textColor2: "242424",
+              textColor4: "505050",
+              textColor1: "000000",
+              bgColor: "ffffff",
+              hasP3: false,
+            },
+            url: "https://music.apple.com/us/album/the-thrill-of-it-all-special-video-edition/1536646939",
+            playParams: {
+              id: "1536646939",
+              kind: "album",
+            },
+            recordLabel: "Capitol",
+            trackCount: 20,
+            isCompilation: false,
+            isPrerelease: false,
+            audioTraits: ["atmos", "lossless", "lossy-stereo", "spatial"],
+            isSingle: false,
+            name: "The Thrill of It All (Special Video Edition)",
+            artistName: "Sam Smith",
+            contentRating: "explicit",
+            isComplete: true,
+          },
+        },
+        1536993568: {
+          id: "1536993568",
+          type: "albums",
+          attributes: {
+            copyright:
+              "℗ 2015 Capitol Records, a division of Universal Music Operations Limited",
+            genreNames: ["Pop", "Music"],
+            releaseDate: "2015-11-06",
+            upc: "00602435363301",
+            isMasteredForItunes: true,
+            artwork: {
+              width: 3000,
+              url: "https://is4-ssl.mzstatic.com/image/thumb/Music114/v4/f2/59/8a/f2598a7e-945a-3cb6-24e1-9c3ead873760/15UMGIM50961.rgb.jpg/{w}x{h}bb.jpg",
+              height: 3000,
+              textColor3: "dddcdb",
+              textColor2: "f6f5f1",
+              textColor4: "d6d4d1",
+              textColor1: "ffffff",
+              bgColor: "56534e",
+              hasP3: false,
+            },
+            url: "https://music.apple.com/us/album/in-the-lonely-hour-drowning-shadows-edition/1536993568",
+            playParams: {
+              id: "1536993568",
+              kind: "album",
+            },
+            recordLabel: "Capitol",
+            trackCount: 34,
+            isCompilation: false,
+            isPrerelease: false,
+            audioTraits: ["lossless", "lossy-stereo"],
+            isSingle: false,
+            name: "In The Lonely Hour (Drowning Shadows Edition)",
+            artistName: "Sam Smith",
+            isComplete: false,
+          },
+        },
+        1541884146: {
+          id: "1541884146",
+          type: "albums",
+          attributes: {
+            copyright:
+              "A Capitol Records UK / EMI release; ℗ 2020 UMG Recordings, Inc. FP",
+            genreNames: ["Pop", "Music"],
+            releaseDate: "2020-12-04",
+            isMasteredForItunes: false,
+            upc: "00602435577289",
+            artwork: {
+              width: 3000,
+              url: "https://is5-ssl.mzstatic.com/image/thumb/Music122/v4/b4/eb/99/b4eb9919-bec4-470d-9329-36f7bd02b0f3/21UMGIM98193.rgb.jpg/{w}x{h}bb.jpg",
+              height: 3000,
+              textColor3: "91bd95",
+              textColor2: "a9d2ac",
+              textColor4: "8bab8d",
+              textColor1: "b1e8b6",
+              bgColor: "121212",
+              hasP3: false,
+            },
+            url: "https://music.apple.com/us/album/the-holly-the-ivy-ep/1541884146",
+            playParams: {
+              id: "1541884146",
+              kind: "album",
+            },
+            recordLabel: "Capitol Records UK / EMI",
+            trackCount: 5,
+            isCompilation: false,
+            isPrerelease: false,
+            audioTraits: ["lossless", "lossy-stereo"],
+            isSingle: false,
+            name: "The Holly & The Ivy - EP",
+            artistName: "Sam Smith",
+            isComplete: false,
+          },
+        },
+        1555680902: {
+          id: "1555680902",
+          type: "albums",
+          attributes: {
+            copyright:
+              "A Capitol Records UK Release; ℗ 2021 Universal Music Operations Limited",
+            genreNames: ["Pop", "Music"],
+            releaseDate: "2021-03-19",
+            isMasteredForItunes: true,
+            upc: "00602435916736",
+            artwork: {
+              width: 3000,
+              url: "https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/b6/64/11/b66411f5-d729-f99f-4439-bf3671ed75ce/20UM1IM17237.rgb.jpg/{w}x{h}bb.jpg",
+              height: 3000,
+              textColor3: "d5b7ab",
+              textColor2: "ded6c2",
+              textColor4: "ccafa3",
+              textColor1: "e9dfcc",
+              bgColor: "851628",
+              hasP3: false,
+            },
+            url: "https://music.apple.com/us/album/love-goes-live-at-abbey-road-studios/1555680902",
+            playParams: {
+              id: "1555680902",
+              kind: "album",
+            },
+            recordLabel: "Capitol",
+            trackCount: 12,
+            isCompilation: false,
+            isPrerelease: false,
+            audioTraits: ["atmos", "lossless", "lossy-stereo", "spatial"],
+            isSingle: false,
+            name: "Love Goes: Live at Abbey Road Studios",
+            artistName: "Sam Smith",
+            isComplete: true,
+          },
+        },
+        1643168265: {
+          id: "1643168265",
+          type: "albums",
+          attributes: {
+            copyright:
+              "A Capitol Records UK / EMI release; ℗ 2022 Universal Music Operations Limited",
+            genreNames: ["Pop", "Music"],
+            releaseDate: "2022-09-22",
+            isMasteredForItunes: true,
+            upc: "00602445856749",
+            artwork: {
+              width: 3000,
+              url: "https://is2-ssl.mzstatic.com/image/thumb/Music112/v4/a4/0c/bd/a40cbd9d-bb38-8164-cd30-e107c8c7bb0e/22UMGIM83430.rgb.jpg/{w}x{h}bb.jpg",
+              height: 3000,
+              textColor3: "bcb6b0",
+              textColor2: "dcd3c9",
+              textColor4: "b2aaa3",
+              textColor1: "e9e1db",
+              bgColor: "090708",
+              hasP3: false,
+            },
+            url: "https://music.apple.com/us/album/unholy-single/1643168265",
+            playParams: {
+              id: "1643168265",
+              kind: "album",
+            },
+            recordLabel: "Capitol Records UK / EMI",
+            isCompilation: false,
+            trackCount: 1,
+            isPrerelease: false,
+            audioTraits: ["atmos", "lossless", "lossy-stereo", "spatial"],
+            isSingle: true,
+            name: "Unholy - Single",
+            artistName: "Sam Smith & Kim Petras",
+            isComplete: true,
+          },
+        },
+        1649325651: {
+          id: "1649325651",
+          type: "albums",
+          attributes: {
+            copyright:
+              "A Capitol Records UK / EMI release; ℗ 2023 Universal Music Operations Limited",
+            genreNames: ["Pop", "Music"],
+            releaseDate: "2023-01-27",
+            isMasteredForItunes: true,
+            upc: "00602448636058",
+            artwork: {
+              width: 3000,
+              url: "https://is5-ssl.mzstatic.com/image/thumb/Music122/v4/0d/97/a6/0d97a649-760f-522c-269d-9d710dc372ba/22UM1IM07174.rgb.jpg/{w}x{h}bb.jpg",
+              height: 3000,
+              textColor3: "c1a583",
+              textColor2: "e0a581",
+              textColor4: "be8e6d",
+              textColor1: "e4c29d",
+              bgColor: "36311d",
+              hasP3: false,
+            },
+            url: "https://music.apple.com/us/album/gloria/1649325651",
+            playParams: {
+              id: "1649325651",
+              kind: "album",
+            },
+            recordLabel: "Capitol Records UK / EMI",
+            trackCount: 13,
+            isCompilation: false,
+            isPrerelease: false,
+            audioTraits: ["atmos", "lossless", "lossy-stereo", "spatial"],
+            isSingle: false,
+            name: "Gloria",
+            artistName: "Sam Smith",
+            editorialNotes: {
+              standard:
+                "Sam Smith’s fourth album, <i>Gloria</i>, opens with the kind of music we’ve come to expect from the British singer-songwriter: “Love Me More” is a gospel-inflected ballad celebrating the power of self-acceptance. But after that, Smith goes off script. “I wanted it to be a patchwork of pop, it’s something that I was really passionate about,” they tell Apple Music. “I want to be flipping from genre to genre to genre to genre.” <i>Gloria</i>, then, brings us sensual R&B, dazzling dance floor moments (“Lose You” is perhaps Smith’s best sad banger yet), twisting hyperpop, a dancehall-indebted earworm, and even choral music, with embraces of sex, the power of community, and queer joy and history along the way. “My aim with this record was to make sure there is not one song on this album that I don't like,” adds Smith. “I've put so much into this record in terms of the production and the time. I became obsessed. I lived inside the music. I've never worked that hard before.”\n\nThere’s a confidence present that most artists reach a few albums deep, but it’s more than just the gains of experience you can hear here. Made between Suffolk, LA, and Jamaica, <i>Gloria</i> is an album of rebellion, liberation, and letting go of the past, as one of modern pop’s biggest voices unveils their most assured music—and self—yet. “I don’t want to sound cheesy, but <i>Gloria</i> for me is like when a butterfly leaves a cocoon,” says Smith. “That’s what I wanted this record to feel like all the way through. I wanted there to be strength within every single song. I feel like my true artist self has arrived in a way.” Read on as Smith delves deep into every track on <i>Gloria</i>.\n\n<b>“Love Me More”</b>\n“I knew I wanted to write a song that said how I was feeling. I find the whole self-love thing quite cringey. Self-love sometimes feels like a destination; with self-acceptance, every day I have to try and accept myself and show myself love. That's what I was trying to put across in this song. I started this album like my old music. ‘Love Me More’ is the last opportunity I was giving my older fans to come into this next stage with me. This is a song written for my fans, and every song after it is written for me.”\n\n<b>“No God”</b>\n“This comes from a personal story about someone in my life who I’ve lost to drastic opinions. But as me, [songwriters and producers] Jimmy [Napes] and Stargate were writing it, it became a rhetoric on a certain type of person with a god complex. It’s about the ignoring of a human being and allowing someone’s drastic politics to get in the way of caring for someone else. The magic of this song came from the production: the live playing, the backing vocals. We just picked away at it until it sounded perfect. To me, it sounds super expensive.”\n\n<b>“Hurting Interlude”</b>\n“I found this amazing piece: a news anchor speaking at the first-ever Gay Pride in New York. What he says in this interlude broke my heart and took me back to ‘Lose You,’ a song written about a lesbian friend who had her first queer relationship with a woman. Someone's first heartbreak as a queer person can be very intense because of what we do go through when it comes to love. I felt like it was the perfect quote before ‘Lose You.’”\n\n<b>“Lose You”</b>\n“As a queer community, we love our sad dance songs. With this album, you could dedicate every song to a pop diva of mine. ‘Love Me More’ would be Whitney, ‘No God’ would be Brandy, and ‘Lose You’ would be Robyn or George Michael. I wrote this song with some of the most amazing pop writers and it felt like a mastering of a beautifully formed pop song. The production wasn’t taking me to Berlin, though, and I needed it to take me to a German gay club. The little things we did towards the end of this song really took it there—it gives me this really Euro, unashamed, gay, chic feel. It's drama, drama, drama.”\n\n<b>“Perfect” (feat. Jessie Reyez)</b>\n“This is where sex starts to come into the record. I feel like I’ve been a bit desexualized during my career, and I was very young when I started. Being 20 years old and moving onstage in the way I would in a gay bar was petrifying. Jessie really taught me to be brave: I would say things to her in the studio and she wouldn’t laugh or feel uncomfortable. The whole concept of the song is saying, ‘I’m a hot mess,’ and feeling yourself in a really imperfect way. This song is the Rihanna moment—we worked with Stargate on it, who worked on <i>Rated R</i>, one of my favorite Rihanna records. Stargate got hold of Nuno Bettencourt, who does guitar solos on <i>Rated R</i>, and he just ripped all over the song—I love it so much.”\n\n<b>“Unholy” [with Kim Petras]</b>\n“We were in Jamaica and [producer] Omer Fedi was fucking around on the guitar and playing this scale, which I started singing to. Everyone in the room was really confused; they didn’t know if they liked it or not. I had someone on my mind who was pissing me off and I just had to get it out. After we got back, everyone liked the song but said, ‘This is not on brand.’ But it kept prodding at me. I said everything I needed to in the first verse, and that’s when Kim came into the picture. There were about eight guys in the studio who were trying to push Kim’s verse in one direction. We spent all day doing it that way, but then something in my gut said, ‘This is shit.’ There’s a certain humor that only a queer person can understand because we’ve been through it and we live it. And that’s what the verse needed. We needed to tease the man, we needed to make him a ‘Balenciaga daddy.’ This is the most powerful part of the album and it's the most powerful piece of music I've ever been a part of. It’s like an exorcism.”\n\n<b>“How to Cry”</b>\n“This is about the same person ‘Unholy’ is about. I wanted that breath, but I also only wanted one of these moments, because this isn’t the record for super organic, stripped music. In ‘Unholy’ I’m laughing and taking the piss. But at the heart of that emotion is a very sad story. It’s also about a relationship I was in, and about how I think being an emotional person is such a strong characteristic. I really do believe it’s a superpower. So it’s a love letter to me.” \n\n<b>“Six Shots”</b>\n“It’s a paragraph change—after ‘How to Cry,’ this is the pre-drinks to a night. But they’re intense pre-drinks, because we start having sex. This is the first proper sex song I wrote—I just felt really freed by it. At the time, I was insanely single and that’s where the lyric ‘There’s no loving me’ comes from. I was so single that I was almost taken. I wasn’t open to love.”\n\n<b>“Gimme” (feat. Koffee and Jessie Reyez)</b>\n“I’m obsessed with this song—it’s possibly my favorite on the album. It’s the most sexually intense lyrics I’ve ever written, and the verse lyric is actually filthy! The song is basically about wanting the dick so much you can cry. I love dancehall music and have tried many times to write songs that have a dancehall feel. I needed to be in Jamaica to do it in a way where it felt authentic, and I’m so proud that ‘Gimme’ did that. Like a lot of the record, this song is about sharing the moment—I didn’t want to be in the song too much.”\n\n<b>“Dorothy’s Interlude”</b>\n“The opening quote is Divine, which is just pure sass and fabulousness. Next is Judy Garland—there are so many queer connotations with Judy, namely the famous myth that when she died, everyone congregated in New York at Stonewall and the riots started the same night. Then after that you’ve got Sylvia Rivera. It’s quite a harrowing speech at Gay Pride in New York, talking about all of the awful things that are happening in the homeless hospitals to trans people, and her own community of gay men were booing her onstage. After that it goes into RuPaul saying one of the most incredible sayings we have out there. This interlude goes through the ages.” \n\n<b>“I’m Not Here to Make Friends”</b>\n“This song was made with Calvin Harris, Stargate, me, and Jessie Reyez. It was a joy to make. I went on a date the night before and I was just so sick of going on dates where people treated me like a friend or just wanted to meet me because I’m Sam Smith. Even though the song has nothing to do with it, the song title is also an attitude and spirit on the record that I have: I’m done trying to please people now.”\n\n<b>“Gloria”</b>\n“The sound of this song is one of the most beautiful sounds I've ever created. And the reason I think it’s one of my favorite songs is that I’m not on it. [Producer] David Odlum helped convince me to actually sing on this song. At the beginning of my career, I remember everyone telling me I was a good singer, but no one ever really gave me credit for my songwriting. And what I love about this song is it's not about me, it's about something I wrote. This song is about opening your arms to the sky and singing your song as loud as you can. And I really think that my younger self needed it. I went with this idea of, I want this to be an album for a younger me that will give me joy and hope. The lyric is incredibly deep, but it's also playable like a lullaby.”\n\n<b>“Who We Love” [with Ed Sheeran]</b>\n“Ed sent me this song, and I was fearful to begin with because I don’t usually take songs and make them mine. Ed and I have been friends for a long time. I’m not interested in doing an Ed collab that sounds like a hit—I wanted it to mean something. And when I heard this, I felt truly touched. I felt like it was a queer ballad anthem written from a friend. There was something so poignant and beautiful about it. Ed has personally guided me through tough times and been a friend in a very cold industry. I wanted everything about this song to feel warm.”",
+              short:
+                "“I’m done trying to please people now.” Hear their fourth LP in Spatial Audio.",
+              tagline: "New Album + Track by Track",
+            },
+            isComplete: true,
+          },
+        },
+        1654902404: {
+          id: "1654902404",
+          type: "albums",
+          attributes: {
+            copyright:
+              "A Capitol Records UK / EMI release; ℗ 2022 Universal Music Operations Limited",
+            genreNames: ["Pop", "Music"],
+            releaseDate: "2022-11-29",
+            upc: "00602448971005",
+            isMasteredForItunes: true,
+            artwork: {
+              width: 3000,
+              url: "https://is4-ssl.mzstatic.com/image/thumb/Music112/v4/bc/d0/6b/bcd06b0b-2542-8baa-4363-8ea4431b1b94/22UM1IM33241.rgb.jpg/{w}x{h}bb.jpg",
+              height: 3000,
+              textColor3: "c3b6a8",
+              textColor2: "8fb6da",
+              textColor4: "7793ae",
+              textColor1: "efe2d2",
+              bgColor: "150800",
+              hasP3: false,
+            },
+            url: "https://music.apple.com/us/album/live-from-the-royal-albert-hall-ep/1654902404",
+            playParams: {
+              id: "1654902404",
+              kind: "album",
+            },
+            recordLabel: "Capitol Records UK / EMI",
+            trackCount: 6,
+            isCompilation: false,
+            isPrerelease: false,
+            audioTraits: [
+              "atmos",
+              "hi-res-lossless",
+              "lossless",
+              "lossy-stereo",
+              "spatial",
             ],
-            footer:
-              "Writer(s): Dave Bayley\nLyrics powered by www.musixmatch.com",
-            musixmatchLyricsId: "110434091",
-            providerName: "musixmatch",
-            syncAvailable: false,
+            isSingle: false,
+            name: "Live From The Royal Albert Hall - EP",
+            artistName: "Sam Smith",
+            editorialNotes: {
+              standard:
+                "“I definitely wanted this to be different to my other shows,” Sam Smith tells Apple Music of their October 2022 performance at London’s Royal Albert Hall. “I come from a theater background and really missed that feeling on my last tour. It takes a village of talent to put on my shows, and it’s important for me now to showcase and celebrate the artists around me.” In <i>Live From The Royal Albert Hall</i>, which arrives to Apple Music listeners as part of the From Apple Music With Love series, Smith celebrates their body of work with a curated selection of songs from the evening.\n\nThough Smith was mostly performing songs from their catalog, the singer says the set was imbued with the spirit of their fourth studio album <i>Gloria</i>, scheduled to release in January 2023. “With this show it was about adding a little <i>Gloria</i> to all my songs,” Smith says. “I always want to change all the songs a little to fit the mood and the tones of whatever project I’m currently releasing. But I am also passionate about playing the songs the way people love them.” One listen to <i>Live From The Royal Albert Hall</i> and you’re sure to have found that Smith couldn’t lose either way.",
+              short:
+                "Listen to Smith’s Royal Albert Hall set in Spatial, only on Apple Music.",
+              tagline: "From Apple Music With Love",
+            },
+            isComplete: true,
           },
         },
-        30047022: {
-          id: "30047022",
-          type: "lyrics",
+        1659905064: {
+          id: "1659905064",
+          type: "albums",
           attributes: {
-            text: [
-              "All smiles, I know what it takes to fool this town",
-              "I'll do it 'til the sun goes down",
-              "And all through the nighttime",
-              "Oh, yeah",
-              "Oh, yeah, I'll tell you what you wanna hear",
-              "Leave my sunglasses on while I shed a tear",
-              "It's never the right time",
-              "Yeah, yeah",
-              "",
-              "I put my armor on, show you how strong I am",
-              "I put my armor on, I'll show you that I am",
-              "",
-              "I'm unstoppable",
-              "I'm a Porsche with no brakes",
-              "I'm invincible",
-              "Yeah, I win every single game",
-              "I'm so powerful",
-              "I don't need batteries to play",
-              "I'm so confident",
-              "Yeah, I'm unstoppable today",
-              "",
-              "Unstoppable today",
-              "Unstoppable today",
-              "Unstoppable today",
-              "I'm unstoppable today",
-              "",
-              "Break down, only alone I will cry out loud",
-              "You'll never see what's hiding out",
-              "Hiding out deep down",
-              "Yeah, yeah",
-              "I know, I've heard that to let your feelings show",
-              "Is the only way to make friendships grow",
-              "But I'm too afraid now",
-              "Yeah, yeah",
-              "",
-              "I put my armor on, show you how strong I am",
-              "I put my armor on, I'll show you that I am",
-              "",
-              "I'm unstoppable",
-              "I'm a Porsche with no brakes",
-              "I'm invincible",
-              "Yeah, I win every single game",
-              "I'm so powerful",
-              "I don't need batteries to play",
-              "I'm so confident",
-              "Yeah, I'm unstoppable today",
-              "",
-              "Unstoppable today",
-              "Unstoppable today",
-              "Unstoppable today",
-              "I'm unstoppable today",
-              "Unstoppable today",
-              "Unstoppable today",
-              "Unstoppable today",
-              "I'm unstoppable today",
-              "",
-              "I put my armor on, show you how strong I am",
-              "I put my armor on, I'll show you that I am",
-              "",
-              "I'm unstoppable",
-              "I'm a Porsche with no brakes",
-              "I'm invincible",
-              "Yeah, I win every single game",
-              "I'm so powerful",
-              "I don't need batteries to play",
-              "I'm so confident",
-              "Yeah, I'm unstoppable today",
-              "",
-              "Unstoppable today",
-              "Unstoppable today",
-              "Unstoppable today",
-              "I'm unstoppable today",
-              "Unstoppable today",
-              "Unstoppable today",
-              "Unstoppable today",
-              "I'm unstoppable today",
-            ],
-            footer:
-              "Writer(s): Chris Braide, Sia Furler\nLyrics powered by www.musixmatch.com",
-            musixmatchLyricsId: "47319389",
-            providerName: "musixmatch",
-            syncAvailable: false,
+            copyright:
+              "A Capitol Records UK / EMI release; ℗ 2023 Universal Music Operations Limited",
+            genreNames: ["Pop", "Music"],
+            releaseDate: "2023-01-27",
+            isMasteredForItunes: true,
+            upc: "00602455090997",
+            artwork: {
+              width: 3000,
+              url: "https://is3-ssl.mzstatic.com/image/thumb/Music112/v4/cc/2c/79/cc2c79af-5b57-b0a9-ad66-9ce6b3f4ce41/22UM1IM07174.rgb.jpg/{w}x{h}bb.jpg",
+              height: 3000,
+              textColor3: "c1a583",
+              textColor2: "e0a581",
+              textColor4: "be8e6d",
+              textColor1: "e4c29d",
+              bgColor: "36311d",
+              hasP3: false,
+            },
+            url: "https://music.apple.com/us/album/gloria-apple-music-edition/1659905064",
+            playParams: {
+              id: "1659905064",
+              kind: "album",
+            },
+            recordLabel: "Capitol Records UK / EMI",
+            trackCount: 20,
+            isCompilation: false,
+            isPrerelease: false,
+            audioTraits: ["atmos", "lossless", "lossy-stereo", "spatial"],
+            isSingle: false,
+            name: "Gloria (Apple Music Edition)",
+            artistName: "Sam Smith",
+            editorialNotes: {
+              standard:
+                "Sam Smith’s fourth album, <i>Gloria</i>, opens with the kind of music we’ve come to expect from the British singer-songwriter: “Love Me More” is a gospel-inflected ballad celebrating the power of self-acceptance. But after that, Smith goes off script. “I wanted it to be a patchwork of pop, it’s something that I was really passionate about,” they tell Apple Music. “I want to be flipping from genre to genre to genre to genre.” <i>Gloria</i>, then, brings us sensual R&B, dazzling dance floor moments (“Lose You” is perhaps Smith’s best sad banger yet), twisting hyperpop, a dancehall-indebted earworm, and even choral music, with embraces of sex, the power of community, and queer joy and history along the way. “My aim with this record was to make sure there is not one song on this album that I don't like,” adds Smith. “I've put so much into this record in terms of the production and the time. I became obsessed. I lived inside the music. I've never worked that hard before.”\n\nThere’s a confidence present that most artists reach a few albums deep, but it’s more than just the gains of experience you can hear here. Made between Suffolk, LA, and Jamaica, <i>Gloria</i> is an album of rebellion, liberation, and letting go of the past, as one of modern pop’s biggest voices unveils their most assured music—and self—yet. “I don’t want to sound cheesy, but <i>Gloria</i> for me is like when a butterfly leaves a cocoon,” says Smith. “That’s what I wanted this record to feel like all the way through. I wanted there to be strength within every single song. I feel like my true artist self has arrived in a way.” Read on as Smith delves deep into every track on <i>Gloria</i>, and opens up about the experience of playing the Royal Albert Hall in London in 2022, heard in this special Apple Music Edition.\n\n<b>“Love Me More”</b>\n“I knew I wanted to write a song that said how I was feeling. I find the whole self-love thing quite cringey. Self-love sometimes feels like a destination; with self-acceptance, every day I have to try and accept myself and show myself love. That's what I was trying to put across in this song. I started this album like my old music. ‘Love Me More’ is the last opportunity I was giving my older fans to come into this next stage with me. This is a song written for my fans, and every song after it is written for me.”\n\n<b>“No God”</b>\n“This comes from a personal story about someone in my life who I’ve lost to drastic opinions. But as me, [songwriters and producers] Jimmy [Napes] and Stargate were writing it, it became a rhetoric on a certain type of person with a god complex. It’s about the ignoring of a human being and allowing someone’s drastic politics to get in the way of caring for someone else. The magic of this song came from the production: the live playing, the backing vocals. We just picked away at it until it sounded perfect. To me, it sounds super expensive.”\n\n<b>“Hurting Interlude”</b>\n“I found this amazing piece: a news anchor speaking at the first-ever Gay Pride in New York. What he says in this interlude broke my heart and took me back to ‘Lose You,’ a song written about a lesbian friend who had her first queer relationship with a woman. Someone's first heartbreak as a queer person can be very intense because of what we do go through when it comes to love. I felt like it was the perfect quote before ‘Lose You.’”\n\n<b>“Lose You”</b>\n“As a queer community, we love our sad dance songs. With this album, you could dedicate every song to a pop diva of mine. ‘Love Me More’ would be Whitney, ‘No God’ would be Brandy, and ‘Lose You’ would be Robyn or George Michael. I wrote this song with some of the most amazing pop writers and it felt like a mastering of a beautifully formed pop song. The production wasn’t taking me to Berlin, though, and I needed it to take me to a German gay club. The little things we did towards the end of this song really took it there—it gives me this really Euro, unashamed, gay, chic feel. It's drama, drama, drama.”\n\n<b>“Perfect” (feat. Jessie Reyez)</b>\n“This is where sex starts to come into the record. I feel like I’ve been a bit desexualized during my career, and I was very young when I started. Being 20 years old and moving onstage in the way I would in a gay bar was petrifying. Jessie really taught me to be brave: I would say things to her in the studio and she wouldn’t laugh or feel uncomfortable. The whole concept of the song is saying, ‘I’m a hot mess,’ and feeling yourself in a really imperfect way. This song is the Rihanna moment—we worked with Stargate on it, who worked on <i>Rated R</i>, one of my favorite Rihanna records. Stargate got hold of Nuno Bettencourt, who does guitar solos on <i>Rated R</i>, and he just ripped all over the song—I love it so much.”\n\n<b>“Unholy” [with Kim Petras]</b>\n“We were in Jamaica and [producer] Omer Fedi was fucking around on the guitar and playing this scale, which I started singing to. Everyone in the room was really confused; they didn’t know if they liked it or not. I had someone on my mind who was pissing me off and I just had to get it out. After we got back, everyone liked the song but said, ‘This is not on brand.’ But it kept prodding at me. I said everything I needed to in the first verse, and that’s when Kim came into the picture. There were about eight guys in the studio who were trying to push Kim’s verse in one direction. We spent all day doing it that way, but then something in my gut said, ‘This is shit.’ There’s a certain humor that only a queer person can understand because we’ve been through it and we live it. And that’s what the verse needed. We needed to tease the man, we needed to make him a ‘Balenciaga daddy.’ This is the most powerful part of the album and it's the most powerful piece of music I've ever been a part of. It’s like an exorcism.”\n\n<b>“How to Cry”</b>\n“This is about the same person ‘Unholy’ is about. I wanted that breath, but I also only wanted one of these moments, because this isn’t the record for super organic, stripped music. In ‘Unholy’ I’m laughing and taking the piss. But at the heart of that emotion is a very sad story. It’s also about a relationship I was in, and about how I think being an emotional person is such a strong characteristic. I really do believe it’s a superpower. So it’s a love letter to me.” \n\n<b>“Six Shots”</b>\n“It’s a paragraph change—after ‘How to Cry,’ this is the pre-drinks to a night. But they’re intense pre-drinks, because we start having sex. This is the first proper sex song I wrote—I just felt really freed by it. At the time, I was insanely single and that’s where the lyric ‘There’s no loving me’ comes from. I was so single that I was almost taken. I wasn’t open to love.”\n\n<b>“Gimme” (feat. Koffee and Jessie Reyez)</b>\n“I’m obsessed with this song—it’s possibly my favorite on the album. It’s the most sexually intense lyrics I’ve ever written, and the verse lyric is actually filthy! The song is basically about wanting the dick so much you can cry. I love dancehall music and have tried many times to write songs that have a dancehall feel. I needed to be in Jamaica to do it in a way where it felt authentic, and I’m so proud that ‘Gimme’ did that. Like a lot of the record, this song is about sharing the moment—I didn’t want to be in the song too much.”\n\n<b>“Dorothy’s Interlude”</b>\n“The opening quote is Divine, which is just pure sass and fabulousness. Next is Judy Garland—there are so many queer connotations with Judy, namely the famous myth that when she died, everyone congregated in New York at Stonewall and the riots started the same night. Then after that you’ve got Sylvia Rivera. It’s quite a harrowing speech at Gay Pride in New York, talking about all of the awful things that are happening in the homeless hospitals to trans people, and her own community of gay men were booing her onstage. After that it goes into RuPaul saying one of the most incredible sayings we have out there. This interlude goes through the ages.” \n\n<b>“I’m Not Here to Make Friends”</b>\n“This song was made with Calvin Harris, Stargate, me, and Jessie Reyez. It was a joy to make. I went on a date the night before and I was just so sick of going on dates where people treated me like a friend or just wanted to meet me because I’m Sam Smith. Even though the song has nothing to do with it, the song title is also an attitude and spirit on the record that I have: I’m done trying to please people now.”\n\n<b>“Gloria”</b>\n“The sound of this song is one of the most beautiful sounds I've ever created. And the reason I think it’s one of my favorite songs is that I’m not on it. [Producer] David Odlum helped convince me to actually sing on this song. At the beginning of my career, I remember everyone telling me I was a good singer, but no one ever really gave me credit for my songwriting. And what I love about this song is it's not about me, it's about something I wrote. This song is about opening your arms to the sky and singing your song as loud as you can. And I really think that my younger self needed it. I went with this idea of, I want this to be an album for a younger me that will give me joy and hope. The lyric is incredibly deep, but it's also playable like a lullaby.”\n\n<b>“Who We Love” [with Ed Sheeran]</b>\n“Ed sent me this song, and I was fearful to begin with because I don’t usually take songs and make them mine. Ed and I have been friends for a long time. I’m not interested in doing an Ed collab that sounds like a hit—I wanted it to mean something. And when I heard this, I felt truly touched. I felt like it was a queer ballad anthem written from a friend. There was something so poignant and beautiful about it. Ed has personally guided me through tough times and been a friend in a very cold industry. I wanted everything about this song to feel warm.”\n\n<b>Apple Music Edition tracks</b>\n“It was honestly one of the performances of my life. First of all, the venue was incredible, but I really wanted to change the way I did things live with that performance. I wanted to have bodies on the stage. I wanted to introduce dance. I basically start the show like I start my career, and the first song is ‘Stay With Me.’ Even in terms of the clothes, I start in all black, and then the show slowly transitions into <i>Gloria</i> and ‘Unholy.’ I take you from heaven to hell, because hell is just fabulous! I never thought that I'd be able to get the whole of the Royal Albert Hall slut-dropping and dancing. It was crazy. Cat Burns was there on the night, which was so special. Kim came out. It was really about sharing the limelight and sharing this time with other musicians.”",
+              short:
+                "“I’m done trying to please people now.” Hear their fourth LP in Spatial Audio.",
+              tagline: "New Album + Track by Track",
+            },
+            isComplete: true,
           },
         },
-        30143864: {
-          id: "30143864",
-          type: "lyrics",
+        1680907429: {
+          id: "1680907429",
+          type: "albums",
           attributes: {
-            text: [
-              "Kiddo, Kiddo",
-              "K-Kiddominant on the beat, better run it back",
-              "",
-              "Fuckin' Robitussin",
-              "I don't know why this shit got me lazy right now, yeah",
-              "Can't do Percocets or Molly",
-              "I'm turnin' one, tryna live it up here right, right, right",
-              "",
-              "Baby, you can",
-              "Ride it, ooh yeah",
-              "Bring it over to my place",
-              'And you be like, "Baby, who cares?"',
-              "But I know you care",
-              "Bring it over to my place",
-              "",
-              "You don't know what you did, did to me",
-              "Your body lightweight, speaks to me",
-              "I don't know what you did, did to me",
-              "Your body lightweight, speaks to me",
-              "",
-              "Yeah",
-              "Yeah",
-              "",
-              "I can make it hurricane on it",
-              "Hunnid bands, make it rain on it",
-              "Tie it up, put a chain on it",
-              "Make you tattoo my name on it, oh",
-              "",
-              "Make you cry like a baby, yeah",
-              "Let's Go Pro and make a video, yeah",
-              "Make you cry like a baby, yeah",
-              "Let's Go Pro and make a video",
-              "Oh, yeah, yeah, yeah",
-              "",
-              "Baby, you can",
-              "Ride it, ooh yeah",
-              "Bring it over to my place",
-              'And you be like, "Baby, who cares?"',
-              "But I know you care",
-              "Bring it over to my place",
-              "",
-              "You don't know what you did, did to me",
-              "Your body lightweight, speaks to me",
-              "I don't know what you did, did to me",
-              "Your body lightweight, speaks to me",
-              "",
-              "Baby, you can",
-              "Ride it, ooh yeah",
-              'And you be like, "Baby, who cares?"',
-              "But I know you care",
-            ],
-            footer:
-              "Writer(s): Chris Brown, David Adeleke, Ayoola Agboola, Tiffany Mckie\nLyrics powered by www.musixmatch.com",
-            musixmatchLyricsId: "101362448",
-            providerName: "musixmatch",
-            syncAvailable: false,
-          },
-        },
-        30339017: {
-          id: "30339017",
-          type: "lyrics",
-          attributes: {
-            text: [
-              "You and me, 끝나지 않을 history",
-              "Oh, 나의 우주가 돼 준 우리의 이야기",
-              "목적지 없이 흘러가는 저 소행성처럼",
-              "나도 그저 떠내려가고 있었어",
-              "어둠 속에 찾은 나의 모든 dream",
-              "새롭게 시작될 story",
-              "",
-              "When I'm with you, there is no one else",
-              "And I get heaven to myself",
-              "When I'm with you, there is no one else",
-              "I feel this way I've never felt",
-              "",
-              "You and me, 깨지지 않는 별처럼",
-              "너의 꿈이 되어 우주를 여행하는",
-              "어두운 길을 비춰주는 저 은하수처럼",
-              "너는 나를 향해 빛나고 있었어",
-              "어둠 속에 찾은 단 하나의 빛",
-              "너에게 향하는 나의 길",
-              "",
-              "When I'm with you, there is no one else",
-              "And I get heaven to myself",
-              "When I'm with you, there is no one else",
-              "I feel this way I never felt",
-              "",
-              "I feel this way I never felt",
-              "(Oh-oh-oh-oh-oh-oh-oh)",
-              "",
-              "When I'm with you, there is no one else",
-              "And I get heaven to myself",
-              "When I'm with you, there is no one else",
-              "",
-              "A life, a sparkle in your eyes",
-              "Heaven comin' through",
-              "And I love you",
-              "",
-              "And I love you",
-              "",
-              "(Oh-oh-oh-oh-oh-oh-oh)",
-            ],
-            footer:
-              "Writer(s): Composer Author Unknown, Guy Rupert Berryman, Chris Martin, Jin, William Champion, Jonathan Mark Buckland, Kyrre Goervell-dahll\nLyrics powered by www.musixmatch.com",
-            musixmatchLyricsId: "154251406",
-            providerName: "musixmatch",
-            syncAvailable: false,
-          },
-        },
-        30448711: {
-          id: "30448711",
-          type: "lyrics",
-          attributes: {
-            text: [
-              'Come on, Harry, we wanna say "good night" to you!',
-              "",
-              "Holding me back",
-              "Gravity's holding me back",
-              "I want you to hold out the palm of your hand",
-              "Why don't we leave it at that?",
-              "",
-              "Nothing to say",
-              "When everything gets in the way",
-              "Seems you cannot be replaced",
-              "And I'm the one who will stay",
-              "Oh-oh-oh",
-              "",
-              "In this world",
-              "It's just us",
-              "You know it's not the same as it was",
-              "",
-              "In this world",
-              "It's just us",
-              "You know it's not the same as it was",
-              "",
-              "As it was",
-              "As it was",
-              "You know it's not the same",
-              "",
-              "Answer the phone",
-              "Harry, you're no good alone",
-              "Why are you sitting at home on the floor?",
-              "What kind of pills are you on?",
-              "",
-              "Ringing the bell",
-              "And nobody's coming to help",
-              "Your daddy lives by himself",
-              "He just wants to know that you're well",
-              "Oh-oh-oh",
-              "",
-              "In this world",
-              "It's just us",
-              "You know it's not the same as it was",
-              "",
-              "In this world",
-              "It's just us",
-              "You know it's not the same as it was",
-              "",
-              "As it was",
-              "As it was",
-              "You know it's not the same",
-              "",
-              "Go home, get ahead, light-speed internet",
-              "I don't wanna talk about the way that it was",
-              "Leave America, two kids follow her",
-              "I don't wanna talk about who's doing it first",
-              "",
-              "Hey!",
-              "",
-              "As it was",
-              "You know it's not the same as it was",
-              "As it was",
-              "As it was",
-            ],
-            footer:
-              "Writer(s): Thomas Edward Percy Hull, Harry Joseph Hudson-taylor, Alfred Simon Hudson-taylor\nLyrics powered by www.musixmatch.com",
-            musixmatchLyricsId: "141571537",
-            providerName: "musixmatch",
-            syncAvailable: false,
-          },
-        },
-        30485850: {
-          id: "30485850",
-          type: "lyrics",
-          attributes: {
-            text: [
-              "Money",
-              "Oh",
-              "",
-              "Love is just a history that they may prove",
-              "And when you're gone",
-              "I'll tell them my religion's you",
-              "When Punktious comes to kill the king upon his throne",
-              "I'm ready for their stones",
-              "",
-              "I'll dance, dance, dance",
-              "With my hands, hands, hands",
-              "Above my head, head, head",
-              "Like Jesus said",
-              "I'm gonna dance, dance, dance",
-              "With my hands, hands, hands above my head",
-              "Hands together, forgive him before he's dead, because",
-              "",
-              "I won't cry for you",
-              "I won't crucify the things you do",
-              "I won't cry for you",
-              "See, when you're gone, I'll still be Bloody Mary",
-              "",
-              "Love",
-              "",
-              "We are not just art for Michelangelo to carve",
-              "He can't rewrite the aggro of my furied heart",
-              "I'll wait on mountain tops in Paris, cold",
-              "J'veux pas mourir toute seule",
-              "",
-              "I'll dance, dance, dance",
-              "With my hands, hands, hands",
-              "Above my head, head, head",
-              "Like Jesus said",
-              "I'm gonna dance, dance, dance",
-              "With my hands, hands, hands above my head",
-              "Hands together, forgive him before he's dead, because",
-              "",
-              "I won't cry for you",
-              "I won't crucify the things you do",
-              "I won't cry for you",
-              "See, when you're gone, I'll still be Bloody Mary",
-              "",
-              "Love",
-              "",
-              "Gaga, Gaga",
-              "Gaga, Gaga",
-              "Gaga, Gaga",
-              "Gaga, Gaga",
-              "Gaga, Gaga",
-              "Gaga, Gaga",
-              "Gaga, Gaga",
-              "Gaga, Gaga",
-              "",
-              "Dum dum, da-di-da",
-              "Dum dum, da-di-da-dadda-da-di-da",
-              "Dum dum, da-di-da",
-              "Dum dum, da-di-da",
-              "Dum dum, da-di-da-dadda-da-di-da",
-              "Dum dum, da-di-da",
-              "",
-              "I won't cry for you",
-              "I won't crucify the things you do, do, do",
-              "I won't cry for you",
-              "See, when you're gone, I'll still be Bloody Mary",
-              "",
-              "Oh-oh-oh-oh-oh",
-              "Oh-oh-oh-oh-oh",
-              "Oh-oh-oh-oh-oh",
-              "Oh-oh-oh-oh-oh",
-              "Oh-oh-oh-oh-oh",
-              "Oh-oh-oh-oh-oh",
-              "Oh-oh-oh-oh-oh",
-              "Oh-oh-oh-oh-oh",
-              "",
-              "Líberate, mi amor",
-            ],
-            footer:
-              "Writer(s): Fernando Garibay, Lady Gaga, Zach Blair\nLyrics powered by www.musixmatch.com",
-            musixmatchLyricsId: "9701438",
-            providerName: "musixmatch",
-            syncAvailable: false,
-          },
-        },
-        30514024: {
-          id: "30514024",
-          type: "lyrics",
-          attributes: {
-            text: [
-              "Yeah, 'cause girls is players too, uh",
-              "Yeah, yeah, 'cause girls is players too (keep it player, baby)",
-              "'Cause girls is players too",
-              "Bitches gettin' money all around the world",
-              "'Cause girls is players too",
-              "",
-              "What you know 'bout livin' on the top?",
-              "Penthouse suites, lookin' down on the opps?",
-              "Took him for a test drive, left him on the lot",
-              "Time is money, so I spent it on a watch, hol' on",
-              "Lil' titties showin' through the white tee",
-              "You can see the thong bussin' out my tight jeans (okay)",
-              "Rocks on my fingers like a nigga wifed me",
-              "Got another shorty? She ain't nothin' like me, yeah",
-              "",
-              "'Bout to catch another fade (yeah)",
-              "The apple bottom make 'em wanna bite (yeah)",
-              "I just wanna have a good night",
-              "I just wanna have a good night (hold up)",
-              "If you don't know, now you know",
-              "If he broke, then you gotta let him go",
-              "You could have anybody, eeny, miny, moe",
-              "'Cause when you a boss, you could do what you want",
-              "",
-              "Yeah, 'cause girls is players too, uh",
-              "Yeah, yeah, 'cause girls is players too (keep it player, baby)",
-              "'Cause girls is players too",
-              "Bitches gettin' money all around the world",
-              "'Cause girls is players too",
-              "",
-              "I go on, and on, and on again",
-              "He blowin' up my phone, but I'm ignorin' him",
-              "He thinkin' he the one, I got like four of him",
-              "Yeah, I'm sittin' first class, like Valedictorian, uh",
-              "Came a long way from rag to riches",
-              "Five-star bitch, yeah, I taste so delicious",
-              "Let him lick the plate, yeah, I make him do the dishes",
-              "Now he on news talk 'cause a bitch went missin', sheesh (yeah)",
-              "",
-              "'Bout to catch another fade (yeah)",
-              "The apple bottom make 'em wanna bite (yeah)",
-              "I just wanna have a good night",
-              "I just wanna have a good night (hold up)",
-              "If you don't know, now you know",
-              "If he broke, then you gotta let him go",
-              "You could have anybody, eeny, miny, moe",
-              "'Cause when you a boss, you could do what you want",
-              "",
-              "Yeah, 'cause girls is players too, uh",
-              "(It is time that we let 'em know that)",
-              "Girls is players too (keep it player, baby)",
-              "'Cause girls is players too",
-              "Bitches gettin' money all around the world",
-              "'Cause girls is players too",
-            ],
-            footer:
-              "Writer(s): Sylvia Robinson, Clifton Chase, Melvin Glover, Edward Fletcher, Yonatan Goldstein, Akil King, Feli Ferraro, Coi Leray Collins\nLyrics powered by www.musixmatch.com",
-            musixmatchLyricsId: "156259152",
-            providerName: "musixmatch",
-            syncAvailable: false,
-          },
-        },
-        30568373: {
-          id: "30568373",
-          type: "lyrics",
-          attributes: {
-            text: [
-              "Don't ever say it's over if I'm breathing",
-              "Racing to the moonlight, and I'm speeding",
-              "I'm headed to the stars, ready to go far",
-              "I'm star walkin'",
-              "",
-              "Don't ever say it's over if I'm breathing",
-              "Racing to the moonlight, and I'm speeding",
-              "I'm headed to the stars, ready to go far",
-              "I'm star walkin'",
-              "",
-              "On the mission to get high up, I know that I'ma die",
-              "Reaching for a life that I don't really need at all (at all)",
-              "Never listened to replies, learned a lesson from the wise",
-              "You should never take advice from a nigga that ain't try",
-              "",
-              "They said I wouldn't make it out alive",
-              "They told me I would never see the rise",
-              "That's why I gotta kill 'em every time",
-              "Gotta watch 'em bleed too",
-              "",
-              "Don't ever say it's over if I'm breathing",
-              "Racing to the moonlight, and I'm speeding",
-              "I'm headed to the stars, ready to go far",
-              "I'm star walkin'",
-              "",
-              "Don't ever say it's over if I'm breathing",
-              "Racing to the moonlight, and I'm speeding",
-              "I'm headed to the stars, ready to go far",
-              "I'm star walkin'",
-              "",
-              "Been that nigga since I came out my mama (hoo)",
-              "Thanking God, daddy never wore a condom (hoo)",
-              "Prove 'em wrong every time 'til it's normal",
-              "Why worship legends when you know that you can join 'em?",
-              "",
-              "These niggas don't like me, they don't like me",
-              "Likely, they wanna fight me, come on, try it out, try me",
-              'They put me down, but I never cried out, "Why me?"',
-              "Word from the wise, don't put worth inside a nigga that ain't try",
-              "",
-              "They said I wouldn't make it out alive",
-              "They told me I would never see the rise",
-              "That's why I gotta kill 'em every time",
-              "Gotta watch 'em bleed too",
-              "",
-              "Don't ever say it's over if I'm breathing",
-              "Racing to the moonlight, and I'm speeding",
-              "I'm headed to the stars, ready to go far",
-              "I'm star walkin'",
-              "",
-              "Don't ever say it's over if I'm breathing",
-              "Racing to the moonlight, and I'm speeding",
-              "I'm headed to the stars, ready to go far",
-              "I'm star walkin'",
-              "",
-              "I'm star walkin'",
-              "",
-              "Don't ever say it's over if I'm breathing",
-              "Racing to the moonlight, and I'm speeding",
-              "I'm headed to the stars, ready to go far",
-              "I'm star walkin'",
-            ],
-            footer:
-              "Writer(s): Henry Russell Walter, Atia Boggs, Montero Lamar Hill, Omer Fedi\nLyrics powered by www.musixmatch.com",
-            musixmatchLyricsId: "152046965",
-            providerName: "musixmatch",
-            syncAvailable: false,
-          },
-        },
-        30840256: {
-          id: "30840256",
-          type: "lyrics",
-          attributes: {
-            text: [
-              "Don't remind me",
-              "I'm minding my own damn business",
-              "Don't try to find me",
-              "I'm better left alone than in this",
-              "It doesn't surprise me",
-              "Do you really think that I could care",
-              "If you really don't like me",
-              "Find somebody else",
-              "It could be anyone else out there",
-              "",
-              "Don't fret",
-              "I don't ever wanna see you",
-              "And I never wanna miss you again",
-              "One thing",
-              "When you're angry, you're a jerk",
-              "And then you treat me like I'm worth nothing",
-              "",
-              "Don't fret",
-              "I don't ever wanna see you",
-              "And I never wanna miss you again",
-              "It'll happen again",
-              "I watch it happen over and over again",
-              "",
-              "Don't fret",
-              "I don't ever wanna see you",
-              "And I never wanna miss you again",
-              "One thing",
-              "When you're angry, you're a jerk",
-              "And then you treat me like I'm worth nothing",
-              "",
-              "Don't remind me",
-              "I'm minding my own damn business",
-              "Don't try to find me",
-              "I'm better left alone than in this",
-              "It doesn't surprise me",
-              "Do you really think that I could care",
-              "If you really don't like me",
-              "Find somebody else",
-              "It could be anyone else out there",
-              "",
-              "Don't fret",
-              "I don't ever wanna see you",
-              "And I never wanna miss you again",
-              "One thing",
-              "When you're angry, you're a jerk",
-              "And then you treat me like I'm worth nothing",
-              "",
-              "Don't fret",
-              "I don't ever wanna see you",
-              "And I never wanna miss you again",
-              "It'll happen again",
-              "I watch it happen over and over again",
-              "",
-              "Don't fret",
-              "I don't ever wanna see you",
-              "And I never wanna miss you again",
-              "One thing",
-              "When you're angry, you're a jerk",
-              "And then you treat me like I'm worth nothing",
-            ],
-            footer:
-              "Writer(s): David Pramik, Oliver Tree Nickell, 2\nLyrics powered by www.musixmatch.com",
-            musixmatchLyricsId: "149517902",
-            providerName: "musixmatch",
-            syncAvailable: false,
-          },
-        },
-        31117593: {
-          id: "31117593",
-          type: "lyrics",
-          attributes: {
-            text: [
-              "Oooh",
-              "Just can't believe this man",
-              "(Metro Boomin want some more nigga)",
-              "",
-              "Somebody said they saw you",
-              "The person you were kissing wasn't me",
-              "And I would never ask you, I just kept it to myself",
-              "",
-              "I don't wanna know, if you're playing me",
-              "Keep it on the low",
-              "Cause my heart can't take it anymore",
-              "And if you creeping, please don't let it show",
-              "Oh baby, I don't wanna know",
-              "",
-              "I think about it when I hold you",
-              "When looking in your eyes, I can't believe",
-              "And I don't need to know the truth",
-              "But baby keep it to yourself",
-              "",
-              "I don't wanna know, if you're playing me",
-              "Keep it on the low",
-              "Cause my heart can't take it anymore",
-              "And if you creeping, please don't let it show",
-              "Oh baby, I don't wanna know",
-              "",
-              "Did he touch you better than me? (touch you better than me?)",
-              "Did he watch you fall asleep (watch you fall asleep?)",
-              "Did you show him all those things that you used to do to me?",
-              "If you're better off that way (better off that way)",
-              "Baby all that I can say (all that I can say)",
-              "If you're gonna do your thing, then don't come back to me",
-              "Ooh",
-              "",
-              "Woah, woah, woah",
-              "21",
-              "Had me crushing, I was cuffing like the precinct",
-              "How you go from housewife to a sneaky link",
-              "Got you ridin round in all types of benz's and rovers",
-              "Girl you used to ride in a rinky dink",
-              "I'm the one put you in Eliante (on God)",
-              "Fashion Nova model, I put you on the runway (on God)",
-              "You was rocking coach bags, got you chanaynay",
-              "Side bitch in frisco, I call her my bae bae (21)",
-              "I got a girl but I still feel alone",
-              "If you playing me that mean my home aint home",
-              "Having nightmares of going through your phone (21)",
-              "Can't even record you got me out my zone",
-              "",
-              "I don't wanna know, if you're playing me",
-              "Keep it on the low",
-              "Cause my heart can't take it anymore",
-              "And if you creeping, please don't let it show",
-              "Oh baby",
-              "I don't wanna know, if you're playing me",
-              "Keep it on the low",
-              "Cause my heart can't take it anymore",
-              "And if you creeping, please don't let it show",
-              "Oh baby I don't wanna know",
-              "",
-              "If you creeping just don't let me find out (on God)",
-              "Get a hotel never bring him to the house (on God)",
-              "If you're better off that way (better off that way)",
-              "Baby all that I can say (all that I can say)",
-              "If you're gonna do your thing, then don't come back to me",
-            ],
-            footer:
-              "Writer(s): Mario Winans, Michael Jones, Chauncey Hawkins, Erick Sermon, Parrish Joseff Smith, Eithne Ni Bhraonain, Roma Ryan, Nicky Ryan\nLyrics powered by www.musixmatch.com",
-            musixmatchLyricsId: "156263139",
-            providerName: "musixmatch",
-            syncAvailable: false,
-          },
-        },
-        31327778: {
-          id: "31327778",
-          type: "lyrics",
-          attributes: {
-            text: [
-              "I wanna take you somewhere so you know I care",
-              "But it's so cold, and I don't know where",
-              "I brought you daffodils in a pretty string",
-              "But they won't flower like they did last spring",
-              "",
-              "And I wanna kiss you, make you feel alright",
-              "I'm just so tired to share my nights",
-              "I wanna cry and I wanna love",
-              "But all my tears have been used up",
-              "",
-              "On another love, another love",
-              "All my tears have been used up",
-              "On another love, another love",
-              "All my tears have been used up",
-              "On another love, another love",
-              "All my tears have been used up",
-              "",
-              "Oh, ooh",
-              "",
-              "And if somebody hurts you, I wanna fight",
-              "But my hands been broken, one too many times",
-              "So I'll use my voice, I'll be so fucking rude",
-              "Words, they always win, but I know I'll lose",
-              "",
-              "And I'd sing a song, that'd be just ours",
-              "But I sang 'em all to another heart",
-              "And I wanna cry I wanna learn to love",
-              "But all my tears have been used up",
-              "",
-              "On another love, another love",
-              "All my tears have been used up",
-              "On another love, another love",
-              "All my tears have been used up",
-              "On another love, another love",
-              "All my tears have been used up",
-              "Oh, oh, oh",
-              "",
-              "(Oh, need a love, now, my heart is thinking of)",
-              "I wanna sing a song, that'd be just ours",
-              "But I sang 'em all to another heart",
-              "And I wanna cry, I wanna fall in love",
-              "But all my tears have been used up",
-              "",
-              "On another love, another love",
-              "All my tears have been used up",
-              "On another love, another love",
-              "All my tears have been used up",
-              "On another love, another love",
-              "All my tears have been used up",
-              "Oh, oh",
-            ],
-            footer:
-              "Writer(s): Tom Peter Odell\nLyrics powered by www.musixmatch.com",
-            musixmatchLyricsId: "11560975",
-            providerName: "musixmatch",
-            syncAvailable: false,
-          },
-        },
-        31570750: {
-          id: "31570750",
-          type: "lyrics",
-          attributes: {
-            text: [
-              "We were good, we were gold",
-              "Kinda dream that can't be sold",
-              "We were right 'til we weren't",
-              "Built a home and watched it burn",
-              "",
-              "Mmm, I didn't wanna leave you, I didn't wanna lie",
-              "Started to cry, but then remembered I",
-              "",
-              "I can buy myself flowers",
-              "Write my name in the sand",
-              "Talk to myself for hours",
-              "Say things you don't understand",
-              "I can take myself dancing",
-              "And I can hold my own hand",
-              "Yeah, I can love me better than you can",
-              "",
-              "Can love me better, I can love me better, baby",
-              "Can love me better, I can love me better, baby",
-              "",
-              "Paint my nails cherry red",
-              "Match the roses that you left",
-              "No remorse, no regret",
-              "I forgive every word you said",
-              "",
-              "Ooh, I didn't wanna leave you, baby, I didn't wanna fight",
-              "Started to cry, but then remembered I",
-              "",
-              "I can buy myself flowers",
-              "Write my name in the sand",
-              "Talk to myself for hours, yeah",
-              "Say things you don't understand",
-              "I can take myself dancing, yeah",
-              "I can hold my own hand",
-              "Yeah, I can love me better than you can",
-              "",
-              "Can love me better, I can love me better, baby",
-              "Can love me better, I can love me better, baby",
-              "Can love me better, I can love me better, baby",
-              "Can love me better, I (ooh, I)",
-              "",
-              "I didn't wanna leave you, I didn't wanna fight",
-              "Started to cry, but then remembered I",
-              "",
-              "I can buy myself flowers (uh-huh)",
-              "Write my name in the sand",
-              "Talk to myself for hours (yeah)",
-              "Say things you don't understand (you never will)",
-              "I can take myself dancing, yeah",
-              "I can hold my own hand",
-              "Yeah, I can love me better than",
-              "Yeah, I can love me better than you can",
-              "",
-              "Can love me better, I can love me better, baby (uh)",
-              "Can love me better, I can love me better, baby (than you can)",
-              "Can love me better, I can love me better, baby",
-              "Can love me better, I",
-            ],
-            footer:
-              "Writer(s): Michael Pollack, Miley Cyrus, Gregory Aldae Hein\nLyrics powered by www.musixmatch.com",
-            musixmatchLyricsId: "157191703",
-            providerName: "musixmatch",
-            syncAvailable: false,
-          },
-        },
-      },
-      "artist-highlights": {
-        111051: {
-          id: "111051",
-          type: "artist-highlights",
-        },
-        5557599: {
-          id: "5557599",
-          type: "artist-highlights",
-        },
-        28721078: {
-          id: "28721078",
-          type: "artist-highlights",
-        },
-        63346553: {
-          id: "63346553",
-          type: "artist-highlights",
-        },
-        95705522: {
-          id: "95705522",
-          type: "artist-highlights",
-        },
-        137057909: {
-          id: "137057909",
-          type: "artist-highlights",
-        },
-        260414340: {
-          id: "260414340",
-          type: "artist-highlights",
-        },
-        277293880: {
-          id: "277293880",
-          type: "artist-highlights",
-        },
-        358714030: {
-          id: "358714030",
-          type: "artist-highlights",
-        },
-        471260289: {
-          id: "471260289",
-          type: "artist-highlights",
-        },
-        524929515: {
-          id: "524929515",
-          type: "artist-highlights",
-        },
-        528928008: {
-          id: "528928008",
-          type: "artist-highlights",
-        },
-        670534462: {
-          id: "670534462",
-          type: "artist-highlights",
-        },
-        1140096017: {
-          id: "1140096017",
-          type: "artist-highlights",
-        },
-        1191850724: {
-          id: "1191850724",
-          type: "artist-highlights",
-        },
-        1304716885: {
-          id: "1304716885",
-          type: "artist-highlights",
-        },
-        1358539712: {
-          id: "1358539712",
-          type: "artist-highlights",
-        },
-        1400730578: {
-          id: "1400730578",
-          type: "artist-highlights",
-        },
-        1580652660: {
-          id: "1580652660",
-          type: "artist-highlights",
-        },
-      },
-      "shazam-artists": {
-        42: {
-          id: "42",
-          type: "shazam-artists",
-        },
-      },
-      "related-tracks": {
-        "track-similarities-id-636972694": {
-          id: "track-similarities-id-636972694",
-          type: "related-tracks",
-        },
-        "track-similarities-id-53510886": {
-          id: "track-similarities-id-53510886",
-          type: "related-tracks",
-        },
-        "track-similarities-id-609260140": {
-          id: "track-similarities-id-609260140",
-          type: "related-tracks",
-        },
-        "track-similarities-id-628935200": {
-          id: "track-similarities-id-628935200",
-          type: "related-tracks",
-        },
-        "track-similarities-id-648859694": {
-          id: "track-similarities-id-648859694",
-          type: "related-tracks",
-        },
-        "track-similarities-id-626708777": {
-          id: "track-similarities-id-626708777",
-          type: "related-tracks",
-        },
-        "track-similarities-id-614204083": {
-          id: "track-similarities-id-614204083",
-          type: "related-tracks",
-        },
-        "track-similarities-id-514260283": {
-          id: "track-similarities-id-514260283",
-          type: "related-tracks",
-        },
-        "track-similarities-id-643726163": {
-          id: "track-similarities-id-643726163",
-          type: "related-tracks",
-        },
-        "track-similarities-id-498502624": {
-          id: "track-similarities-id-498502624",
-          type: "related-tracks",
-        },
-        "track-similarities-id-308021058": {
-          id: "track-similarities-id-308021058",
-          type: "related-tracks",
-        },
-        "track-similarities-id-601555046": {
-          id: "track-similarities-id-601555046",
-          type: "related-tracks",
-        },
-        "track-similarities-id-70679146": {
-          id: "track-similarities-id-70679146",
-          type: "related-tracks",
-        },
-        "track-similarities-id-640613166": {
-          id: "track-similarities-id-640613166",
-          type: "related-tracks",
-        },
-        "track-similarities-id-607917333": {
-          id: "track-similarities-id-607917333",
-          type: "related-tracks",
-        },
-        "track-similarities-id-639053666": {
-          id: "track-similarities-id-639053666",
-          type: "related-tracks",
-        },
-        "track-similarities-id-628712770": {
-          id: "track-similarities-id-628712770",
-          type: "related-tracks",
-        },
-        "track-similarities-id-606589047": {
-          id: "track-similarities-id-606589047",
-          type: "related-tracks",
-        },
-        "track-similarities-id-630520607": {
-          id: "track-similarities-id-630520607",
-          type: "related-tracks",
-        },
-        "track-similarities-id-40590926": {
-          id: "track-similarities-id-40590926",
-          type: "related-tracks",
-        },
-      },
-      "shazam-songs": {
-        40590926: {
-          id: "40590926",
-          type: "shazam-songs",
-          attributes: {
-            type: "MUSIC",
-            title: "Mockingbird",
-            artist: "Eminem",
-            primaryArtist: "Eminem",
-            label: "Aftermath",
-            explicit: true,
-            isrc: "USIR10400813",
-            webUrl:
-              "https://www.shazam.com/track/40590926/mockingbird?co=US&offsetInMilliseconds=&timeSkew=&trackLength=",
-            images: {
-              artistAvatar:
-                "https://is2-ssl.mzstatic.com/image/thumb/Features115/v4/87/8e/a0/878ea0a1-ed8d-6fd7-3567-76ab8e6529af/mzl.ayuccyos.jpg/800x800cc.jpg",
-              coverArt:
-                "https://is2-ssl.mzstatic.com/image/thumb/Music128/v4/99/4a/a6/994aa6ee-8232-c580-a7a4-1d4dfd602511/00602498648841.rgb.jpg/400x400cc.jpg",
-              coverArtHq:
-                "https://is2-ssl.mzstatic.com/image/thumb/Music128/v4/99/4a/a6/994aa6ee-8232-c580-a7a4-1d4dfd602511/00602498648841.rgb.jpg/800x800cc.jpg",
-            },
-            share: {
-              subject: "Mockingbird - Eminem",
-              text: "I used Shazam to discover Mockingbird by Eminem.",
-              image:
-                "https://is2-ssl.mzstatic.com/image/thumb/Music128/v4/99/4a/a6/994aa6ee-8232-c580-a7a4-1d4dfd602511/00602498648841.rgb.jpg/400x400cc.jpg",
-              twitter: "I used @Shazam to discover Mockingbird by Eminem.",
-              html: "https://www.shazam.com/snippets/email-share/40590926?lang=en-US&country=US",
-              snapchat: "https://www.shazam.com/partner/sc/track/40590926",
-            },
-            genres: {
-              primary: "Hip-Hop/Rap",
-            },
-            streaming: {
-              preview:
-                "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/65/c6/15/65c61537-1c2f-e2bd-0f26-2ed9818fb86f/mzaf_9317418265960662555.plus.aac.ep.m4a",
-              deeplink:
-                "intent://music.apple.com/us/album/mockingbird/1440751265?i=1440751633&mttnagencyid=s2n&mttnsiteid=125115&mttn3pid=Apple-Shazam&mttnsub1=Shazam_android_am&mttnsub2=5348615A-616D-3235-3830-44754D6D5973&itscg=30201&app=music&itsct=Shazam_android_am#Intent;scheme=http;package=com.apple.android.music;action=android.intent.action.VIEW;end",
-              store:
-                "https://play.google.com/store/apps/details?id=com.apple.android.music&referrer=utm_source=https%3A%2F%2Fmusic.apple.com%2Fsubscribe%3Fmttnagencyid%3Ds2n%26mttnsiteid%3D125115%26mttn3pid%3DApple-Shazam%26mttnsub1%3DShazam_android_am%26mttnsub2%3D5348615A-616D-3235-3830-44754D6D5973%26itscg%3D30201%26app%3Dmusic%26itsct%3DShazam_android_am",
-            },
-            classicalAvailability: false,
-          },
-          relationships: {
-            "artist-highlights": {
-              data: [
-                {
-                  id: "111051",
-                  type: "artist-highlights",
-                },
-              ],
-            },
-            "track-highlights": {
-              data: [
-                {
-                  id: "1445837780",
-                  type: "track-highlights",
-                },
-              ],
-            },
-            "related-tracks": {
-              data: [
-                {
-                  id: "track-similarities-id-40590926",
-                  type: "related-tracks",
-                },
-              ],
-            },
-            songs: {
-              data: [
-                {
-                  id: "1440751633",
-                  type: "songs",
-                },
-              ],
-            },
-            albums: {
-              data: [
-                {
-                  id: "1440751265",
-                  type: "albums",
-                },
-              ],
-            },
-            "shazam-artists": {
-              data: [
-                {
-                  id: "42",
-                  type: "shazam-artists",
-                },
-              ],
-            },
-            artists: {
-              data: [
-                {
-                  id: "111051",
-                  type: "artists",
-                },
-              ],
-            },
-          },
-        },
-        53510886: {
-          id: "53510886",
-          type: "shazam-songs",
-          attributes: {
-            type: "MUSIC",
-            title: "Bloody Mary",
-            artist: "Lady Gaga",
-            primaryArtist: "Lady Gaga",
-            label: "Interscope",
-            explicit: false,
-            isrc: "USUM71106449",
-            webUrl:
-              "https://www.shazam.com/track/53510886/bloody-mary?co=US&offsetInMilliseconds=&timeSkew=&trackLength=",
-            images: {
-              artistAvatar:
-                "https://is2-ssl.mzstatic.com/image/thumb/Music122/v4/2c/7d/5e/2c7d5ec0-bad6-5fb6-08f2-ccfd94aa2985/pr_source.png/800x800cc.jpg",
-              coverArt:
-                "https://is4-ssl.mzstatic.com/image/thumb/Music124/v4/65/1b/f6/651bf621-fcf2-e3ba-4ef4-22645f26e0a0/11UMGIM12477.rgb.jpg/400x400cc.jpg",
-              coverArtHq:
-                "https://is4-ssl.mzstatic.com/image/thumb/Music124/v4/65/1b/f6/651bf621-fcf2-e3ba-4ef4-22645f26e0a0/11UMGIM12477.rgb.jpg/800x800cc.jpg",
-            },
-            share: {
-              subject: "Bloody Mary - Lady Gaga",
-              text: "I used Shazam to discover Bloody Mary by Lady Gaga.",
-              image:
-                "https://is4-ssl.mzstatic.com/image/thumb/Music124/v4/65/1b/f6/651bf621-fcf2-e3ba-4ef4-22645f26e0a0/11UMGIM12477.rgb.jpg/400x400cc.jpg",
-              twitter: "I used @Shazam to discover Bloody Mary by Lady Gaga.",
-              html: "https://www.shazam.com/snippets/email-share/53510886?lang=en-US&country=US",
-              snapchat: "https://www.shazam.com/partner/sc/track/53510886",
-            },
-            genres: {
-              primary: "Pop",
-            },
-            streaming: {
-              preview:
-                "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview122/v4/c7/b0/df/c7b0dfe8-e1dc-1bda-88b0-0dc9b67e1b1b/mzaf_15572490037611837314.plus.aac.ep.m4a",
-              deeplink:
-                "intent://music.apple.com/us/album/bloody-mary/1440824019?i=1440824272&mttnagencyid=s2n&mttnsiteid=125115&mttn3pid=Apple-Shazam&mttnsub1=Shazam_android_am&mttnsub2=5348615A-616D-3235-3830-44754D6D5973&itscg=30201&app=music&itsct=Shazam_android_am#Intent;scheme=http;package=com.apple.android.music;action=android.intent.action.VIEW;end",
-              store:
-                "https://play.google.com/store/apps/details?id=com.apple.android.music&referrer=utm_source=https%3A%2F%2Fmusic.apple.com%2Fsubscribe%3Fmttnagencyid%3Ds2n%26mttnsiteid%3D125115%26mttn3pid%3DApple-Shazam%26mttnsub1%3DShazam_android_am%26mttnsub2%3D5348615A-616D-3235-3830-44754D6D5973%26itscg%3D30201%26app%3Dmusic%26itsct%3DShazam_android_am",
-            },
-            classicalAvailability: false,
-          },
-          relationships: {
-            "artist-highlights": {
-              data: [
-                {
-                  id: "277293880",
-                  type: "artist-highlights",
-                },
-              ],
-            },
-            "related-tracks": {
-              data: [
-                {
-                  id: "track-similarities-id-53510886",
-                  type: "related-tracks",
-                },
-              ],
-            },
-            songs: {
-              data: [
-                {
-                  id: "1440824272",
-                  type: "songs",
-                },
-              ],
-            },
-            albums: {
-              data: [
-                {
-                  id: "1440824019",
-                  type: "albums",
-                },
-              ],
-            },
-            "shazam-artists": {
-              data: [
-                {
-                  id: "42",
-                  type: "shazam-artists",
-                },
-              ],
-            },
-            artists: {
-              data: [
-                {
-                  id: "277293880",
-                  type: "artists",
-                },
-              ],
-            },
-            lyrics: {
-              data: [
-                {
-                  id: "30485850",
-                  type: "lyrics",
-                },
-              ],
-            },
-          },
-        },
-        70679146: {
-          id: "70679146",
-          type: "shazam-songs",
-          attributes: {
-            type: "MUSIC",
-            title: "Another Love",
-            artist: "Tom Odell",
-            primaryArtist: "Tom Odell",
-            label: "ITNO/Columbia",
-            explicit: true,
-            isrc: "GBARL1300522",
-            webUrl:
-              "https://www.shazam.com/track/70679146/another-love?co=US&offsetInMilliseconds=&timeSkew=&trackLength=",
-            images: {
-              artistAvatar:
-                "https://is5-ssl.mzstatic.com/image/thumb/Music112/v4/47/4f/7e/474f7ebe-1442-1dd2-ed17-78808b521f08/pr_source.png/800x800cc.jpg",
-              coverArt:
-                "https://is4-ssl.mzstatic.com/image/thumb/Music125/v4/dd/1f/7a/dd1f7a8d-eb5d-2508-3ba5-2de3739a1437/886444186797.jpg/400x400cc.jpg",
-              coverArtHq:
-                "https://is4-ssl.mzstatic.com/image/thumb/Music125/v4/dd/1f/7a/dd1f7a8d-eb5d-2508-3ba5-2de3739a1437/886444186797.jpg/800x800cc.jpg",
-            },
-            share: {
-              subject: "Another Love - Tom Odell",
-              text: "I used Shazam to discover Another Love by Tom Odell.",
-              image:
-                "https://is4-ssl.mzstatic.com/image/thumb/Music125/v4/dd/1f/7a/dd1f7a8d-eb5d-2508-3ba5-2de3739a1437/886444186797.jpg/400x400cc.jpg",
-              twitter: "I used @Shazam to discover Another Love by Tom Odell.",
-              html: "https://www.shazam.com/snippets/email-share/70679146?lang=en-US&country=US",
-              snapchat: "https://www.shazam.com/partner/sc/track/70679146",
-            },
-            genres: {
-              primary: "Singer/Songwriter",
-            },
-            streaming: {
-              preview:
-                "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview115/v4/e2/18/b7/e218b7c2-5650-2e40-7a63-5c4ca08018fe/mzaf_3776950118914761382.plus.aac.ep.m4a",
-              deeplink:
-                "intent://music.apple.com/us/album/another-love/687867700?i=687868140&mttnagencyid=s2n&mttnsiteid=125115&mttn3pid=Apple-Shazam&mttnsub1=Shazam_android_am&mttnsub2=5348615A-616D-3235-3830-44754D6D5973&itscg=30201&app=music&itsct=Shazam_android_am#Intent;scheme=http;package=com.apple.android.music;action=android.intent.action.VIEW;end",
-              store:
-                "https://play.google.com/store/apps/details?id=com.apple.android.music&referrer=utm_source=https%3A%2F%2Fmusic.apple.com%2Fsubscribe%3Fmttnagencyid%3Ds2n%26mttnsiteid%3D125115%26mttn3pid%3DApple-Shazam%26mttnsub1%3DShazam_android_am%26mttnsub2%3D5348615A-616D-3235-3830-44754D6D5973%26itscg%3D30201%26app%3Dmusic%26itsct%3DShazam_android_am",
-            },
-            classicalAvailability: false,
-          },
-          relationships: {
-            "artist-highlights": {
-              data: [
-                {
-                  id: "524929515",
-                  type: "artist-highlights",
-                },
-              ],
-            },
-            "track-highlights": {
-              data: [
-                {
-                  id: "1281370544",
-                  type: "track-highlights",
-                },
-              ],
-            },
-            "related-tracks": {
-              data: [
-                {
-                  id: "track-similarities-id-70679146",
-                  type: "related-tracks",
-                },
-              ],
-            },
-            songs: {
-              data: [
-                {
-                  id: "687868140",
-                  type: "songs",
-                },
-              ],
-            },
-            albums: {
-              data: [
-                {
-                  id: "687867700",
-                  type: "albums",
-                },
-              ],
-            },
-            "shazam-artists": {
-              data: [
-                {
-                  id: "42",
-                  type: "shazam-artists",
-                },
-              ],
-            },
-            artists: {
-              data: [
-                {
-                  id: "524929515",
-                  type: "artists",
-                },
-              ],
-            },
-            lyrics: {
-              data: [
-                {
-                  id: "31327778",
-                  type: "lyrics",
-                },
-              ],
-            },
-          },
-        },
-        308021058: {
-          id: "308021058",
-          type: "shazam-songs",
-          attributes: {
-            type: "MUSIC",
-            title: "Unstoppable",
-            artist: "Sia",
-            primaryArtist: "Sia",
-            label: "Monkey Puzzle Records/RCA Records",
-            explicit: false,
-            isrc: "USRC11502934",
-            webUrl:
-              "https://www.shazam.com/track/308021058/unstoppable?co=US&offsetInMilliseconds=&timeSkew=&trackLength=",
-            images: {
-              artistAvatar:
-                "https://is1-ssl.mzstatic.com/image/thumb/Features115/v4/fa/52/dd/fa52ddb2-730b-c79d-4b6d-9590a9d75e52/pr_source.png/800x800cc.jpg",
-              coverArt:
-                "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/bc/13/27/bc13275c-8b26-802d-771b-d15ae00fb530/mzm.hvpwjsvi.jpg/400x400cc.jpg",
-              coverArtHq:
-                "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/bc/13/27/bc13275c-8b26-802d-771b-d15ae00fb530/mzm.hvpwjsvi.jpg/800x800cc.jpg",
-            },
-            share: {
-              subject: "Unstoppable - Sia",
-              text: "I used Shazam to discover Unstoppable by Sia.",
-              image:
-                "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/bc/13/27/bc13275c-8b26-802d-771b-d15ae00fb530/mzm.hvpwjsvi.jpg/400x400cc.jpg",
-              twitter: "I used @Shazam to discover Unstoppable by Sia.",
-              html: "https://www.shazam.com/snippets/email-share/308021058?lang=en-US&country=US",
-              snapchat: "https://www.shazam.com/partner/sc/track/308021058",
-            },
-            genres: {
-              primary: "Pop",
-            },
-            streaming: {
-              preview:
-                "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/bd/e5/1d/bde51d50-f37e-e019-9c54-c32ef6ef7ca5/mzaf_2494221124566835972.plus.aac.ep.m4a",
-              deeplink:
-                "intent://music.apple.com/us/album/unstoppable/1055074478?i=1055074639&mttnagencyid=s2n&mttnsiteid=125115&mttn3pid=Apple-Shazam&mttnsub1=Shazam_android_am&mttnsub2=5348615A-616D-3235-3830-44754D6D5973&itscg=30201&app=music&itsct=Shazam_android_am#Intent;scheme=http;package=com.apple.android.music;action=android.intent.action.VIEW;end",
-              store:
-                "https://play.google.com/store/apps/details?id=com.apple.android.music&referrer=utm_source=https%3A%2F%2Fmusic.apple.com%2Fsubscribe%3Fmttnagencyid%3Ds2n%26mttnsiteid%3D125115%26mttn3pid%3DApple-Shazam%26mttnsub1%3DShazam_android_am%26mttnsub2%3D5348615A-616D-3235-3830-44754D6D5973%26itscg%3D30201%26app%3Dmusic%26itsct%3DShazam_android_am",
-            },
-            classicalAvailability: false,
-          },
-          relationships: {
-            "artist-highlights": {
-              data: [
-                {
-                  id: "28721078",
-                  type: "artist-highlights",
-                },
-              ],
-            },
-            "track-highlights": {
-              data: [
-                {
-                  id: "1651276204",
-                  type: "track-highlights",
-                },
-              ],
-            },
-            "related-tracks": {
-              data: [
-                {
-                  id: "track-similarities-id-308021058",
-                  type: "related-tracks",
-                },
-              ],
-            },
-            songs: {
-              data: [
-                {
-                  id: "1055074639",
-                  type: "songs",
-                },
-              ],
-            },
-            albums: {
-              data: [
-                {
-                  id: "1055074478",
-                  type: "albums",
-                },
-              ],
-            },
-            "shazam-artists": {
-              data: [
-                {
-                  id: "42",
-                  type: "shazam-artists",
-                },
-              ],
-            },
-            artists: {
-              data: [
-                {
-                  id: "28721078",
-                  type: "artists",
-                },
-              ],
-            },
-            lyrics: {
-              data: [
-                {
-                  id: "30047022",
-                  type: "lyrics",
-                },
-              ],
-            },
-          },
-        },
-        498502624: {
-          id: "498502624",
-          type: "shazam-songs",
-          attributes: {
-            type: "MUSIC",
-            title: "Under The Influence",
-            artist: "Chris Brown",
-            primaryArtist: "Chris Brown",
-            label: "Chris Brown Entertainment/RCA Records",
-            explicit: true,
-            isrc: "USRC11902743",
-            webUrl:
-              "https://www.shazam.com/track/498502624/under-the-influence?co=US&offsetInMilliseconds=&timeSkew=&trackLength=",
-            images: {
-              artistAvatar:
-                "https://is4-ssl.mzstatic.com/image/thumb/Music122/v4/54/ca/43/54ca4321-8c0b-099e-f552-950a40a2a899/pr_source.png/800x800cc.jpg",
-              coverArt:
-                "https://is5-ssl.mzstatic.com/image/thumb/Music122/v4/97/ec/96/97ec963b-8829-f040-fe40-508069d6044b/196589418449.jpg/400x400cc.jpg",
-              coverArtHq:
-                "https://is5-ssl.mzstatic.com/image/thumb/Music122/v4/97/ec/96/97ec963b-8829-f040-fe40-508069d6044b/196589418449.jpg/800x800cc.jpg",
-            },
-            share: {
-              subject: "Under The Influence - Chris Brown",
-              text: "I used Shazam to discover Under The Influence by Chris Brown.",
-              image:
-                "https://is5-ssl.mzstatic.com/image/thumb/Music122/v4/97/ec/96/97ec963b-8829-f040-fe40-508069d6044b/196589418449.jpg/400x400cc.jpg",
-              twitter:
-                "I used @Shazam to discover Under The Influence by Chris Brown.",
-              html: "https://www.shazam.com/snippets/email-share/498502624?lang=en-US&country=US",
-              snapchat: "https://www.shazam.com/partner/sc/track/498502624",
-            },
-            genres: {
-              primary: "R&B/Soul",
-            },
-            streaming: {
-              preview:
-                "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview112/v4/8f/15/a9/8f15a986-0cd0-4804-5335-85afddb45ec6/mzaf_842264860529529074.plus.aac.ep.m4a",
-              deeplink:
-                "intent://music.apple.com/us/album/under-the-influence/1643755888?i=1643756110&mttnagencyid=s2n&mttnsiteid=125115&mttn3pid=Apple-Shazam&mttnsub1=Shazam_android_am&mttnsub2=5348615A-616D-3235-3830-44754D6D5973&itscg=30201&app=music&itsct=Shazam_android_am#Intent;scheme=http;package=com.apple.android.music;action=android.intent.action.VIEW;end",
-              store:
-                "https://play.google.com/store/apps/details?id=com.apple.android.music&referrer=utm_source=https%3A%2F%2Fmusic.apple.com%2Fsubscribe%3Fmttnagencyid%3Ds2n%26mttnsiteid%3D125115%26mttn3pid%3DApple-Shazam%26mttnsub1%3DShazam_android_am%26mttnsub2%3D5348615A-616D-3235-3830-44754D6D5973%26itscg%3D30201%26app%3Dmusic%26itsct%3DShazam_android_am",
-            },
-            classicalAvailability: false,
-          },
-          relationships: {
-            "artist-highlights": {
-              data: [
-                {
-                  id: "95705522",
-                  type: "artist-highlights",
-                },
-              ],
-            },
-            "track-highlights": {
-              data: [
-                {
-                  id: "1650529451",
-                  type: "track-highlights",
-                },
-              ],
-            },
-            "related-tracks": {
-              data: [
-                {
-                  id: "track-similarities-id-498502624",
-                  type: "related-tracks",
-                },
-              ],
-            },
-            songs: {
-              data: [
-                {
-                  id: "1643756110",
-                  type: "songs",
-                },
-              ],
-            },
-            albums: {
-              data: [
-                {
-                  id: "1643755888",
-                  type: "albums",
-                },
-              ],
-            },
-            "shazam-artists": {
-              data: [
-                {
-                  id: "42",
-                  type: "shazam-artists",
-                },
-              ],
-            },
-            artists: {
-              data: [
-                {
-                  id: "95705522",
-                  type: "artists",
-                },
-              ],
-            },
-            lyrics: {
-              data: [
-                {
-                  id: "30143864",
-                  type: "lyrics",
-                },
-              ],
-            },
-          },
-        },
-        514260283: {
-          id: "514260283",
-          type: "shazam-songs",
-          attributes: {
-            type: "MUSIC",
-            title: "Heat Waves",
-            artist: "Glass Animals",
-            primaryArtist: "Glass Animals",
-            label: "Polydor Records",
-            explicit: false,
-            isrc: "GBUM72000433",
-            webUrl:
-              "https://www.shazam.com/track/514260283/heat-waves?co=US&offsetInMilliseconds=&timeSkew=&trackLength=",
-            images: {
-              artistAvatar:
-                "https://is1-ssl.mzstatic.com/image/thumb/Features115/v4/06/b3/09/06b30967-8ba7-2206-79d4-e2011f18d599/pr_source.png/800x800cc.jpg",
-              coverArt:
-                "https://is3-ssl.mzstatic.com/image/thumb/Music116/v4/00/b5/53/00b553e2-fbd4-1def-92aa-1d1635697bbb/22UMGIM84423.rgb.jpg/400x400cc.jpg",
-              coverArtHq:
-                "https://is3-ssl.mzstatic.com/image/thumb/Music116/v4/00/b5/53/00b553e2-fbd4-1def-92aa-1d1635697bbb/22UMGIM84423.rgb.jpg/800x800cc.jpg",
-            },
-            share: {
-              subject: "Heat Waves - Glass Animals",
-              text: "I used Shazam to discover Heat Waves by Glass Animals.",
-              image:
-                "https://is3-ssl.mzstatic.com/image/thumb/Music116/v4/00/b5/53/00b553e2-fbd4-1def-92aa-1d1635697bbb/22UMGIM84423.rgb.jpg/400x400cc.jpg",
-              twitter:
-                "I used @Shazam to discover Heat Waves by Glass Animals.",
-              html: "https://www.shazam.com/snippets/email-share/514260283?lang=en-US&country=US",
-              snapchat: "https://www.shazam.com/partner/sc/track/514260283",
-            },
-            genres: {
-              primary: "Alternative",
-            },
-            streaming: {
-              preview:
-                "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/6c/53/5d/6c535d2b-2f76-9d59-dc0b-0639a7fb2687/mzaf_15095229188415863996.plus.aac.ep.m4a",
-              deeplink:
-                "intent://music.apple.com/us/album/heat-waves/1680740657?i=1680740761&mttnagencyid=s2n&mttnsiteid=125115&mttn3pid=Apple-Shazam&mttnsub1=Shazam_android_am&mttnsub2=5348615A-616D-3235-3830-44754D6D5973&itscg=30201&app=music&itsct=Shazam_android_am#Intent;scheme=http;package=com.apple.android.music;action=android.intent.action.VIEW;end",
-              store:
-                "https://play.google.com/store/apps/details?id=com.apple.android.music&referrer=utm_source=https%3A%2F%2Fmusic.apple.com%2Fsubscribe%3Fmttnagencyid%3Ds2n%26mttnsiteid%3D125115%26mttn3pid%3DApple-Shazam%26mttnsub1%3DShazam_android_am%26mttnsub2%3D5348615A-616D-3235-3830-44754D6D5973%26itscg%3D30201%26app%3Dmusic%26itsct%3DShazam_android_am",
-            },
-            classicalAvailability: false,
-          },
-          relationships: {
-            "artist-highlights": {
-              data: [
-                {
-                  id: "528928008",
-                  type: "artist-highlights",
-                },
-              ],
-            },
-            "track-highlights": {
-              data: [
-                {
-                  id: "1520434039",
-                  type: "track-highlights",
-                },
-              ],
-            },
-            "related-tracks": {
-              data: [
-                {
-                  id: "track-similarities-id-514260283",
-                  type: "related-tracks",
-                },
-              ],
-            },
-            songs: {
-              data: [
-                {
-                  id: "1680740761",
-                  type: "songs",
-                },
-              ],
-            },
-            albums: {
-              data: [
-                {
-                  id: "1680740657",
-                  type: "albums",
-                },
-              ],
-            },
-            "shazam-artists": {
-              data: [
-                {
-                  id: "42",
-                  type: "shazam-artists",
-                },
-              ],
-            },
-            artists: {
-              data: [
-                {
-                  id: "528928008",
-                  type: "artists",
-                },
-              ],
-            },
-            lyrics: {
-              data: [
-                {
-                  id: "29547308",
-                  type: "lyrics",
-                },
-              ],
-            },
-          },
-        },
-        601555046: {
-          id: "601555046",
-          type: "shazam-songs",
-          attributes: {
-            type: "MUSIC",
-            title: "Calm Down",
-            artist: "Rema",
-            primaryArtist: "Rema",
-            label: "Mavin Records / Jonzing World",
-            explicit: false,
-            isrc: "NGA3B2214004",
-            webUrl:
-              "https://www.shazam.com/track/601555046/calm-down?co=US&offsetInMilliseconds=&timeSkew=&trackLength=",
-            images: {
-              artistAvatar:
-                "https://is3-ssl.mzstatic.com/image/thumb/AMCArtistImages126/v4/0e/bc/cb/0ebccb7c-af52-7962-7583-96d95e677f6d/718012c7-9b6a-4153-9334-54f84d2935e3_ami-identity-9e987f39368f9dd37966c136969aac14-2023-02-11T08-30-18.286Z_cropped.png/800x800cc.jpg",
-              coverArt:
-                "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/b2/b4/7c/b2b47cf9-d8e2-53f6-5c62-c974d665c95b/22UMGIM08994.rgb.jpg/400x400cc.jpg",
-              coverArtHq:
-                "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/b2/b4/7c/b2b47cf9-d8e2-53f6-5c62-c974d665c95b/22UMGIM08994.rgb.jpg/800x800cc.jpg",
-            },
-            share: {
-              subject: "Calm Down - Rema",
-              text: "I used Shazam to discover Calm Down by Rema.",
-              image:
-                "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/b2/b4/7c/b2b47cf9-d8e2-53f6-5c62-c974d665c95b/22UMGIM08994.rgb.jpg/400x400cc.jpg",
-              twitter: "I used @Shazam to discover Calm Down by Rema.",
-              html: "https://www.shazam.com/snippets/email-share/601555046?lang=en-US&country=US",
-              snapchat: "https://www.shazam.com/partner/sc/track/601555046",
-            },
-            genres: {
-              primary: "World",
-            },
-            streaming: {
-              preview:
-                "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview112/v4/70/9f/c7/709fc7e3-8e43-4b42-4f6e-c9f0a94842ce/mzaf_8187227090010990098.plus.aac.ep.m4a",
-              deeplink:
-                "intent://music.apple.com/us/album/calm-down/1614063395?i=1614063459&mttnagencyid=s2n&mttnsiteid=125115&mttn3pid=Apple-Shazam&mttnsub1=Shazam_android_am&mttnsub2=5348615A-616D-3235-3830-44754D6D5973&itscg=30201&app=music&itsct=Shazam_android_am#Intent;scheme=http;package=com.apple.android.music;action=android.intent.action.VIEW;end",
-              store:
-                "https://play.google.com/store/apps/details?id=com.apple.android.music&referrer=utm_source=https%3A%2F%2Fmusic.apple.com%2Fsubscribe%3Fmttnagencyid%3Ds2n%26mttnsiteid%3D125115%26mttn3pid%3DApple-Shazam%26mttnsub1%3DShazam_android_am%26mttnsub2%3D5348615A-616D-3235-3830-44754D6D5973%26itscg%3D30201%26app%3Dmusic%26itsct%3DShazam_android_am",
-            },
-            classicalAvailability: false,
-          },
-          relationships: {
-            "artist-highlights": {
-              data: [
-                {
-                  id: "1304716885",
-                  type: "artist-highlights",
-                },
-              ],
-            },
-            "track-highlights": {
-              data: [
-                {
-                  id: "1650414355",
-                  type: "track-highlights",
-                },
-              ],
-            },
-            "related-tracks": {
-              data: [
-                {
-                  id: "track-similarities-id-601555046",
-                  type: "related-tracks",
-                },
-              ],
-            },
-            songs: {
-              data: [
-                {
-                  id: "1614063459",
-                  type: "songs",
-                },
-              ],
-            },
-            albums: {
-              data: [
-                {
-                  id: "1614063395",
-                  type: "albums",
-                },
-              ],
-            },
-            "shazam-artists": {
-              data: [
-                {
-                  id: "42",
-                  type: "shazam-artists",
-                },
-              ],
-            },
-            artists: {
-              data: [
-                {
-                  id: "1304716885",
-                  type: "artists",
-                },
-              ],
-            },
-            lyrics: {
-              data: [
-                {
-                  id: "29353439",
-                  type: "lyrics",
-                },
-              ],
-            },
-          },
-        },
-        606589047: {
-          id: "606589047",
-          type: "shazam-songs",
-          attributes: {
-            type: "MUSIC",
-            title: "Bones",
-            artist: "Imagine Dragons",
-            primaryArtist: "Imagine Dragons",
-            label: "KIDinaKORNER/Interscope Records",
-            explicit: false,
-            isrc: "USUM72201759",
-            webUrl:
-              "https://www.shazam.com/track/606589047/bones?co=US&offsetInMilliseconds=&timeSkew=&trackLength=",
-            images: {
-              artistAvatar:
-                "https://is5-ssl.mzstatic.com/image/thumb/Music125/v4/83/bd/b7/83bdb7ff-63a6-2252-e04b-ece8ebdc5768/pr_source.png/800x800cc.jpg",
-              coverArt:
-                "https://is4-ssl.mzstatic.com/image/thumb/Music116/v4/33/87/c8/3387c827-adaa-681d-bd10-ce7d8e888b9c/22UMGIM21054.rgb.jpg/400x400cc.jpg",
-              coverArtHq:
-                "https://is4-ssl.mzstatic.com/image/thumb/Music116/v4/33/87/c8/3387c827-adaa-681d-bd10-ce7d8e888b9c/22UMGIM21054.rgb.jpg/800x800cc.jpg",
-            },
-            share: {
-              subject: "Bones - Imagine Dragons",
-              text: "I used Shazam to discover Bones by Imagine Dragons.",
-              image:
-                "https://is4-ssl.mzstatic.com/image/thumb/Music116/v4/33/87/c8/3387c827-adaa-681d-bd10-ce7d8e888b9c/22UMGIM21054.rgb.jpg/400x400cc.jpg",
-              twitter: "I used @Shazam to discover Bones by Imagine Dragons.",
-              html: "https://www.shazam.com/snippets/email-share/606589047?lang=en-US&country=US",
-              snapchat: "https://www.shazam.com/partner/sc/track/606589047",
-            },
-            genres: {
-              primary: "Alternative",
-            },
-            streaming: {
-              preview:
-                "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview122/v4/85/bd/1e/85bd1eaa-8aa2-2f8c-d84d-bd66a525faf9/mzaf_17880216165394527644.plus.aac.ep.m4a",
-              deeplink:
-                "intent://music.apple.com/us/album/bones/1612321587?i=1612321591&mttnagencyid=s2n&mttnsiteid=125115&mttn3pid=Apple-Shazam&mttnsub1=Shazam_android_am&mttnsub2=5348615A-616D-3235-3830-44754D6D5973&itscg=30201&app=music&itsct=Shazam_android_am#Intent;scheme=http;package=com.apple.android.music;action=android.intent.action.VIEW;end",
-              store:
-                "https://play.google.com/store/apps/details?id=com.apple.android.music&referrer=utm_source=https%3A%2F%2Fmusic.apple.com%2Fsubscribe%3Fmttnagencyid%3Ds2n%26mttnsiteid%3D125115%26mttn3pid%3DApple-Shazam%26mttnsub1%3DShazam_android_am%26mttnsub2%3D5348615A-616D-3235-3830-44754D6D5973%26itscg%3D30201%26app%3Dmusic%26itsct%3DShazam_android_am",
-            },
-            classicalAvailability: false,
-          },
-          relationships: {
-            "artist-highlights": {
-              data: [
-                {
-                  id: "358714030",
-                  type: "artist-highlights",
-                },
-              ],
-            },
-            "track-highlights": {
-              data: [
-                {
-                  id: "1617758121",
-                  type: "track-highlights",
-                },
-              ],
-            },
-            "related-tracks": {
-              data: [
-                {
-                  id: "track-similarities-id-606589047",
-                  type: "related-tracks",
-                },
-              ],
-            },
-            songs: {
-              data: [
-                {
-                  id: "1612321591",
-                  type: "songs",
-                },
-              ],
-            },
-            albums: {
-              data: [
-                {
-                  id: "1612321587",
-                  type: "albums",
-                },
-              ],
-            },
-            "shazam-artists": {
-              data: [
-                {
-                  id: "42",
-                  type: "shazam-artists",
-                },
-              ],
-            },
-            artists: {
-              data: [
-                {
-                  id: "358714030",
-                  type: "artists",
-                },
-              ],
-            },
-            lyrics: {
-              data: [
-                {
-                  id: "29371213",
-                  type: "lyrics",
-                },
-              ],
-            },
-          },
-        },
-        607917333: {
-          id: "607917333",
-          type: "shazam-songs",
-          attributes: {
-            type: "MUSIC",
-            title: "SNAP",
-            artist: "Rosa Linn",
-            primaryArtist: "Rosa Linn",
-            label: "Columbia",
-            explicit: false,
-            isrc: "USSM12207342",
-            webUrl:
-              "https://www.shazam.com/track/607917333/snap?co=US&offsetInMilliseconds=&timeSkew=&trackLength=",
-            images: {
-              artistAvatar:
-                "https://is4-ssl.mzstatic.com/image/thumb/Music116/v4/75/4c/3b/754c3b37-5a16-c203-f6f6-ff5c3ddfa93e/pr_source.png/800x800cc.jpg",
-              coverArt:
-                "https://is4-ssl.mzstatic.com/image/thumb/Music122/v4/e6/f7/26/e6f726ab-1827-dec4-1613-394b537db8e4/196589496959.jpg/400x400cc.jpg",
-              coverArtHq:
-                "https://is4-ssl.mzstatic.com/image/thumb/Music122/v4/e6/f7/26/e6f726ab-1827-dec4-1613-394b537db8e4/196589496959.jpg/800x800cc.jpg",
-            },
-            share: {
-              subject: "SNAP - Rosa Linn",
-              text: "I used Shazam to discover SNAP by Rosa Linn.",
-              image:
-                "https://is4-ssl.mzstatic.com/image/thumb/Music122/v4/e6/f7/26/e6f726ab-1827-dec4-1613-394b537db8e4/196589496959.jpg/400x400cc.jpg",
-              twitter: "I used @Shazam to discover SNAP by Rosa Linn.",
-              html: "https://www.shazam.com/snippets/email-share/607917333?lang=en-US&country=US",
-              snapchat: "https://www.shazam.com/partner/sc/track/607917333",
-            },
-            genres: {
-              primary: "Indie Pop",
-            },
-            streaming: {
-              preview:
-                "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview122/v4/3f/51/6f/3f516f8f-aff1-2ccd-151a-e417ed5e934e/mzaf_4321344331127641664.plus.aac.ep.m4a",
-              deeplink:
-                "intent://music.apple.com/us/album/snap/1646526226?i=1646526227&mttnagencyid=s2n&mttnsiteid=125115&mttn3pid=Apple-Shazam&mttnsub1=Shazam_android_am&mttnsub2=5348615A-616D-3235-3830-44754D6D5973&itscg=30201&app=music&itsct=Shazam_android_am#Intent;scheme=http;package=com.apple.android.music;action=android.intent.action.VIEW;end",
-              store:
-                "https://play.google.com/store/apps/details?id=com.apple.android.music&referrer=utm_source=https%3A%2F%2Fmusic.apple.com%2Fsubscribe%3Fmttnagencyid%3Ds2n%26mttnsiteid%3D125115%26mttn3pid%3DApple-Shazam%26mttnsub1%3DShazam_android_am%26mttnsub2%3D5348615A-616D-3235-3830-44754D6D5973%26itscg%3D30201%26app%3Dmusic%26itsct%3DShazam_android_am",
-            },
-            classicalAvailability: false,
-          },
-          relationships: {
-            "artist-highlights": {
-              data: [
-                {
-                  id: "1580652660",
-                  type: "artist-highlights",
-                },
-              ],
-            },
-            "track-highlights": {
-              data: [
-                {
-                  id: "1648922849",
-                  type: "track-highlights",
-                },
-              ],
-            },
-            "related-tracks": {
-              data: [
-                {
-                  id: "track-similarities-id-607917333",
-                  type: "related-tracks",
-                },
-              ],
-            },
-            songs: {
-              data: [
-                {
-                  id: "1646526227",
-                  type: "songs",
-                },
-              ],
-            },
-            albums: {
-              data: [
-                {
-                  id: "1646526226",
-                  type: "albums",
-                },
-              ],
-            },
-            "shazam-artists": {
-              data: [
-                {
-                  id: "42",
-                  type: "shazam-artists",
-                },
-              ],
-            },
-            artists: {
-              data: [
-                {
-                  id: "1580652660",
-                  type: "artists",
-                },
-              ],
-            },
-            lyrics: {
-              data: [
-                {
-                  id: "29382097",
-                  type: "lyrics",
-                },
-              ],
-            },
-          },
-        },
-        609260140: {
-          id: "609260140",
-          type: "shazam-songs",
-          attributes: {
-            type: "MUSIC",
-            title: "As It Was",
-            artist: "Harry Styles",
-            primaryArtist: "Harry Styles",
-            label: "Columbia",
-            explicit: false,
-            isrc: "USSM12200612",
-            webUrl:
-              "https://www.shazam.com/track/609260140/as-it-was?co=US&offsetInMilliseconds=&timeSkew=&trackLength=",
-            images: {
-              artistAvatar:
-                "https://is2-ssl.mzstatic.com/image/thumb/Music122/v4/00/8f/26/008f26ce-ec78-ad42-9303-260ac3b9701c/pr_source.png/800x800cc.jpg",
-              coverArt:
-                "https://is4-ssl.mzstatic.com/image/thumb/Music126/v4/2a/19/fb/2a19fb85-2f70-9e44-f2a9-82abe679b88e/886449990061.jpg/400x400cc.jpg",
-              coverArtHq:
-                "https://is4-ssl.mzstatic.com/image/thumb/Music126/v4/2a/19/fb/2a19fb85-2f70-9e44-f2a9-82abe679b88e/886449990061.jpg/800x800cc.jpg",
-            },
-            share: {
-              subject: "As It Was - Harry Styles",
-              text: "I used Shazam to discover As It Was by Harry Styles.",
-              image:
-                "https://is4-ssl.mzstatic.com/image/thumb/Music126/v4/2a/19/fb/2a19fb85-2f70-9e44-f2a9-82abe679b88e/886449990061.jpg/400x400cc.jpg",
-              twitter: "I used @Shazam to discover As It Was by Harry Styles.",
-              html: "https://www.shazam.com/snippets/email-share/609260140?lang=en-US&country=US",
-              snapchat: "https://www.shazam.com/partner/sc/track/609260140",
-            },
-            genres: {
-              primary: "Pop",
-            },
-            streaming: {
-              preview:
-                "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview122/v4/96/7e/ea/967eea0f-3d8e-9bb6-b4c5-fb255f50b906/mzaf_16046209671483865399.plus.aac.ep.m4a",
-              deeplink:
-                "intent://music.apple.com/us/album/as-it-was/1615584999?i=1615585008&mttnagencyid=s2n&mttnsiteid=125115&mttn3pid=Apple-Shazam&mttnsub1=Shazam_android_am&mttnsub2=5348615A-616D-3235-3830-44754D6D5973&itscg=30201&app=music&itsct=Shazam_android_am#Intent;scheme=http;package=com.apple.android.music;action=android.intent.action.VIEW;end",
-              store:
-                "https://play.google.com/store/apps/details?id=com.apple.android.music&referrer=utm_source=https%3A%2F%2Fmusic.apple.com%2Fsubscribe%3Fmttnagencyid%3Ds2n%26mttnsiteid%3D125115%26mttn3pid%3DApple-Shazam%26mttnsub1%3DShazam_android_am%26mttnsub2%3D5348615A-616D-3235-3830-44754D6D5973%26itscg%3D30201%26app%3Dmusic%26itsct%3DShazam_android_am",
-            },
-            classicalAvailability: false,
-          },
-          relationships: {
-            "artist-highlights": {
-              data: [
-                {
-                  id: "471260289",
-                  type: "artist-highlights",
-                },
-              ],
-            },
-            "track-highlights": {
-              data: [
-                {
-                  id: "1616896437",
-                  type: "track-highlights",
-                },
-              ],
-            },
-            "related-tracks": {
-              data: [
-                {
-                  id: "track-similarities-id-609260140",
-                  type: "related-tracks",
-                },
-              ],
-            },
-            songs: {
-              data: [
-                {
-                  id: "1615585008",
-                  type: "songs",
-                },
-              ],
-            },
-            albums: {
-              data: [
-                {
-                  id: "1615584999",
-                  type: "albums",
-                },
-              ],
-            },
-            "shazam-artists": {
-              data: [
-                {
-                  id: "42",
-                  type: "shazam-artists",
-                },
-              ],
-            },
-            artists: {
-              data: [
-                {
-                  id: "471260289",
-                  type: "artists",
-                },
-              ],
-            },
-            lyrics: {
-              data: [
-                {
-                  id: "30448711",
-                  type: "lyrics",
-                },
-              ],
-            },
-          },
-        },
-        614204083: {
-          id: "614204083",
-          type: "shazam-songs",
-          attributes: {
-            type: "MUSIC",
-            title: "I Ain't Worried",
-            artist: "OneRepublic",
-            primaryArtist: "OneRepublic",
-            label: "Interscope Records",
-            explicit: false,
-            isrc: "USUM72206227",
-            webUrl:
-              "https://www.shazam.com/track/614204083/i-aint-worried?co=US&offsetInMilliseconds=&timeSkew=&trackLength=",
-            images: {
-              artistAvatar:
-                "https://is3-ssl.mzstatic.com/image/thumb/Music126/v4/cc/0e/16/cc0e16cd-642c-001f-180c-9d6e6080d5c7/pr_source.png/800x800cc.jpg",
-              coverArt:
-                "https://is4-ssl.mzstatic.com/image/thumb/Music122/v4/e6/14/14/e6141444-6597-4c3a-7ad1-86304528acf4/22UMGIM45569.rgb.jpg/400x400cc.jpg",
-              coverArtHq:
-                "https://is4-ssl.mzstatic.com/image/thumb/Music122/v4/e6/14/14/e6141444-6597-4c3a-7ad1-86304528acf4/22UMGIM45569.rgb.jpg/800x800cc.jpg",
-            },
-            share: {
-              subject: "I Ain't Worried - OneRepublic",
-              text: "I used Shazam to discover I Ain't Worried by OneRepublic.",
-              image:
-                "https://is4-ssl.mzstatic.com/image/thumb/Music122/v4/e6/14/14/e6141444-6597-4c3a-7ad1-86304528acf4/22UMGIM45569.rgb.jpg/400x400cc.jpg",
-              twitter:
-                "I used @Shazam to discover I Ain't Worried by OneRepublic.",
-              html: "https://www.shazam.com/snippets/email-share/614204083?lang=en-US&country=US",
-              snapchat: "https://www.shazam.com/partner/sc/track/614204083",
-            },
-            genres: {
-              primary: "Pop",
-            },
-            streaming: {
-              preview:
-                "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview112/v4/5c/f0/8a/5cf08acf-596f-c264-affa-9c387a7410e8/mzaf_2952444090080507083.plus.aac.p.m4a",
-              deeplink:
-                "intent://music.apple.com/us/album/i-aint-worried/1621817793?i=1621817894&mttnagencyid=s2n&mttnsiteid=125115&mttn3pid=Apple-Shazam&mttnsub1=Shazam_android_am&mttnsub2=5348615A-616D-3235-3830-44754D6D5973&itscg=30201&app=music&itsct=Shazam_android_am#Intent;scheme=http;package=com.apple.android.music;action=android.intent.action.VIEW;end",
-              store:
-                "https://play.google.com/store/apps/details?id=com.apple.android.music&referrer=utm_source=https%3A%2F%2Fmusic.apple.com%2Fsubscribe%3Fmttnagencyid%3Ds2n%26mttnsiteid%3D125115%26mttn3pid%3DApple-Shazam%26mttnsub1%3DShazam_android_am%26mttnsub2%3D5348615A-616D-3235-3830-44754D6D5973%26itscg%3D30201%26app%3Dmusic%26itsct%3DShazam_android_am",
-            },
-            classicalAvailability: false,
-          },
-          relationships: {
-            "artist-highlights": {
-              data: [
-                {
-                  id: "260414340",
-                  type: "artist-highlights",
-                },
-              ],
-            },
-            "track-highlights": {
-              data: [
-                {
-                  id: "1623893089",
-                  type: "track-highlights",
-                },
-              ],
-            },
-            "related-tracks": {
-              data: [
-                {
-                  id: "track-similarities-id-614204083",
-                  type: "related-tracks",
-                },
-              ],
-            },
-            songs: {
-              data: [
-                {
-                  id: "1621817894",
-                  type: "songs",
-                },
-              ],
-            },
-            albums: {
-              data: [
-                {
-                  id: "1621817793",
-                  type: "albums",
-                },
-              ],
-            },
-            "shazam-artists": {
-              data: [
-                {
-                  id: "42",
-                  type: "shazam-artists",
-                },
-              ],
-            },
-            artists: {
-              data: [
-                {
-                  id: "260414340",
-                  type: "artists",
-                },
-              ],
-            },
-            lyrics: {
-              data: [
-                {
-                  id: "29282474",
-                  type: "lyrics",
-                },
-              ],
-            },
-          },
-        },
-        626708777: {
-          id: "626708777",
-          type: "shazam-songs",
-          attributes: {
-            type: "MUSIC",
-            title: "Miss You",
-            artist: "Oliver Tree & Robin Schulz",
-            primaryArtist: "Oliver Tree",
-            label: "Atlantic Records",
-            explicit: true,
-            isrc: "USAT22211992",
-            webUrl:
-              "https://www.shazam.com/track/626708777/miss-you?co=US&offsetInMilliseconds=&timeSkew=&trackLength=",
-            images: {
-              artistAvatar:
-                "https://is1-ssl.mzstatic.com/image/thumb/AMCArtistImages112/v4/34/e2/89/34e2892d-f812-db6a-1d24-b0c81e96849f/39ecba06-e143-4801-b33b-b5b8367b0474_ami-identity-3bd5d7c869befd01c574e84637437516-2022-11-14T18-17-57.618Z_cropped.png/800x800cc.jpg",
-              coverArt:
-                "https://is4-ssl.mzstatic.com/image/thumb/Music122/v4/69/e0/27/69e02785-714c-d0b9-ba68-04a2361fa7e5/075679730466.jpg/400x400cc.jpg",
-              coverArtHq:
-                "https://is4-ssl.mzstatic.com/image/thumb/Music122/v4/69/e0/27/69e02785-714c-d0b9-ba68-04a2361fa7e5/075679730466.jpg/800x800cc.jpg",
-            },
-            share: {
-              subject: "Miss You - Oliver Tree & Robin Schulz",
-              text: "I used Shazam to discover Miss You by Oliver Tree & Robin Schulz.",
-              image:
-                "https://is4-ssl.mzstatic.com/image/thumb/Music122/v4/69/e0/27/69e02785-714c-d0b9-ba68-04a2361fa7e5/075679730466.jpg/400x400cc.jpg",
-              twitter:
-                "I used @Shazam to discover Miss You by Oliver Tree & Robin Schulz.",
-              html: "https://www.shazam.com/snippets/email-share/626708777?lang=en-US&country=US",
-              snapchat: "https://www.shazam.com/partner/sc/track/626708777",
-            },
-            genres: {
-              primary: "Pop",
-            },
-            streaming: {
-              preview:
-                "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview122/v4/78/d1/8f/78d18f9f-671b-3c3c-0033-917651170937/mzaf_14625856779470870222.plus.aac.ep.m4a",
-              deeplink:
-                "intent://music.apple.com/us/album/miss-you/1638208775?i=1638208778&mttnagencyid=s2n&mttnsiteid=125115&mttn3pid=Apple-Shazam&mttnsub1=Shazam_android_am&mttnsub2=5348615A-616D-3235-3830-44754D6D5973&itscg=30201&app=music&itsct=Shazam_android_am#Intent;scheme=http;package=com.apple.android.music;action=android.intent.action.VIEW;end",
-              store:
-                "https://play.google.com/store/apps/details?id=com.apple.android.music&referrer=utm_source=https%3A%2F%2Fmusic.apple.com%2Fsubscribe%3Fmttnagencyid%3Ds2n%26mttnsiteid%3D125115%26mttn3pid%3DApple-Shazam%26mttnsub1%3DShazam_android_am%26mttnsub2%3D5348615A-616D-3235-3830-44754D6D5973%26itscg%3D30201%26app%3Dmusic%26itsct%3DShazam_android_am",
-            },
-            classicalAvailability: false,
-          },
-          relationships: {
-            "artist-highlights": {
-              data: [
-                {
-                  id: "1140096017",
-                  type: "artist-highlights",
-                },
-              ],
-            },
-            "track-highlights": {
-              data: [
-                {
-                  id: "1651969464",
-                  type: "track-highlights",
-                },
-              ],
-            },
-            "related-tracks": {
-              data: [
-                {
-                  id: "track-similarities-id-626708777",
-                  type: "related-tracks",
-                },
-              ],
-            },
-            songs: {
-              data: [
-                {
-                  id: "1638208778",
-                  type: "songs",
-                },
-              ],
-            },
-            albums: {
-              data: [
-                {
-                  id: "1638208775",
-                  type: "albums",
-                },
-              ],
-            },
-            "shazam-artists": {
-              data: [
-                {
-                  id: "42",
-                  type: "shazam-artists",
-                },
-              ],
-            },
-            artists: {
-              data: [
-                {
-                  id: "1140096017",
-                  type: "artists",
-                },
-              ],
-            },
-            lyrics: {
-              data: [
-                {
-                  id: "30840256",
-                  type: "lyrics",
-                },
-              ],
-            },
-          },
-        },
-        628712770: {
-          id: "628712770",
-          type: "shazam-songs",
-          attributes: {
-            type: "MUSIC",
-            title: "Calm Down",
-            artist: "Rema & Selena Gomez",
-            primaryArtist: "Rema",
-            label: "Mavin Records / Jonzing World",
-            explicit: false,
-            isrc: "NGA3B2214021",
-            webUrl:
-              "https://www.shazam.com/track/628712770/calm-down?co=US&offsetInMilliseconds=&timeSkew=&trackLength=",
-            images: {
-              artistAvatar:
-                "https://is3-ssl.mzstatic.com/image/thumb/AMCArtistImages126/v4/0e/bc/cb/0ebccb7c-af52-7962-7583-96d95e677f6d/718012c7-9b6a-4153-9334-54f84d2935e3_ami-identity-9e987f39368f9dd37966c136969aac14-2023-02-11T08-30-18.286Z_cropped.png/800x800cc.jpg",
-              coverArt:
-                "https://is3-ssl.mzstatic.com/image/thumb/Music112/v4/ee/f1/dc/eef1dc82-f516-fd0f-581c-3f952a0e2243/22UMGIM92113.rgb.jpg/400x400cc.jpg",
-              coverArtHq:
-                "https://is3-ssl.mzstatic.com/image/thumb/Music112/v4/ee/f1/dc/eef1dc82-f516-fd0f-581c-3f952a0e2243/22UMGIM92113.rgb.jpg/800x800cc.jpg",
-            },
-            share: {
-              subject: "Calm Down - Rema & Selena Gomez",
-              text: "I used Shazam to discover Calm Down by Rema & Selena Gomez.",
-              image:
-                "https://is3-ssl.mzstatic.com/image/thumb/Music112/v4/ee/f1/dc/eef1dc82-f516-fd0f-581c-3f952a0e2243/22UMGIM92113.rgb.jpg/400x400cc.jpg",
-              twitter:
-                "I used @Shazam to discover Calm Down by Rema & Selena Gomez.",
-              html: "https://www.shazam.com/snippets/email-share/628712770?lang=en-US&country=US",
-              snapchat: "https://www.shazam.com/partner/sc/track/628712770",
-            },
-            genres: {
-              primary: "Pop",
-            },
-            streaming: {
-              preview:
-                "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview112/v4/21/6a/f7/216af760-4f00-d65e-5176-d3b76ff1143d/mzaf_10299316430509002343.plus.aac.ep.m4a",
-              deeplink:
-                "intent://music.apple.com/us/album/calm-down/1640501237?i=1640501238&mttnagencyid=s2n&mttnsiteid=125115&mttn3pid=Apple-Shazam&mttnsub1=Shazam_android_am&mttnsub2=5348615A-616D-3235-3830-44754D6D5973&itscg=30201&app=music&itsct=Shazam_android_am#Intent;scheme=http;package=com.apple.android.music;action=android.intent.action.VIEW;end",
-              store:
-                "https://play.google.com/store/apps/details?id=com.apple.android.music&referrer=utm_source=https%3A%2F%2Fmusic.apple.com%2Fsubscribe%3Fmttnagencyid%3Ds2n%26mttnsiteid%3D125115%26mttn3pid%3DApple-Shazam%26mttnsub1%3DShazam_android_am%26mttnsub2%3D5348615A-616D-3235-3830-44754D6D5973%26itscg%3D30201%26app%3Dmusic%26itsct%3DShazam_android_am",
-            },
-            classicalAvailability: false,
-          },
-          relationships: {
-            "artist-highlights": {
-              data: [
-                {
-                  id: "1304716885",
-                  type: "artist-highlights",
-                },
-              ],
-            },
-            "track-highlights": {
-              data: [
-                {
-                  id: "1643167420",
-                  type: "track-highlights",
-                },
-              ],
-            },
-            "related-tracks": {
-              data: [
-                {
-                  id: "track-similarities-id-628712770",
-                  type: "related-tracks",
-                },
-              ],
-            },
-            songs: {
-              data: [
-                {
-                  id: "1640501238",
-                  type: "songs",
-                },
-              ],
-            },
-            albums: {
-              data: [
-                {
-                  id: "1640501237",
-                  type: "albums",
-                },
-              ],
-            },
-            "shazam-artists": {
-              data: [
-                {
-                  id: "42",
-                  type: "shazam-artists",
-                },
-              ],
-            },
-            artists: {
-              data: [
-                {
-                  id: "1304716885",
-                  type: "artists",
-                },
-              ],
-            },
-          },
-        },
-        628935200: {
-          id: "628935200",
-          type: "shazam-songs",
-          attributes: {
-            type: "MUSIC",
-            title: "I'm Good (Blue)",
-            artist: "David Guetta & Bebe Rexha",
-            primaryArtist: "David Guetta",
-            label: "Warner Records",
-            explicit: false,
-            isrc: "UKWLG2200057",
-            webUrl:
-              "https://www.shazam.com/track/628935200/im-good-blue?co=US&offsetInMilliseconds=&timeSkew=&trackLength=",
-            images: {
-              artistAvatar:
-                "https://is5-ssl.mzstatic.com/image/thumb/Features115/v4/d4/0c/2d/d40c2d6c-9ebc-b1b3-6cd8-36a9fb9d4eef/mzl.jynpmslg.jpg/800x800cc.jpg",
-              coverArt:
-                "https://is5-ssl.mzstatic.com/image/thumb/Music116/v4/55/21/67/55216795-948a-9fc5-7ae8-f95b6d0093ba/093624854555.jpg/400x400cc.jpg",
-              coverArtHq:
-                "https://is5-ssl.mzstatic.com/image/thumb/Music116/v4/55/21/67/55216795-948a-9fc5-7ae8-f95b6d0093ba/093624854555.jpg/800x800cc.jpg",
-            },
-            share: {
-              subject: "I'm Good (Blue) - David Guetta & Bebe Rexha",
-              text: "I used Shazam to discover I'm Good (Blue) by David Guetta & Bebe Rexha.",
-              image:
-                "https://is5-ssl.mzstatic.com/image/thumb/Music116/v4/55/21/67/55216795-948a-9fc5-7ae8-f95b6d0093ba/093624854555.jpg/400x400cc.jpg",
-              twitter:
-                "I used @Shazam to discover I'm Good (Blue) by David Guetta & Bebe Rexha.",
-              html: "https://www.shazam.com/snippets/email-share/628935200?lang=en-US&country=US",
-              snapchat: "https://www.shazam.com/partner/sc/track/628935200",
-            },
-            genres: {
-              primary: "Dance",
-            },
-            streaming: {
-              preview:
-                "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/3b/89/0a/3b890a97-7763-9068-323e-9e11085ed374/mzaf_5650712663528084469.plus.aac.ep.m4a",
-              deeplink:
-                "intent://music.apple.com/us/album/im-good-blue/1678877550?i=1678878113&mttnagencyid=s2n&mttnsiteid=125115&mttn3pid=Apple-Shazam&mttnsub1=Shazam_android_am&mttnsub2=5348615A-616D-3235-3830-44754D6D5973&itscg=30201&app=music&itsct=Shazam_android_am#Intent;scheme=http;package=com.apple.android.music;action=android.intent.action.VIEW;end",
-              store:
-                "https://play.google.com/store/apps/details?id=com.apple.android.music&referrer=utm_source=https%3A%2F%2Fmusic.apple.com%2Fsubscribe%3Fmttnagencyid%3Ds2n%26mttnsiteid%3D125115%26mttn3pid%3DApple-Shazam%26mttnsub1%3DShazam_android_am%26mttnsub2%3D5348615A-616D-3235-3830-44754D6D5973%26itscg%3D30201%26app%3Dmusic%26itsct%3DShazam_android_am",
-            },
-            classicalAvailability: false,
-          },
-          relationships: {
-            "artist-highlights": {
-              data: [
-                {
-                  id: "5557599",
-                  type: "artist-highlights",
-                },
-              ],
-            },
-            "track-highlights": {
-              data: [
-                {
-                  id: "1646266064",
-                  type: "track-highlights",
-                },
-              ],
-            },
-            "related-tracks": {
-              data: [
-                {
-                  id: "track-similarities-id-628935200",
-                  type: "related-tracks",
-                },
-              ],
-            },
-            songs: {
-              data: [
-                {
-                  id: "1678878113",
-                  type: "songs",
-                },
-              ],
-            },
-            albums: {
-              data: [
-                {
-                  id: "1678877550",
-                  type: "albums",
-                },
-              ],
-            },
-            "shazam-artists": {
-              data: [
-                {
-                  id: "42",
-                  type: "shazam-artists",
-                },
-              ],
-            },
-            artists: {
-              data: [
-                {
-                  id: "5557599",
-                  type: "artists",
-                },
-              ],
-            },
-          },
-        },
-        630520607: {
-          id: "630520607",
-          type: "shazam-songs",
-          attributes: {
-            type: "MUSIC",
-            title: "STAR WALKIN' (League of Legends Worlds Anthem)",
-            artist: "Lil Nas X",
-            primaryArtist: "Lil Nas X",
-            label: "Columbia",
-            explicit: true,
-            isrc: "USSM12208809",
-            webUrl:
-              "https://www.shazam.com/track/630520607/star-walkin-league-of-legends-worlds-anthem?co=US&offsetInMilliseconds=&timeSkew=&trackLength=",
-            images: {
-              artistAvatar:
-                "https://is5-ssl.mzstatic.com/image/thumb/Music122/v4/cc/71/d7/cc71d772-a807-6943-b4e2-c1b92b7b99b8/pr_source.png/800x800cc.jpg",
-              coverArt:
-                "https://is5-ssl.mzstatic.com/image/thumb/Music112/v4/ba/4c/c4/ba4cc4e4-50e5-04f8-b865-389fdf0dfc38/dj.vdbsglhz.jpg/400x400cc.jpg",
-              coverArtHq:
-                "https://is5-ssl.mzstatic.com/image/thumb/Music112/v4/ba/4c/c4/ba4cc4e4-50e5-04f8-b865-389fdf0dfc38/dj.vdbsglhz.jpg/800x800cc.jpg",
-            },
-            share: {
-              subject:
-                "STAR WALKIN' (League of Legends Worlds Anthem) - Lil Nas X",
-              text: "I used Shazam to discover STAR WALKIN' (League of Legends Worlds Anthem) by Lil Nas X.",
-              image:
-                "https://is5-ssl.mzstatic.com/image/thumb/Music112/v4/ba/4c/c4/ba4cc4e4-50e5-04f8-b865-389fdf0dfc38/dj.vdbsglhz.jpg/400x400cc.jpg",
-              twitter:
-                "I used @Shazam to discover STAR WALKIN' (League of Legends Worlds Anthem) by Lil Nas X.",
-              html: "https://www.shazam.com/snippets/email-share/630520607?lang=en-US&country=US",
-              snapchat: "https://www.shazam.com/partner/sc/track/630520607",
-            },
-            genres: {
-              primary: "Pop",
-            },
-            streaming: {
-              preview:
-                "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview112/v4/6d/4b/66/6d4b6697-57ec-f34c-a56d-53c7fe48acea/mzaf_14430168494514608993.plus.aac.ep.m4a",
-              deeplink:
-                "intent://music.apple.com/us/album/star-walkin-league-of-legends-worlds-anthem/1642613175?i=1642613664&mttnagencyid=s2n&mttnsiteid=125115&mttn3pid=Apple-Shazam&mttnsub1=Shazam_android_am&mttnsub2=5348615A-616D-3235-3830-44754D6D5973&itscg=30201&app=music&itsct=Shazam_android_am#Intent;scheme=http;package=com.apple.android.music;action=android.intent.action.VIEW;end",
-              store:
-                "https://play.google.com/store/apps/details?id=com.apple.android.music&referrer=utm_source=https%3A%2F%2Fmusic.apple.com%2Fsubscribe%3Fmttnagencyid%3Ds2n%26mttnsiteid%3D125115%26mttn3pid%3DApple-Shazam%26mttnsub1%3DShazam_android_am%26mttnsub2%3D5348615A-616D-3235-3830-44754D6D5973%26itscg%3D30201%26app%3Dmusic%26itsct%3DShazam_android_am",
-            },
-            classicalAvailability: false,
-          },
-          relationships: {
-            "artist-highlights": {
-              data: [
-                {
-                  id: "1400730578",
-                  type: "artist-highlights",
-                },
-              ],
-            },
-            "track-highlights": {
-              data: [
-                {
-                  id: "1647609220",
-                  type: "track-highlights",
-                },
-              ],
-            },
-            "related-tracks": {
-              data: [
-                {
-                  id: "track-similarities-id-630520607",
-                  type: "related-tracks",
-                },
-              ],
-            },
-            songs: {
-              data: [
-                {
-                  id: "1642613664",
-                  type: "songs",
-                },
-              ],
-            },
-            albums: {
-              data: [
-                {
-                  id: "1642613175",
-                  type: "albums",
-                },
-              ],
-            },
-            "shazam-artists": {
-              data: [
-                {
-                  id: "42",
-                  type: "shazam-artists",
-                },
-              ],
-            },
-            artists: {
-              data: [
-                {
-                  id: "1400730578",
-                  type: "artists",
-                },
-              ],
-            },
-            lyrics: {
-              data: [
-                {
-                  id: "30568373",
-                  type: "lyrics",
-                },
-              ],
-            },
-          },
-        },
-        636972694: {
-          id: "636972694",
-          type: "shazam-songs",
-          attributes: {
-            type: "MUSIC",
-            title: "The Astronaut",
-            artist: "JIN",
-            primaryArtist: "JIN",
-            label: "BIGHIT MUSIC",
-            explicit: false,
-            isrc: "USA2P2230326",
-            webUrl:
-              "https://www.shazam.com/track/636972694/the-astronaut?co=US&offsetInMilliseconds=&timeSkew=&trackLength=",
-            images: {
-              artistAvatar:
-                "https://is1-ssl.mzstatic.com/image/thumb/AMCArtistImages112/v4/a1/b7/ca/a1b7ca45-84c6-1939-70cb-fdfb79c23b68/c6967405-5d2d-4e64-91ec-be857bb9b0b6_ami-identity-e3de1066dd9a89fa6fadb60b1a50fdd9-2022-10-24T04-08-49.135Z_cropped.png/800x800cc.jpg",
-              coverArt:
-                "https://is5-ssl.mzstatic.com/image/thumb/Music122/v4/1b/38/ea/1b38eacd-158d-5040-8887-2786d2a641bc/192641874338_Cover.jpg/400x400cc.jpg",
-              coverArtHq:
-                "https://is5-ssl.mzstatic.com/image/thumb/Music122/v4/1b/38/ea/1b38eacd-158d-5040-8887-2786d2a641bc/192641874338_Cover.jpg/800x800cc.jpg",
-            },
-            share: {
-              subject: "The Astronaut - JIN",
-              text: "I used Shazam to discover The Astronaut by JIN.",
-              image:
-                "https://is5-ssl.mzstatic.com/image/thumb/Music122/v4/1b/38/ea/1b38eacd-158d-5040-8887-2786d2a641bc/192641874338_Cover.jpg/400x400cc.jpg",
-              twitter: "I used @Shazam to discover The Astronaut by JIN.",
-              html: "https://www.shazam.com/snippets/email-share/636972694?lang=en-US&country=US",
-              snapchat: "https://www.shazam.com/partner/sc/track/636972694",
-            },
-            genres: {
-              primary: "K-Pop",
-            },
-            streaming: {
-              preview:
-                "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview112/v4/bc/5c/5c/bc5c5ca1-0aa1-457d-65ce-f0f56f8a8245/mzaf_12809811648741532519.plus.aac.ep.m4a",
-              deeplink:
-                "intent://music.apple.com/us/album/the-astronaut/1649563458?i=1649563461&mttnagencyid=s2n&mttnsiteid=125115&mttn3pid=Apple-Shazam&mttnsub1=Shazam_android_am&mttnsub2=5348615A-616D-3235-3830-44754D6D5973&itscg=30201&app=music&itsct=Shazam_android_am#Intent;scheme=http;package=com.apple.android.music;action=android.intent.action.VIEW;end",
-              store:
-                "https://play.google.com/store/apps/details?id=com.apple.android.music&referrer=utm_source=https%3A%2F%2Fmusic.apple.com%2Fsubscribe%3Fmttnagencyid%3Ds2n%26mttnsiteid%3D125115%26mttn3pid%3DApple-Shazam%26mttnsub1%3DShazam_android_am%26mttnsub2%3D5348615A-616D-3235-3830-44754D6D5973%26itscg%3D30201%26app%3Dmusic%26itsct%3DShazam_android_am",
-            },
-            classicalAvailability: false,
-          },
-          relationships: {
-            "artist-highlights": {
-              data: [
-                {
-                  id: "1191850724",
-                  type: "artist-highlights",
-                },
-              ],
-            },
-            "track-highlights": {
-              data: [
-                {
-                  id: "1651904457",
-                  type: "track-highlights",
-                },
-              ],
-            },
-            "related-tracks": {
-              data: [
-                {
-                  id: "track-similarities-id-636972694",
-                  type: "related-tracks",
-                },
-              ],
-            },
-            songs: {
-              data: [
-                {
-                  id: "1649563461",
-                  type: "songs",
-                },
-              ],
-            },
-            albums: {
-              data: [
-                {
-                  id: "1649563458",
-                  type: "albums",
-                },
-              ],
-            },
-            "shazam-artists": {
-              data: [
-                {
-                  id: "42",
-                  type: "shazam-artists",
-                },
-              ],
-            },
-            artists: {
-              data: [
-                {
-                  id: "1191850724",
-                  type: "artists",
-                },
-              ],
-            },
-            lyrics: {
-              data: [
-                {
-                  id: "30339017",
-                  type: "lyrics",
-                },
-              ],
-            },
-          },
-        },
-        639053666: {
-          id: "639053666",
-          type: "shazam-songs",
-          attributes: {
-            type: "MUSIC",
-            title:
-              "Lift Me Up (From Black Panther: Wakanda Forever - Music From and Inspired By)",
-            artist: "Rihanna",
-            primaryArtist: "Rihanna",
-            label: "Black Panther 2 Rihanna Recordings",
-            explicit: false,
-            isrc: "QMJMT2204481",
-            webUrl:
-              "https://www.shazam.com/track/639053666/lift-me-up-from-black-panther-wakanda-forever-music?co=US&offsetInMilliseconds=&timeSkew=&trackLength=",
-            images: {
-              artistAvatar:
-                "https://is1-ssl.mzstatic.com/image/thumb/Features116/v4/14/9d/76/149d76d9-cca6-b8e1-146f-e95a9802db13/mza_2396005047706780053.png/800x800cc.jpg",
-              coverArt:
-                "https://is2-ssl.mzstatic.com/image/thumb/Music112/v4/46/17/80/461780d4-8620-3e89-7cc4-7f1f08152924/22UM1IM24755.rgb.jpg/400x400cc.jpg",
-              coverArtHq:
-                "https://is2-ssl.mzstatic.com/image/thumb/Music112/v4/46/17/80/461780d4-8620-3e89-7cc4-7f1f08152924/22UM1IM24755.rgb.jpg/800x800cc.jpg",
-            },
-            share: {
-              subject:
-                "Lift Me Up (From Black Panther: Wakanda Forever - Music From and Inspired By) - Rihanna",
-              text: "I used Shazam to discover Lift Me Up (From Black Panther: Wakanda Forever - Music From and Inspired By) by Rihanna.",
-              image:
-                "https://is2-ssl.mzstatic.com/image/thumb/Music112/v4/46/17/80/461780d4-8620-3e89-7cc4-7f1f08152924/22UM1IM24755.rgb.jpg/400x400cc.jpg",
-              twitter:
-                "I used @Shazam to discover Lift Me Up (From Black Panther: Wakanda Forever - Music From and Inspired By) by Rihanna.",
-              html: "https://www.shazam.com/snippets/email-share/639053666?lang=en-US&country=US",
-              snapchat: "https://www.shazam.com/partner/sc/track/639053666",
-            },
-            genres: {
-              primary: "Pop",
-            },
-            streaming: {
-              preview:
-                "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview112/v4/37/ec/71/37ec7188-c1f5-47c1-43a7-28d32e26f172/mzaf_7868625517086999040.plus.aac.ep.m4a",
-              deeplink:
-                "intent://music.apple.com/us/album/lift-me-up-from-black-panther-wakanda-forever-music/1651763191?i=1651763192&mttnagencyid=s2n&mttnsiteid=125115&mttn3pid=Apple-Shazam&mttnsub1=Shazam_android_am&mttnsub2=5348615A-616D-3235-3830-44754D6D5973&itscg=30201&app=music&itsct=Shazam_android_am#Intent;scheme=http;package=com.apple.android.music;action=android.intent.action.VIEW;end",
-              store:
-                "https://play.google.com/store/apps/details?id=com.apple.android.music&referrer=utm_source=https%3A%2F%2Fmusic.apple.com%2Fsubscribe%3Fmttnagencyid%3Ds2n%26mttnsiteid%3D125115%26mttn3pid%3DApple-Shazam%26mttnsub1%3DShazam_android_am%26mttnsub2%3D5348615A-616D-3235-3830-44754D6D5973%26itscg%3D30201%26app%3Dmusic%26itsct%3DShazam_android_am",
-            },
-            classicalAvailability: true,
-          },
-          relationships: {
-            "artist-highlights": {
-              data: [
-                {
-                  id: "63346553",
-                  type: "artist-highlights",
-                },
-              ],
-            },
-            "track-highlights": {
-              data: [
-                {
-                  id: "1652104610",
-                  type: "track-highlights",
-                },
-              ],
-            },
-            "related-tracks": {
-              data: [
-                {
-                  id: "track-similarities-id-639053666",
-                  type: "related-tracks",
-                },
-              ],
-            },
-            songs: {
-              data: [
-                {
-                  id: "1651763192",
-                  type: "songs",
-                },
-              ],
-            },
-            albums: {
-              data: [
-                {
-                  id: "1651763191",
-                  type: "albums",
-                },
-              ],
-            },
-            "shazam-artists": {
-              data: [
-                {
-                  id: "42",
-                  type: "shazam-artists",
-                },
-              ],
-            },
-            artists: {
-              data: [
-                {
-                  id: "63346553",
-                  type: "artists",
-                },
-              ],
-            },
-          },
-        },
-        640613166: {
-          id: "640613166",
-          type: "shazam-songs",
-          attributes: {
-            type: "MUSIC",
-            title: "Players",
-            artist: "Coi Leray",
-            primaryArtist: "Coi Leray",
-            label: "Uptown / Republic Records",
-            explicit: true,
-            isrc: "USUM72222387",
-            webUrl:
-              "https://www.shazam.com/track/640613166/players?co=US&offsetInMilliseconds=&timeSkew=&trackLength=",
-            images: {
-              artistAvatar:
-                "https://is2-ssl.mzstatic.com/image/thumb/AMCArtistImages123/v4/c2/d0/68/c2d068ce-b3ec-f888-de7f-ae3f6bcf27fb/bf01dc25-39fc-4d63-9229-d0b69fa718b4_file_cropped.png/800x800cc.jpg",
-              coverArt:
-                "https://is3-ssl.mzstatic.com/image/thumb/Music113/v4/e1/f8/88/e1f88885-262a-3c37-6b43-90b6d35f8c99/22UM1IM37104.rgb.jpg/400x400cc.jpg",
-              coverArtHq:
-                "https://is3-ssl.mzstatic.com/image/thumb/Music113/v4/e1/f8/88/e1f88885-262a-3c37-6b43-90b6d35f8c99/22UM1IM37104.rgb.jpg/800x800cc.jpg",
-            },
-            share: {
-              subject: "Players - Coi Leray",
-              text: "I used Shazam to discover Players by Coi Leray.",
-              image:
-                "https://is3-ssl.mzstatic.com/image/thumb/Music113/v4/e1/f8/88/e1f88885-262a-3c37-6b43-90b6d35f8c99/22UM1IM37104.rgb.jpg/400x400cc.jpg",
-              twitter: "I used @Shazam to discover Players by Coi Leray.",
-              html: "https://www.shazam.com/snippets/email-share/640613166?lang=en-US&country=US",
-              snapchat: "https://www.shazam.com/partner/sc/track/640613166",
-            },
-            genres: {
-              primary: "Hip-Hop/Rap",
-            },
-            streaming: {
-              preview:
-                "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview123/v4/d4/60/92/d4609241-0bb2-4b59-1e97-c2e671a0139c/mzaf_14378477710218482188.plus.aac.p.m4a",
-              deeplink:
-                "intent://music.apple.com/us/album/players/1663558165?i=1663558166&mttnagencyid=s2n&mttnsiteid=125115&mttn3pid=Apple-Shazam&mttnsub1=Shazam_android_am&mttnsub2=5348615A-616D-3235-3830-44754D6D5973&itscg=30201&app=music&itsct=Shazam_android_am#Intent;scheme=http;package=com.apple.android.music;action=android.intent.action.VIEW;end",
-              store:
-                "https://play.google.com/store/apps/details?id=com.apple.android.music&referrer=utm_source=https%3A%2F%2Fmusic.apple.com%2Fsubscribe%3Fmttnagencyid%3Ds2n%26mttnsiteid%3D125115%26mttn3pid%3DApple-Shazam%26mttnsub1%3DShazam_android_am%26mttnsub2%3D5348615A-616D-3235-3830-44754D6D5973%26itscg%3D30201%26app%3Dmusic%26itsct%3DShazam_android_am",
-            },
-            classicalAvailability: false,
-          },
-          relationships: {
-            "artist-highlights": {
-              data: [
-                {
-                  id: "1358539712",
-                  type: "artist-highlights",
-                },
-              ],
-            },
-            "related-tracks": {
-              data: [
-                {
-                  id: "track-similarities-id-640613166",
-                  type: "related-tracks",
-                },
-              ],
-            },
-            songs: {
-              data: [
-                {
-                  id: "1663558166",
-                  type: "songs",
-                },
-              ],
-            },
-            albums: {
-              data: [
-                {
-                  id: "1663558165",
-                  type: "albums",
-                },
-              ],
-            },
-            "shazam-artists": {
-              data: [
-                {
-                  id: "42",
-                  type: "shazam-artists",
-                },
-              ],
-            },
-            artists: {
-              data: [
-                {
-                  id: "1358539712",
-                  type: "artists",
-                },
-              ],
-            },
-            lyrics: {
-              data: [
-                {
-                  id: "30514024",
-                  type: "lyrics",
-                },
-              ],
-            },
-          },
-        },
-        643726163: {
-          id: "643726163",
-          type: "shazam-songs",
-          attributes: {
-            type: "MUSIC",
-            title: "Creepin'",
-            artist: "Metro Boomin, The Weeknd & 21 Savage",
-            primaryArtist: "Metro Boomin",
-            label: "Republic Records",
-            explicit: true,
-            isrc: "USUG12208791",
-            webUrl:
-              "https://www.shazam.com/track/643726163/creepin?co=US&offsetInMilliseconds=&timeSkew=&trackLength=",
-            images: {
-              artistAvatar:
-                "https://is5-ssl.mzstatic.com/image/thumb/Features112/v4/10/ea/1e/10ea1e97-487d-e802-3da0-f5f5ec112a03/mzl.sxemrluw.jpg/800x800cc.jpg",
-              coverArt:
-                "https://is2-ssl.mzstatic.com/image/thumb/Music122/v4/6e/fc/48/6efc48ad-d371-c4d6-62ff-1655c2be943d/22UM1IM40165.rgb.jpg/400x400cc.jpg",
-              coverArtHq:
-                "https://is2-ssl.mzstatic.com/image/thumb/Music122/v4/6e/fc/48/6efc48ad-d371-c4d6-62ff-1655c2be943d/22UM1IM40165.rgb.jpg/800x800cc.jpg",
-            },
-            share: {
-              subject: "Creepin' - Metro Boomin, The Weeknd & 21 Savage",
-              text: "I used Shazam to discover Creepin' by Metro Boomin, The Weeknd & 21 Savage.",
-              image:
-                "https://is2-ssl.mzstatic.com/image/thumb/Music122/v4/6e/fc/48/6efc48ad-d371-c4d6-62ff-1655c2be943d/22UM1IM40165.rgb.jpg/400x400cc.jpg",
-              twitter:
-                "I used @Shazam to discover Creepin' by Metro Boomin, The Weeknd & 21 Savage.",
-              html: "https://www.shazam.com/snippets/email-share/643726163?lang=en-US&country=US",
-              snapchat: "https://www.shazam.com/partner/sc/track/643726163",
-            },
-            genres: {
-              primary: "Hip-Hop/Rap",
-            },
-            streaming: {
-              preview:
-                "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview112/v4/cc/01/f1/cc01f1b7-7f87-0ce5-3e0a-bdcc48cb5c25/mzaf_2509141783693089572.plus.aac.ep.m4a",
-              deeplink:
-                "intent://music.apple.com/us/album/creepin/1660133085?i=1660134392&mttnagencyid=s2n&mttnsiteid=125115&mttn3pid=Apple-Shazam&mttnsub1=Shazam_android_am&mttnsub2=5348615A-616D-3235-3830-44754D6D5973&itscg=30201&app=music&itsct=Shazam_android_am#Intent;scheme=http;package=com.apple.android.music;action=android.intent.action.VIEW;end",
-              store:
-                "https://play.google.com/store/apps/details?id=com.apple.android.music&referrer=utm_source=https%3A%2F%2Fmusic.apple.com%2Fsubscribe%3Fmttnagencyid%3Ds2n%26mttnsiteid%3D125115%26mttn3pid%3DApple-Shazam%26mttnsub1%3DShazam_android_am%26mttnsub2%3D5348615A-616D-3235-3830-44754D6D5973%26itscg%3D30201%26app%3Dmusic%26itsct%3DShazam_android_am",
-            },
-            classicalAvailability: false,
-          },
-          relationships: {
-            "artist-highlights": {
-              data: [
-                {
-                  id: "670534462",
-                  type: "artist-highlights",
-                },
-              ],
-            },
-            "related-tracks": {
-              data: [
-                {
-                  id: "track-similarities-id-643726163",
-                  type: "related-tracks",
-                },
-              ],
-            },
-            songs: {
-              data: [
-                {
-                  id: "1660134392",
-                  type: "songs",
-                },
-              ],
-            },
-            albums: {
-              data: [
-                {
-                  id: "1660133085",
-                  type: "albums",
-                },
-              ],
-            },
-            "shazam-artists": {
-              data: [
-                {
-                  id: "42",
-                  type: "shazam-artists",
-                },
-              ],
-            },
-            artists: {
-              data: [
-                {
-                  id: "670534462",
-                  type: "artists",
-                },
-              ],
-            },
-            lyrics: {
-              data: [
-                {
-                  id: "31117593",
-                  type: "lyrics",
-                },
-              ],
-            },
-          },
-        },
-        648859694: {
-          id: "648859694",
-          type: "shazam-songs",
-          attributes: {
-            type: "MUSIC",
-            title: "Flowers",
-            artist: "Miley Cyrus",
-            primaryArtist: "Miley Cyrus",
-            label: "Columbia",
-            explicit: false,
-            isrc: "USSM12209777",
-            webUrl:
-              "https://www.shazam.com/track/648859694/flowers?co=US&offsetInMilliseconds=&timeSkew=&trackLength=",
-            images: {
-              artistAvatar:
-                "https://is4-ssl.mzstatic.com/image/thumb/AMCArtistImages123/v4/b0/37/e1/b037e1f1-cf37-419e-66b2-2ecda585be40/c0ef2b77-e0ce-4518-b1a3-60596c96c801_ami-identity-b057dd0940cbcd4300602f5bf8130c3d-2023-01-05T15-01-46.780Z_cropped.png/800x800cc.jpg",
-              coverArt:
-                "https://is1-ssl.mzstatic.com/image/thumb/Music123/v4/9e/80/c7/9e80c757-6994-4338-9e79-b92d5f75f788/196589561725.jpg/400x400cc.jpg",
-              coverArtHq:
-                "https://is1-ssl.mzstatic.com/image/thumb/Music123/v4/9e/80/c7/9e80c757-6994-4338-9e79-b92d5f75f788/196589561725.jpg/800x800cc.jpg",
-            },
-            share: {
-              subject: "Flowers - Miley Cyrus",
-              text: "I used Shazam to discover Flowers by Miley Cyrus.",
-              image:
-                "https://is1-ssl.mzstatic.com/image/thumb/Music123/v4/9e/80/c7/9e80c757-6994-4338-9e79-b92d5f75f788/196589561725.jpg/400x400cc.jpg",
-              twitter: "I used @Shazam to discover Flowers by Miley Cyrus.",
-              html: "https://www.shazam.com/snippets/email-share/648859694?lang=en-US&country=US",
-              snapchat: "https://www.shazam.com/partner/sc/track/648859694",
-            },
-            genres: {
-              primary: "Pop",
-            },
-            streaming: {
-              preview:
-                "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/3e/57/ef/3e57efa9-0572-82f5-0e92-ea5fef33982a/mzaf_14012893767887586921.plus.aac.ep.m4a",
-              deeplink:
-                "intent://music.apple.com/us/album/flowers/1663973555?i=1663973562&mttnagencyid=s2n&mttnsiteid=125115&mttn3pid=Apple-Shazam&mttnsub1=Shazam_android_am&mttnsub2=5348615A-616D-3235-3830-44754D6D5973&itscg=30201&app=music&itsct=Shazam_android_am#Intent;scheme=http;package=com.apple.android.music;action=android.intent.action.VIEW;end",
-              store:
-                "https://play.google.com/store/apps/details?id=com.apple.android.music&referrer=utm_source=https%3A%2F%2Fmusic.apple.com%2Fsubscribe%3Fmttnagencyid%3Ds2n%26mttnsiteid%3D125115%26mttn3pid%3DApple-Shazam%26mttnsub1%3DShazam_android_am%26mttnsub2%3D5348615A-616D-3235-3830-44754D6D5973%26itscg%3D30201%26app%3Dmusic%26itsct%3DShazam_android_am",
-            },
-            classicalAvailability: false,
-          },
-          relationships: {
-            "artist-highlights": {
-              data: [
-                {
-                  id: "137057909",
-                  type: "artist-highlights",
-                },
-              ],
-            },
-            "related-tracks": {
-              data: [
-                {
-                  id: "track-similarities-id-648859694",
-                  type: "related-tracks",
-                },
-              ],
-            },
-            songs: {
-              data: [
-                {
-                  id: "1663973562",
-                  type: "songs",
-                },
-              ],
-            },
-            albums: {
-              data: [
-                {
-                  id: "1663973555",
-                  type: "albums",
-                },
-              ],
-            },
-            "shazam-artists": {
-              data: [
-                {
-                  id: "42",
-                  type: "shazam-artists",
-                },
-              ],
-            },
-            artists: {
-              data: [
-                {
-                  id: "137057909",
-                  type: "artists",
-                },
-              ],
-            },
-            lyrics: {
-              data: [
-                {
-                  id: "31570750",
-                  type: "lyrics",
-                },
-              ],
-            },
+            copyright:
+              "A Capitol Records UK / EMI release; ℗ 2023 Universal Music Operations Limited",
+            genreNames: ["Pop", "Music"],
+            releaseDate: "2023-01-27",
+            isMasteredForItunes: true,
+            upc: "00602455669742",
+            artwork: {
+              width: 3000,
+              url: "https://is5-ssl.mzstatic.com/image/thumb/Music116/v4/3c/ea/b8/3ceab8cc-b932-9e43-cffb-18dcac80ab30/23UMGIM38271.rgb.jpg/{w}x{h}bb.jpg",
+              height: 3000,
+              textColor3: "c1a583",
+              textColor2: "e0a581",
+              textColor4: "be8e6d",
+              textColor1: "e4c29d",
+              bgColor: "36311d",
+              hasP3: false,
+            },
+            url: "https://music.apple.com/us/album/gloria-special-edition/1680907429",
+            playParams: {
+              id: "1680907429",
+              kind: "album",
+            },
+            recordLabel: "Capitol Records UK / EMI",
+            isCompilation: false,
+            trackCount: 22,
+            isPrerelease: false,
+            audioTraits: ["lossless", "lossy-stereo"],
+            isSingle: false,
+            name: "Gloria (Special Edition)",
+            artistName: "Sam Smith",
+            isComplete: true,
           },
         },
       },
     },
   };
 
-  const error = null;
-  const isFetchingRelated = false;
+  console.log(artistData?.resources?.artists);
 
-  console.log(Object.values(relatedData.resources["shazam-songs"]));
+  const isFetchingArtist = false;
+  const error = false;
 
-  if (isFetching || isFetchingRelated)
-    return <Loader title="Fetching song details" />;
+  if (isFetchingArtist) return <Loader title="Loading artist details" />;
 
   if (error) return <Error />;
 
   return (
     <div className="flex flex-col">
-      <DetailsHeader artistId="" songData={data} />
-
-      <div className="mb-10">
-        <h2 className="text-white text-3xl font-bold">Lyrics:</h2>
-
-        <div className="mt-5">
-          {data?.sections[1].type === "LYRICS" ? (
-            data.sections[1].text.map((line, i) => (
-              <p className="text-gray-400 text-base my-1">{line}</p>
-            ))
-          ) : (
-            <p className="text-gray-400 text-base my-1">
-              Sorry, lyrics aren't available for this song
-            </p>
-          )}
-        </div>
-      </div>
+      <DetailsHeader artistId={artistId} artistData={artistData?.resources} />
 
       <RelatedSongs
-        artistId={0}
-        data={Object.values(relatedData.resources["shazam-songs"])}
+        artistId={artistId}
+        data={Object.values(artistData.resources.songs)}
         isPlaying={isPlaying}
         activeSong={activeSong}
-        handlePauseClick={handlePauseClick}
       />
     </div>
   );

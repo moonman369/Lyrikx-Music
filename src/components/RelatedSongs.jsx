@@ -15,6 +15,7 @@ const RelatedSongs = ({
       {data?.map((song, i) => (
         <SongBar
           key={`${song?.id}-${artistId}`}
+          artistId={artistId}
           song={song}
           i={i}
           data={data}
