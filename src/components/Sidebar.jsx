@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import { RiCloseLine } from "react-icons/ri";
 import { HiOutlineMenu } from "react-icons/hi";
 
-import { logo } from "../assets";
+import { logo, logo1 } from "../assets";
 import { links } from "../assets/constants";
 
 const NavLinks = ({ handleClick }) => (
@@ -28,7 +28,13 @@ const Sidebar = () => {
   return (
     <>
       <div className="md:flex hidden flex-col w-[240px] py-10 px-4 bg-[#161616]">
-        <img src={logo} alt="logo" className="w-full h-14 object-contain" />
+        <img
+          src={logo1}
+          alt="logo"
+          width="80px"
+          // height="100px"
+          className=""
+        />
         <NavLinks />
       </div>
 
@@ -55,7 +61,13 @@ const Sidebar = () => {
           mobileMenuOpen ? "left-0" : "-left-full"
         }`}
       >
-        <img src={logo} alt="logo" className="w-full h-14 object-contain" />
+        <img
+          src={logo1}
+          alt="logo"
+          width="80px"
+          // height="1000px"
+          className="object-contain"
+        />
         <NavLinks
           handleClick={() => {
             setMobileMenuOpen(false);
